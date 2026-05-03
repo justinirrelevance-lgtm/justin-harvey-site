@@ -709,30 +709,49 @@ function buildReorderList() {
   const list = document.getElementById('reorder-list');
   try {
     const doc = pv.contentDocument;
-    // Get all major image sections
-    const sections = [...doc.querySelectorAll('.pf,.pg2,.pg3,.pgwp,.pq,.ts,.tsec')].filter(s => s.querySelector('img'));
-    if (!sections.length) { list.innerHTML = '<div class="empty" style="padding:1rem">No reorderable sections found</div>'; return; }
 
-    list.innerHTML = sections.slice(0,20).map((sec, i) => {
-      const img = sec.querySelector('img');
-      const cap = sec.querySelector('.cap')?.textContent || '';
-      const src = img?.getAttribute('src') || '';
+    // Grab every <img> in DOM order — no filter
+    const allImgs = [...doc.querySelectorAll('img')];
+    if (!allImgs.length) {
+      list.innerHTML = '<div class="empty" style="padding:1rem">No images found</div>';
+      return;
+    }
+
+    // Store the parent containers (the immediate moveable block) for each img
+    // We move the outermost section-level parent: .pf, .pg2, .pg3, .pgwp, .pq, .col, .cover-img, .split-img, .ts, .tsec, or the img's own parentElement
+    function getSectionEl(img) {
+      const candidates = ['.pf','.pg2','.pg3','.pgwp','.pq','.col','.cover-img','.spl-img','.split-img'];
+      for (const sel of candidates) {
+        const el = img.closest(sel);
+        if (el) return el;
+      }
+      return img.parentElement;
+    }
+
+    window._reorderImgs = allImgs;
+    window._reorderSections = allImgs.map(getSectionEl);
+
+    list.innerHTML = allImgs.map((img, i) => {
+      const src = img.getAttribute('src') || '';
       const filename = src.split('/').pop();
+      const parent = getSectionEl(img);
+      const cap = parent?.querySelector('.cap')?.textContent || img.alt || '';
+      const badge = parent?.querySelector('.badge')?.textContent || '';
       return `<div class="reorder-item" draggable="true" data-idx="${i}" id="ri-${i}"
           ondragstart="dragStart(event,${i})" ondragover="dragOver(event,${i})"
           ondrop="dragDrop(event,${i})" ondragleave="dragLeave(event,${i})">
-        <span class="drag-handle">⠿</span>
+        <span class="drag-handle" style="font-size:18px;color:#555;flex-shrink:0;line-height:1">⠿</span>
         <img src="${src}" class="reorder-thumb" onerror="this.style.background='#333';this.src=''">
         <div class="reorder-info">
-          <div class="reorder-name">${filename}</div>
-          <div class="reorder-cap">${cap || 'No caption'}</div>
+          <div class="reorder-name" style="font-size:11px">${filename}</div>
+          <div class="reorder-cap">${cap}${badge ? ' · ' + badge : ''}</div>
         </div>
+        <span style="font-size:10px;color:#444;flex-shrink:0">#${i+1}</span>
       </div>`;
     }).join('');
 
-    window._reorderSections = sections;
   } catch(e) {
-    list.innerHTML = '<div class="empty" style="padding:1rem">Could not load sections</div>';
+    list.innerHTML = '<div class="empty" style="padding:1rem">Could not load — ' + e.message + '</div>';
   }
 }
 
@@ -760,25 +779,40 @@ function dragDrop(e, toIdx) {
     const secs = window._reorderSections;
     const from = secs[dragIdx];
     const to = secs[toIdx];
-    const parent = from.parentElement;
-    if (!parent) return;
 
-    // DOM swap
-    const fromNext = from.nextSibling;
-    if (toIdx > dragIdx) {
-      parent.insertBefore(from, to.nextSibling);
+    if (!from || !to || from === to) return;
+
+    // If they share the same parent we can move directly
+    if (from.parentElement === to.parentElement) {
+      const parent = from.parentElement;
+      if (toIdx > dragIdx) {
+        parent.insertBefore(from, to.nextSibling);
+      } else {
+        parent.insertBefore(from, to);
+      }
     } else {
-      parent.insertBefore(from, to);
+      // Different parents — swap the whole parent sections instead
+      const fromParent = from.closest('.pf,.pg2,.pg3,.pgwp,.pq,.ts,.tsec') || from.parentElement;
+      const toParent = to.closest('.pf,.pg2,.pg3,.pgwp,.pq,.ts,.tsec') || to.parentElement;
+      if (fromParent && toParent && fromParent.parentElement === toParent.parentElement) {
+        const parent = fromParent.parentElement;
+        if (toIdx > dragIdx) {
+          parent.insertBefore(fromParent, toParent.nextSibling);
+        } else {
+          parent.insertBefore(fromParent, toParent);
+        }
+      }
     }
 
-    const fromImg = from.querySelector('img')?.getAttribute('src')?.split('/').pop() || `section-${dragIdx}`;
-    const toImg = to.querySelector('img')?.getAttribute('src')?.split('/').pop() || `section-${toIdx}`;
-    changes.push({type:'reorder', from: fromImg, to: toImg, fromIdx: dragIdx, toIdx});
-    notify(`Moved ${fromImg} ${dragIdx < toIdx ? 'down' : 'up'}`, 'info');
+    const fromFile = window._reorderImgs[dragIdx]?.getAttribute('src')?.split('/').pop() || `img-${dragIdx}`;
+    const toFile = window._reorderImgs[toIdx]?.getAttribute('src')?.split('/').pop() || `img-${toIdx}`;
+    changes.push({type:'reorder', fromFile, toFile, fromIdx: dragIdx, toIdx,
+      description: `Move "${fromFile}" from position ${dragIdx+1} to position ${toIdx+1}`});
+    notify(`Moved #${dragIdx+1} → position ${toIdx+1}`, 'info');
     renderChanges();
-    buildReorderList();
+    setTimeout(buildReorderList, 100);
   } catch(e2) {
-    notify('Could not reorder — try a different section', 'err');
+    notify('Reorder failed: ' + e2.message, 'err');
   }
   dragIdx = null;
 }
@@ -854,7 +888,7 @@ function exportChanges() {
       if (c.type === 'text') return `${i+1}. Text change — ${c.tag}.${c.classes}: "${c.content}"`;
       if (c.type === 'caption') return `${i+1}. Caption on ${c.file}: "${c.text}"`;
       if (c.type === 'remove') return `${i+1}. ${c.description}`;
-      if (c.type === 'reorder') return `${i+1}. Move image at position ${c.fromIdx} to position ${c.toIdx} (${c.from} before/after ${c.to})`;
+      if (c.type === 'reorder') return `${i+1}. ${c.description || 'Reorder: ' + c.fromFile + ' to position ' + (c.toIdx+1)}`;
       if (c.type === 'upload') return `${i+1}. New photo uploaded: ${c.filename} — add to assets folder`;
       return `${i+1}. ${JSON.stringify(c)}`;
     }).join('\n');
