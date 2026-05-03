@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JH Image Manager</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Mono', monospace; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; }
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  header { 
+    background: #111; border-bottom: 1px solid #222; 
+    padding: 16px 24px; display: flex; align-items: center; gap: 16px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  header h1 { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: #fff; }
+  header span { font-size: 11px; color: #555; }
+  .tab-bar { 
+    display: flex; gap: 0; border-bottom: 1px solid #1a1a1a; 
+    background: #0d0d0d; padding: 0 24px;
+  }
+  .tab { 
+    padding: 12px 20px; font-size: 11px; letter-spacing: 0.1em; 
+    text-transform: uppercase; cursor: pointer; border-bottom: 2px solid transparent;
+    color: #555; transition: all 0.2s;
+  }
+  .tab.active { color: #fff; border-bottom-color: #c0392b; }
+  .tab:hover { color: #aaa; }
+
+  .panel { display: none; padding: 24px; }
+  .panel.active { display: block; }
+
+  /* Image Grid */
+  .page-section { margin-bottom: 32px; }
+  .page-section h2 { 
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; 
+    color: #555; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #1a1a1a;
+  }
+  .img-grid { 
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 12px;
+  }
+  .img-card { 
+    background: #111; border: 1px solid #1e1e1e; border-radius: 4px; 
+    overflow: hidden; cursor: pointer; transition: border-color 0.2s;
+    position: relative;
+  }
+  .img-card:hover { border-color: #333; }
+  .img-card.selected { border-color: #c0392b; box-shadow: 0 0 0 2px rgba(192,57,43,0.3); }
+  .img-card .thumb { 
+    width: 100%; height: 140px; object-fit: cover; display: block;
+    transition: opacity 0.2s;
+  }
+  .img-card .info { padding: 10px 12px; }
+  .img-card .filename { font-size: 10px; color: #888; word-break: break-all; }
+  .img-card .caption-text { font-size: 11px; color: #ccc; margin-top: 3px; }
+  .img-card .badge-tag { 
+    display: inline-block; font-size: 9px; padding: 2px 6px; 
+    border-radius: 2px; margin-top: 4px; letter-spacing: 0.05em;
+  }
+  .badge-netflix { background: #e50914; color: #fff; }
+  .badge-disney { background: #0033a0; color: #fff; }
+  .badge-coupang { background: #ff4500; color: #fff; }
+  .badge-cinema { background: #2c2c2c; color: #aaa; border: 1px solid #333; }
+
+  /* Edit Panel */
+  .edit-panel { 
+    position: fixed; right: 0; top: 0; bottom: 0; width: 360px;
+    background: #111; border-left: 1px solid #1e1e1e; 
+    padding: 24px; overflow-y: auto; z-index: 200;
+    transform: translateX(100%); transition: transform 0.3s ease;
+  }
+  .edit-panel.open { transform: translateX(0); }
+  .edit-panel h3 { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #fff; margin-bottom: 20px; }
+  .edit-panel .close-btn { 
+    position: absolute; top: 20px; right: 20px; 
+    background: none; border: 1px solid #333; color: #888; 
+    width: 28px; height: 28px; border-radius: 2px; cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .edit-panel .close-btn:hover { color: #fff; border-color: #555; }
+
+  .field { margin-bottom: 16px; }
+  .field label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; display: block; margin-bottom: 6px; }
+  .field input, .field select, .field textarea { 
+    width: 100%; background: #0a0a0a; border: 1px solid #222; 
+    color: #e0e0e0; padding: 8px 10px; font-family: inherit; font-size: 12px;
+    border-radius: 2px; outline: none;
+  }
+  .field input:focus, .field select:focus { border-color: #c0392b; }
+
+  .preview-box { 
+    width: 100%; height: 180px; border: 1px solid #222; 
+    border-radius: 2px; overflow: hidden; position: relative; margin-bottom: 16px;
+    background: #000;
+  }
+  .preview-box img { 
+    width: 100%; height: 100%; object-fit: cover; 
+    transition: object-position 0.1s;
+  }
+  .preview-box .crosshair {
+    position: absolute; top: 50%; left: 50%; 
+    transform: translate(-50%, -50%);
+    pointer-events: none; opacity: 0.4;
+  }
+
+  .slider-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .slider-wrap label { color: #555; }
+  .slider-wrap input[type=range] { 
+    width: 100%; accent-color: #c0392b; 
+    background: transparent; cursor: pointer;
+  }
+  .slider-val { 
+    text-align: right; font-size: 11px; color: #c0392b; 
+    font-weight: 600; margin-top: 2px;
+  }
+
+  .apply-btn { 
+    width: 100%; padding: 12px; background: #c0392b; 
+    border: none; color: #fff; font-family: inherit; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+    border-radius: 2px; margin-top: 8px; font-weight: 600;
+    transition: background 0.2s;
+  }
+  .apply-btn:hover { background: #e74c3c; }
+  .apply-btn.secondary { background: #1a1a1a; border: 1px solid #333; color: #aaa; }
+  .apply-btn.secondary:hover { background: #222; color: #fff; }
+
+  /* Upload Zone */
+  .upload-zone { 
+    border: 2px dashed #222; border-radius: 4px; padding: 40px 20px;
+    text-align: center; cursor: pointer; transition: border-color 0.2s;
+    margin-bottom: 24px;
+  }
+  .upload-zone:hover, .upload-zone.drag { border-color: #c0392b; }
+  .upload-zone p { font-size: 12px; color: #555; margin-top: 8px; }
+  .upload-zone input { display: none; }
+
+  /* Changes log */
+  .changes-log { 
+    background: #0a0a0a; border: 1px solid #1e1e1e; border-radius: 4px;
+    padding: 16px; font-size: 11px; color: #666; 
+    max-height: 300px; overflow-y: auto; white-space: pre-wrap;
+    font-family: inherit; line-height: 1.6;
+  }
+  .changes-log .change-item { color: #e0e0e0; }
+  .changes-log .change-item span { color: #c0392b; }
+
+  .copy-btn { 
+    width: 100%; margin-top: 12px; padding: 12px; 
+    background: #0a0a0a; border: 1px solid #c0392b; 
+    color: #c0392b; font-family: inherit; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+    border-radius: 2px; transition: all 0.2s;
+  }
+  .copy-btn:hover { background: #c0392b; color: #fff; }
+
+  .empty-state { 
+    text-align: center; padding: 60px 20px; 
+    font-size: 12px; color: #333;
+  }
+
+  /* Replace photo section */
+  .replace-section { margin-top: 16px; padding-top: 16px; border-top: 1px solid #1e1e1e; }
+  .img-option { 
+    display: flex; align-items: center; gap: 10px; 
+    padding: 6px 8px; cursor: pointer; border-radius: 2px;
+    transition: background 0.15s; font-size: 11px; color: #888;
+  }
+  .img-option:hover { background: #161616; color: #ccc; }
+  .img-option img { width: 40px; height: 30px; object-fit: cover; border-radius: 2px; }
+  .img-picker { 
+    max-height: 200px; overflow-y: auto; 
+    background: #0a0a0a; border: 1px solid #1e1e1e; border-radius: 2px;
+    margin-top: 6px;
+  }
+
+  .notice { 
+    background: #111; border: 1px solid #1e1e1e; border-left: 3px solid #c0392b;
+    padding: 12px 16px; font-size: 11px; color: #888; margin-bottom: 20px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>JH · Image Manager</h1>
+  <span>justin-harvey.netlify.app</span>
+</header>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="switchTab('actor')">Actor Page</div>
+  <div class="tab" onclick="switchTab('mediakit')">Media Kit</div>
+  <div class="tab" onclick="switchTab('upload')">Upload New Photo</div>
+  <div class="tab" onclick="switchTab('changes')">Changes Log</div>
+</div>
+
+<!-- ACTOR PAGE TAB -->
+<div id="tab-actor" class="panel active">
+  <div class="notice">
+    Click any photo to edit its crop position, swap it for a different image, or update its caption. 
+    All changes are logged — copy them to send to Claude for a single push deploy.
+  </div>
+  <div id="actor-grid" class="img-grid"></div>
+</div>
+
+<!-- MEDIA KIT TAB -->
+<div id="tab-mediakit" class="panel">
+  <div class="notice">
+    Project photos and brand logos. Click to adjust crop or swap image.
+  </div>
+  <div id="mediakit-grid" class="img-grid"></div>
+</div>
+
+<!-- UPLOAD TAB -->
+<div id="tab-upload" class="panel">
+  <div class="notice">
+    Upload new photos here. After upload, go to Actor Page or Media Kit tab and use "Replace with" to swap any existing photo with your new upload.
+  </div>
+  <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="17,8 12,3 7,8"/>
+      <line x1="12" y1="3" x2="12" y2="15"/>
+    </svg>
+    <p>Click or drag photos here to upload</p>
+    <p style="font-size:10px;margin-top:4px;">JPG, PNG, WEBP accepted</p>
+    <input type="file" id="file-input" accept="image/*" multiple onchange="handleUpload(event)">
+  </div>
+  <div id="upload-list"></div>
+</div>
+
+<!-- CHANGES LOG TAB -->
+<div id="tab-changes" class="panel">
+  <div class="notice">
+    Every change you make is recorded here in exact format. Copy and paste this entire block to Claude and all changes will be applied in one single push — no back and forth.
+  </div>
+  <div class="changes-log" id="changes-log">No changes yet. Edit photos in the Actor Page or Media Kit tabs.</div>
+  <button class="copy-btn" onclick="copyChanges()">📋 Copy all changes for Claude</button>
+  <button class="apply-btn secondary" style="margin-top:8px;" onclick="clearChanges()">Clear log</button>
+</div>
+
+<!-- EDIT PANEL (slides in from right) -->
+<div class="edit-panel" id="edit-panel">
+  <button class="close-btn" onclick="closePanel()">×</button>
+  <h3 id="panel-title">Edit Photo</h3>
+
+  <div class="preview-box">
+    <img id="preview-img" src="" alt="">
+  </div>
+
+  <div class="field">
+    <label>Filename</label>
+    <input type="text" id="field-filename" readonly style="color:#555;">
+  </div>
+
+  <div class="field">
+    <label>Caption</label>
+    <input type="text" id="field-caption" placeholder="e.g. The Tyrant · 2024">
+  </div>
+
+  <div class="field">
+    <label>Badge</label>
+    <select id="field-badge">
+      <option value="none">None</option>
+      <option value="Netflix">Netflix</option>
+      <option value="Disney+">Disney+</option>
+      <option value="Coupang Play">Coupang Play</option>
+      <option value="Cinema">Cinema</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Crop Position — drag sliders to frame the shot</label>
+    <div class="slider-group">
+      <div class="slider-wrap">
+        <label>← Left / Right →</label>
+        <input type="range" id="slider-x" min="0" max="100" value="50" oninput="updatePreview()">
+        <div class="slider-val" id="val-x">50%</div>
+      </div>
+      <div class="slider-wrap">
+        <label>↑ Top / Bottom ↓</label>
+        <input type="range" id="slider-y" min="0" max="100" value="50" oninput="updatePreview()">
+        <div class="slider-val" id="val-y">50%</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="apply-btn" onclick="applyChanges()">✓ Save Changes</button>
+
+  <div class="replace-section">
+    <div class="field">
+      <label>Replace with different photo</label>
+      <input type="text" id="replace-search" placeholder="Search photos..." oninput="filterPicker(this.value)">
+      <div class="img-picker" id="img-picker"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+const BASE = 'https://justin-harvey.netlify.app/assets/';
+
+const ACTOR_IMAGES = [
+  { file: 'hero-suit.jpg',              caption: 'Justin Harvey',          badge: 'none',      x: 50, y: 30, page: 'actor' },
+  { file: 'film-childe-1.jpg',          caption: 'Tyrant',                 badge: 'Disney+',   x: 50, y: 10, page: 'actor' },
+  { file: 'model-editorial-1.jpg',      caption: 'Justin Harvey',          badge: 'none',      x: 50, y: 40, page: 'actor' },
+  { file: 'film-childe-2.jpg',          caption: 'The Tyrant · 2024',      badge: 'Disney+',   x: 30, y: 20, page: 'actor' },
+  { file: 'film-childe-3.jpg',          caption: 'The Childe',             badge: 'Cinema',    x: 50, y: 30, page: 'actor' },
+  { file: 'film-physical100-suit.jpg',  caption: 'Physical 100 · Netflix', badge: 'Netflix',   x: 50, y: 10, page: 'actor' },
+  { file: 'film-physical100-wrestle.jpg', caption: 'Physical 100',         badge: 'Netflix',   x: 50, y: 30, page: 'actor' },
+  { file: 'film-physical100-running.jpg', caption: 'Physical 100',         badge: 'Netflix',   x: 50, y: 30, page: 'actor' },
+  { file: 'model-editorial-2.jpg',      caption: 'Justin Harvey',          badge: 'none',      x: 50, y: 40, page: 'actor' },
+  { file: 'film-physical100-sculpture.jpg', caption: 'Physical 100',       badge: 'Netflix',   x: 50, y: 30, page: 'actor' },
+  { file: 'film-witch2-2.jpg',          caption: 'The Witch: Part 2',      badge: 'Cinema',    x: 50, y: 30, page: 'actor' },
+  { file: 'film-firstnight-1.jpg',      caption: 'Newtopia · 2025',        badge: 'Coupang Play', x: 50, y: 20, page: 'actor' },
+  { file: 'film-childe-4.jpg',          caption: 'Tyrant · 2024',          badge: 'Disney+',   x: 50, y: 30, page: 'actor' },
+  { file: 'lifestyle-gym-eating.jpg',   caption: 'Justin Harvey',          badge: 'none',      x: 50, y: 61, page: 'actor' },
+  { file: 'editorial-chair-dark.jpg',   caption: 'Justin Harvey',          badge: 'none',      x: 50, y: 12, page: 'actor' },
+  { file: 'model-knit-beige.jpg',       caption: 'Justin Harvey',          badge: 'none',      x: 50, y: 35, page: 'actor' },
+  { file: 'proj-exercise.jpg',          caption: 'Lifestyle',              badge: 'none',      x: 35, y: 25, page: 'actor' },
+];
+
+const MEDIAKIT_IMAGES = [
+  { file: 'proj-freedom.jpg',   caption: 'Freedom — Olympia Jacket',   badge: 'none', x: 50, y: 25, page: 'mediakit' },
+  { file: 'proj-exercise.jpg',  caption: 'Exercise Editorial',          badge: 'none', x: 50, y: 20, page: 'mediakit' },
+  { file: 'proj-timetorun.jpg', caption: 'Time to Run',                 badge: 'none', x: 50, y: 18, page: 'mediakit' },
+  { file: 'freedom.jpg',        caption: 'Freedom (brand logo)',        badge: 'none', x: 50, y: 50, page: 'mediakit', isBrandLogo: true },
+  { file: 'cathay.jpg',         caption: 'Cathay Pacific',              badge: 'none', x: 50, y: 50, page: 'mediakit', isBrandLogo: true },
+  { file: 'hk7.jpg',            caption: 'HK Sevens',                   badge: 'none', x: 50, y: 50, page: 'mediakit', isBrandLogo: true },
+  { file: 'hktb.webp',          caption: 'HKTB / Discover HK',         badge: 'none', x: 50, y: 50, page: 'mediakit', isBrandLogo: true },
+  { file: 'giant.jpg',          caption: 'Giant Bicycles',              badge: 'none', x: 50, y: 50, page: 'mediakit', isBrandLogo: true },
+  { file: 'timetorun.jpg',      caption: 'Time to Run (logo)',          badge: 'none', x: 50, y: 50, page: 'mediakit', isBrandLogo: true },
+  { file: 'gbx.png',            caption: 'Gymbox',                      badge: 'none', x: 50, y: 50, page: 'mediakit', isBrandLogo: true },
+  { file: 'johnber.jpg',        caption: 'Johnber',                     badge: 'none', x: 50, y: 50, page: 'mediakit', isBrandLogo: true },
+];
+
+const ALL_ASSETS = ["cathay.jpg","editorial-chair-dark.jpg","editorial-cream-sweater.jpg","editorial-grey-suit-smile.jpg","editorial-grey-suit.jpg","film-action-1.jpg","film-action-2.jpg","film-action-3.jpg","film-childe-1.jpg","film-childe-2.jpg","film-childe-3.jpg","film-childe-4.jpg","film-duke-1.jpg","film-firstnight-1.jpg","film-firstnight-2.jpg","film-newtopia-1.jpg","film-newtopia-chef.jpg","film-newtopia.jpg","film-physical100-4.jpg","film-physical100-run.jpg","film-physical100-running.jpg","film-physical100-sculpture.jpg","film-physical100-suit.jpg","film-physical100-wrestle.jpg","film-portraits.jpg","film-witch2-1.jpg","film-witch2-2.jpg","film-witch2-3.jpg","film-witch2-action.jpg","film-witch2-forest.jpg","film-witch2-gun.jpg","freedom.jpg","gbx.png","giant.jpg","headshot-bw-close.jpg","headshot-bw-suit.jpg","headshot-bw-suit2.jpg","headshot-bw-turtleneck.jpg","headshot-bw-turtleneck2.jpg","headshot-white-shirt.jpg","hero-main.jpg","hero-suit.jpg","hero.png","hk7.jpg","hktb.webp","johnber.jpg","lifestyle-gym-eating.jpg","lifestyle-outdoor.jpg","model-bw-face1.jpg","model-bw-face2.jpg","model-bw-face3.jpg","model-editorial-1.jpg","model-editorial-2.jpg","model-editorial-3.jpg","model-editorial-4.jpg","model-knit-beige.jpg","model-suit-white.jpg","photo-crop.png","photo-red.jpg","proj-exercise.jpg","proj-freedom.jpg","proj-timetorun.jpg","timetorun.jpg"];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+
+let changes = [];
+let currentCard = null;
+let currentData = null;
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+
+function renderGrid(images, containerId) {
+  const grid = document.getElementById(containerId);
+  grid.innerHTML = '';
+
+  // Group by section
+  let sectionLabel = containerId === 'actor-grid' ? '' : '';
+
+  images.forEach((img, i) => {
+    const card = document.createElement('div');
+    card.className = 'img-card';
+    card.dataset.index = i;
+    card.dataset.page = img.page;
+
+    const badgeHtml = img.badge && img.badge !== 'none'
+      ? `<span class="badge-tag badge-${img.badge.toLowerCase().replace(/[^a-z]/g,'')}">${img.badge}</span>`
+      : '';
+
+    const sectionTag = img.isBrandLogo ? '<span style="font-size:9px;color:#555;margin-left:4px;">LOGO</span>' : '';
+
+    card.innerHTML = `
+      <img class="thumb" src="${BASE}${img.file}" alt="${img.caption}" loading="lazy"
+        style="object-position:${img.x}% ${img.y}%">
+      <div class="info">
+        <div class="filename">${i + 1}. ${img.file}${sectionTag}</div>
+        <div class="caption-text">${img.caption}</div>
+        ${badgeHtml}
+      </div>
+    `;
+    card.addEventListener('click', () => openPanel(card, img, i, images));
+    grid.appendChild(card);
+  });
+}
+
+// ─── PANEL ──────────────────────────────────────────────────────────────────
+
+function openPanel(card, img, index, list) {
+  // Deselect previous
+  document.querySelectorAll('.img-card.selected').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+
+  currentCard = card;
+  currentData = { img, index, list };
+
+  document.getElementById('panel-title').textContent = `Edit — ${img.file}`;
+  document.getElementById('field-filename').value = img.file;
+  document.getElementById('field-caption').value = img.caption;
+  document.getElementById('field-badge').value = img.badge || 'none';
+  document.getElementById('slider-x').value = img.x;
+  document.getElementById('slider-y').value = img.y;
+  document.getElementById('val-x').textContent = img.x + '%';
+  document.getElementById('val-y').textContent = img.y + '%';
+
+  const preview = document.getElementById('preview-img');
+  preview.src = BASE + img.file;
+  preview.style.objectPosition = `${img.x}% ${img.y}%`;
+
+  buildPicker('');
+  document.getElementById('edit-panel').classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('edit-panel').classList.remove('open');
+  document.querySelectorAll('.img-card.selected').forEach(c => c.classList.remove('selected'));
+  currentCard = null;
+  currentData = null;
+}
+
+function updatePreview() {
+  const x = document.getElementById('slider-x').value;
+  const y = document.getElementById('slider-y').value;
+  document.getElementById('val-x').textContent = x + '%';
+  document.getElementById('val-y').textContent = y + '%';
+  document.getElementById('preview-img').style.objectPosition = `${x}% ${y}%`;
+}
+
+function applyChanges() {
+  if (!currentData) return;
+  const { img, index, list } = currentData;
+
+  const newX = parseInt(document.getElementById('slider-x').value);
+  const newY = parseInt(document.getElementById('slider-y').value);
+  const newCaption = document.getElementById('field-caption').value.trim();
+  const newBadge = document.getElementById('field-badge').value;
+
+  const changed = [];
+  if (newX !== img.x || newY !== img.y) changed.push(`position ${newX}% ${newY}%`);
+  if (newCaption !== img.caption) changed.push(`caption: "${newCaption}"`);
+  if (newBadge !== img.badge) changed.push(`badge: ${newBadge}`);
+
+  if (changed.length === 0) {
+    alert('No changes detected.');
+    return;
+  }
+
+  // Update local state
+  list[index].x = newX;
+  list[index].y = newY;
+  list[index].caption = newCaption;
+  list[index].badge = newBadge;
+
+  // Update thumbnail
+  currentCard.querySelector('.thumb').style.objectPosition = `${newX}% ${newY}%`;
+  currentCard.querySelector('.caption-text').textContent = newCaption;
+
+  // Log change
+  const changeEntry = {
+    file: img.file,
+    page: img.page,
+    changes: changed,
+    timestamp: new Date().toLocaleTimeString()
+  };
+  changes.push(changeEntry);
+  updateChangesLog();
+
+  // Visual feedback
+  const btn = document.querySelector('.apply-btn');
+  btn.textContent = '✓ Saved!';
+  btn.style.background = '#27ae60';
+  setTimeout(() => {
+    btn.textContent = '✓ Save Changes';
+    btn.style.background = '#c0392b';
+  }, 1500);
+}
+
+function replacePhoto(newFile) {
+  if (!currentData) return;
+  const { img, index, list } = currentData;
+  const oldFile = img.file;
+
+  list[index].file = newFile;
+  currentCard.querySelector('.thumb').src = BASE + newFile;
+  document.getElementById('field-filename').value = newFile;
+  document.getElementById('preview-img').src = BASE + newFile;
+
+  changes.push({
+    file: oldFile,
+    page: img.page,
+    changes: [`REPLACE with ${newFile}`],
+    timestamp: new Date().toLocaleTimeString()
+  });
+  updateChangesLog();
+
+  // Highlight the picker item
+  document.querySelectorAll('.img-option').forEach(o => {
+    o.style.background = o.dataset.file === newFile ? '#1a1a1a' : '';
+    o.style.color = o.dataset.file === newFile ? '#fff' : '';
+  });
+}
+
+// ─── PHOTO PICKER ───────────────────────────────────────────────────────────
+
+function buildPicker(filter) {
+  const picker = document.getElementById('img-picker');
+  const filtered = ALL_ASSETS.filter(f => f.toLowerCase().includes(filter.toLowerCase()));
+  picker.innerHTML = filtered.map(f => `
+    <div class="img-option" data-file="${f}" onclick="replacePhoto('${f}')">
+      <img src="${BASE}${f}" alt="${f}" onerror="this.style.display='none'">
+      <span>${f}</span>
+    </div>
+  `).join('');
+}
+
+function filterPicker(val) {
+  buildPicker(val);
+}
+
+// ─── UPLOAD ─────────────────────────────────────────────────────────────────
+
+function handleUpload(event) {
+  const files = Array.from(event.target.files);
+  const list = document.getElementById('upload-list');
+  list.innerHTML = '';
+
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const div = document.createElement('div');
+      div.style.cssText = 'display:flex;align-items:center;gap:12px;padding:12px;background:#111;border:1px solid #1e1e1e;border-radius:4px;margin-bottom:8px;';
+      div.innerHTML = `
+        <img src="${e.target.result}" style="width:60px;height:45px;object-fit:cover;border-radius:2px;">
+        <div>
+          <div style="font-size:11px;color:#ccc;">${file.name}</div>
+          <div style="font-size:10px;color:#555;margin-top:2px;">${(file.size/1024).toFixed(0)} KB</div>
+          <div style="font-size:10px;color:#c0392b;margin-top:4px;">
+            ⚠ Upload to GitHub: add to assets/ folder in your repo, then tell Claude the filename to use it.
+          </div>
+        </div>
+      `;
+      list.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ─── CHANGES LOG ────────────────────────────────────────────────────────────
+
+function updateChangesLog() {
+  const log = document.getElementById('changes-log');
+  if (changes.length === 0) {
+    log.textContent = 'No changes yet.';
+    return;
+  }
+  log.innerHTML = changes.map((c, i) => `
+    <div class="change-item">${i + 1}. Photo "<span>${c.file}</span>" on <span>${c.page}.html</span>: ${c.changes.join(', ')} <span style="color:#333">[${c.timestamp}]</span></div>
+  `).join('\n');
+}
+
+function copyChanges() {
+  if (changes.length === 0) {
+    alert('No changes to copy yet.');
+    return;
+  }
+  const text = `Please apply these changes to the site:\n\n` +
+    changes.map((c, i) => `${i + 1}. Photo "${c.file}" on ${c.page}.html: ${c.changes.join(', ')}`).join('\n');
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Copied to clipboard!';
+    btn.style.color = '#27ae60';
+    btn.style.borderColor = '#27ae60';
+    setTimeout(() => {
+      btn.textContent = '📋 Copy all changes for Claude';
+      btn.style.color = '#c0392b';
+      btn.style.borderColor = '#c0392b';
+    }, 2000);
+  });
+}
+
+function clearChanges() {
+  if (confirm('Clear all logged changes?')) {
+    changes = [];
+    updateChangesLog();
+  }
+}
+
+// ─── TABS ────────────────────────────────────────────────────────────────────
+
+function switchTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`tab-${name}`).classList.add('active');
+  event.target.classList.add('active');
+  closePanel();
+}
+
+// ─── DRAG UPLOAD ────────────────────────────────────────────────────────────
+
+const uploadZone = document.getElementById('upload-zone');
+if (uploadZone) {
+  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag'));
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag');
+    const dt = new DataTransfer();
+    Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+    document.getElementById('file-input').files = dt.files;
+    handleUpload({ target: { files: dt.files } });
+  });
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+
+renderGrid(ACTOR_IMAGES, 'actor-grid');
+renderGrid(MEDIAKIT_IMAGES, 'mediakit-grid');
+</script>
+</body>
+</html>
