@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Editor — Justin Harvey</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sora',sans-serif;background:#0f0f0f;color:#f0f0f0;font-size:14px;line-height:1.5}
+.header{padding:1.5rem 2rem;background:#1a1a1a;border-bottom:1px solid #2a2a2a;display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:18px;font-weight:600}
+.header span{font-size:11px;color:#666;letter-spacing:0.1em;text-transform:uppercase}
+.layout{display:grid;grid-template-columns:320px 1fr;height:calc(100vh - 64px)}
+.sidebar{background:#141414;border-right:1px solid #2a2a2a;overflow-y:auto;display:flex;flex-direction:column}
+.preview{background:#0a0a0a;overflow:hidden;position:relative}
+.preview iframe{width:100%;height:100%;border:none;transform-origin:top left}
+
+/* SIDEBAR */
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #2a2a2a}
+.tab{padding:0.875rem;text-align:center;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#555;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all 0.15s}
+.tab.active{color:#fff;border-bottom-color:#7B8FA1}
+.panel{display:none;flex:1;overflow-y:auto}
+.panel.active{display:block}
+
+/* SECTIONS */
+.section{border-bottom:1px solid #222}
+.section-header{padding:0.875rem 1.25rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.section-header:hover{background:#1c1c1c}
+.section-title{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#999}
+.section-arrow{font-size:10px;color:#444;transition:transform 0.2s}
+.section-arrow.open{transform:rotate(90deg)}
+.section-body{display:none;padding:0.75rem 1.25rem 1.25rem}
+.section-body.open{display:block}
+
+/* CONTROLS */
+.ctrl{margin-bottom:1rem}
+.ctrl:last-child{margin-bottom:0}
+.ctrl label{display:block;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#666;margin-bottom:6px}
+.ctrl input[type=text],.ctrl input[type=number],.ctrl textarea,.ctrl select{width:100%;background:#1e1e1e;border:1px solid #333;border-radius:3px;color:#f0f0f0;font-family:'Sora',sans-serif;font-size:13px;padding:8px 10px;outline:none;transition:border-color 0.15s}
+.ctrl input[type=text]:focus,.ctrl input[type=number]:focus,.ctrl textarea:focus,.ctrl select:focus{border-color:#7B8FA1}
+.ctrl textarea{resize:vertical;min-height:72px}
+
+/* IMAGE POSITION SLIDER */
+.slider-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.slider-group label{font-size:10px;color:#555;margin-bottom:4px;display:block}
+.slider-group input[type=range]{width:100%;accent-color:#7B8FA1;margin-bottom:2px}
+.slider-group .val{font-size:11px;color:#7B8FA1;text-align:right}
+
+/* PHOTO CARDS */
+.photo-card{background:#1e1e1e;border:1px solid #2a2a2a;border-radius:4px;padding:0.875rem;margin-bottom:0.75rem;cursor:pointer;transition:border-color 0.15s}
+.photo-card:hover{border-color:#555}
+.photo-card.selected{border-color:#7B8FA1}
+.photo-card-name{font-size:12px;font-weight:600;color:#ccc;margin-bottom:2px}
+.photo-card-file{font-size:10px;color:#555;font-family:monospace}
+.photo-preview{width:100%;height:80px;object-fit:cover;border-radius:3px;margin-top:8px;display:block}
+
+/* BUTTONS */
+.btn{display:inline-block;padding:10px 20px;border-radius:3px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.15s;font-family:'Sora',sans-serif}
+.btn-primary{background:#7B8FA1;color:#fff}
+.btn-primary:hover{background:#5a6f82}
+.btn-danger{background:#c0392b;color:#fff}
+.btn-danger:hover{background:#a93226}
+.btn-ghost{background:none;border:1px solid #333;color:#888}
+.btn-ghost:hover{border-color:#666;color:#ccc}
+.btn-full{width:100%;text-align:center}
+
+/* STATUS */
+.status{padding:0.75rem 1.25rem;font-size:11px;font-weight:600;letter-spacing:0.06em;border-top:1px solid #222;color:#555;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#555;flex-shrink:0}
+.status-dot.saving{background:#f39c12;animation:pulse 0.8s infinite}
+.status-dot.saved{background:#27ae60}
+.status-dot.error{background:#c0392b}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* PAGE SELECTOR */
+.page-select{padding:0.875rem 1.25rem;border-bottom:1px solid #2a2a2a}
+.page-select label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#666;margin-bottom:6px;display:block}
+.page-select select{width:100%;background:#1e1e1e;border:1px solid #333;border-radius:3px;color:#f0f0f0;font-size:13px;padding:8px 10px;outline:none;font-family:'Sora',sans-serif}
+
+/* SEPARATOR */
+.sep{height:1px;background:#222;margin:0.75rem 0}
+
+/* TAG */
+.tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:6px}
+.tag-live{background:rgba(39,174,96,0.2);color:#27ae60}
+.tag-manual{background:rgba(123,143,161,0.2);color:#7B8FA1}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Site Editor <span class="tag tag-live">Live</span></h1>
+  <span id="last-saved">Not saved yet</span>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="page-select">
+      <label>Page</label>
+      <select id="page-selector" onchange="loadPage(this.value)">
+        <option value="index.html">Homepage</option>
+        <option value="actor.html">Actor Profile</option>
+        <option value="mediakit.html">Media Kit</option>
+        <option value="contact.html">Contact</option>
+      </select>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('content')">Content</button>
+      <button class="tab" onclick="switchTab('photos')">Photos</button>
+    </div>
+
+    <!-- CONTENT TAB -->
+    <div class="panel active" id="tab-content">
+
+      <!-- HOMEPAGE -->
+      <div id="section-homepage" class="section">
+        <div class="section-header" onclick="toggleSection('homepage')">
+          <span class="section-title">Homepage</span>
+          <span class="section-arrow" id="arrow-homepage">›</span>
+        </div>
+        <div class="section-body" id="body-homepage">
+          <div class="ctrl">
+            <label>Tagline</label>
+            <textarea id="home-tagline">South African actor based in Seoul. Netflix & Disney+ credits. Fluent Korean. Eight years building a career inside the Korean film and television industry.</textarea>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="applyHomepageEdits()">Apply changes</button>
+        </div>
+      </div>
+
+      <!-- ACTOR PAGE -->
+      <div id="section-actor" class="section">
+        <div class="section-header" onclick="toggleSection('actor')">
+          <span class="section-title">Actor Profile</span>
+          <span class="section-arrow" id="arrow-actor">›</span>
+        </div>
+        <div class="section-body" id="body-actor">
+          <div class="ctrl">
+            <label>Bio paragraph 1</label>
+            <textarea id="actor-bio1">Justin John Harvey is a South African actor based in Seoul — one of the very few foreign actors to have built a sustained, fluent career inside the Korean film and television industry.</textarea>
+          </div>
+          <div class="ctrl">
+            <label>Bio paragraph 2</label>
+            <textarea id="actor-bio2">Cast across three productions by director Park Hoon-jung — The Witch: Part 2, The Childe, and Disney+ series Tyrant. In 2024, finished 4th on Netflix's Physical 100: Underground, the highest placement by any foreign national.</textarea>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="applyActorEdits()">Apply changes</button>
+        </div>
+      </div>
+
+      <!-- PHOTO LABELS / CAPTIONS -->
+      <div id="section-captions" class="section">
+        <div class="section-header" onclick="toggleSection('captions')">
+          <span class="section-title">Photo captions</span>
+          <span class="section-arrow" id="arrow-captions">›</span>
+        </div>
+        <div class="section-body" id="body-captions">
+          <p style="font-size:11px;color:#555;margin-bottom:1rem">Click any photo in the preview, then edit its caption and position here.</p>
+          <div class="ctrl">
+            <label>Selected photo</label>
+            <input type="text" id="selected-photo" value="Click a photo to select it" readonly style="color:#555">
+          </div>
+          <div class="ctrl">
+            <label>Caption text</label>
+            <input type="text" id="photo-caption" value="" placeholder="e.g. The Childe · 2023">
+          </div>
+          <div class="ctrl">
+            <label>Image position</label>
+            <div class="slider-wrap">
+              <div class="slider-group">
+                <label>Left ↔ Right</label>
+                <input type="range" min="0" max="100" value="50" id="pos-x" oninput="updatePosition()">
+                <div class="val" id="pos-x-val">50%</div>
+              </div>
+              <div class="slider-group">
+                <label>Top ↕ Bottom</label>
+                <input type="range" min="0" max="100" value="20" id="pos-y" oninput="updatePosition()">
+                <div class="val" id="pos-y-val">20%</div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="applyPhotoEdits()">Apply to photo</button>
+        </div>
+      </div>
+
+      <!-- MEDIA KIT STATS -->
+      <div id="section-stats" class="section">
+        <div class="section-header" onclick="toggleSection('stats')">
+          <span class="section-title">Media Kit stats</span>
+          <span class="section-arrow" id="arrow-stats">›</span>
+        </div>
+        <div class="section-body" id="body-stats">
+          <div class="ctrl"><label>IG Followers</label><input type="text" id="stat-ig" value="64k"></div>
+          <div class="ctrl"><label>Weekly Reach</label><input type="text" id="stat-reach" value="750k"></div>
+          <div class="ctrl"><label>Engagement Rate</label><input type="text" id="stat-eng" value="48.9%"></div>
+          <div class="ctrl"><label>YouTube Subscribers</label><input type="text" id="stat-yt" value="5.5k"></div>
+          <button class="btn btn-primary btn-full" onclick="applyStats()">Apply stats</button>
+        </div>
+      </div>
+
+      <!-- RATES -->
+      <div id="section-rates" class="section">
+        <div class="section-header" onclick="toggleSection('rates')">
+          <span class="section-title">Pricing rates</span>
+          <span class="section-arrow" id="arrow-rates">›</span>
+        </div>
+        <div class="section-body" id="body-rates">
+          <div class="ctrl"><label>Post + Stories (entry)</label><input type="text" id="rate-1" value="₩2M"></div>
+          <div class="ctrl"><label>Monthly Retainer</label><input type="text" id="rate-2" value="₩4.5M"></div>
+          <div class="ctrl"><label>3-Month Trial</label><input type="text" id="rate-3" value="₩4M"></div>
+          <div class="ctrl"><label>Brand Trip</label><input type="text" id="rate-4" value="₩8M"></div>
+          <div class="ctrl"><label>YouTube Dedicated</label><input type="text" id="rate-5" value="₩5M"></div>
+          <button class="btn btn-primary btn-full" onclick="applyRates()">Apply rates</button>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div id="section-contact" class="section">
+        <div class="section-header" onclick="toggleSection('contact')">
+          <span class="section-title">Contact details</span>
+          <span class="section-arrow" id="arrow-contact">›</span>
+        </div>
+        <div class="section-body" id="body-contact">
+          <div class="ctrl"><label>Email</label><input type="text" id="contact-email" value="justin.irrelevance@gmail.com"></div>
+          <div class="ctrl"><label>Phone</label><input type="text" id="contact-phone" value="+82 10 5045 5269"></div>
+          <button class="btn btn-primary btn-full" onclick="applyContact()">Apply changes</button>
+        </div>
+      </div>
+
+    </div><!-- end content tab -->
+
+    <!-- PHOTOS TAB -->
+    <div class="panel" id="tab-photos">
+      <div style="padding:1.25rem">
+        <p style="font-size:11px;color:#555;margin-bottom:1rem;line-height:1.7">
+          To replace a photo: click it in the preview panel on the right. It will be highlighted. Then use the sliders in the Content tab to adjust position, or type a new filename below.
+        </p>
+        <div class="ctrl">
+          <label>Replace selected image with</label>
+          <select id="swap-photo-select">
+            <option value="">-- select a photo --</option>
+            <option value="assets/hero-main.jpg">hero-main.jpg (homepage hero)</option>
+            <option value="assets/hero-suit.jpg">hero-suit.jpg (black suit)</option>
+            <option value="assets/model-bw-face1.jpg">model-bw-face1.jpg</option>
+            <option value="assets/model-bw-face2.jpg">model-bw-face2.jpg</option>
+            <option value="assets/model-bw-face3.jpg">model-bw-face3.jpg</option>
+            <option value="assets/model-editorial-1.jpg">model-editorial-1.jpg (grey suit)</option>
+            <option value="assets/model-editorial-2.jpg">model-editorial-2.jpg (grey suit close)</option>
+            <option value="assets/model-editorial-3.jpg">model-editorial-3.jpg (turtleneck BW)</option>
+            <option value="assets/model-suit-white.jpg">model-suit-white.jpg (white shirt)</option>
+            <option value="assets/model-knit-beige.jpg">model-knit-beige.jpg (cream knit)</option>
+            <option value="assets/film-childe-1.jpg">film-childe-1.jpg (Tyrant hallway)</option>
+            <option value="assets/film-childe-2.jpg">film-childe-2.jpg (Childe face warm)</option>
+            <option value="assets/film-childe-3.jpg">film-childe-3.jpg (Childe closeup)</option>
+            <option value="assets/film-childe-4.jpg">film-childe-4.jpg (Tyrant subway)</option>
+            <option value="assets/film-physical100-suit.jpg">film-physical100-suit.jpg (P100 entry)</option>
+            <option value="assets/film-physical100-sculpture.jpg">film-physical100-sculpture.jpg (P100 sculpture)</option>
+            <option value="assets/film-physical100-wrestle.jpg">film-physical100-wrestle.jpg (P100 wrestle)</option>
+            <option value="assets/film-physical100-running.jpg">film-physical100-running.jpg (P100 running)</option>
+            <option value="assets/film-firstnight-1.jpg">film-firstnight-1.jpg (First Night set)</option>
+            <option value="assets/film-newtopia.jpg">film-newtopia.jpg (Newtopia)</option>
+            <option value="assets/film-witch2-2.jpg">film-witch2-2.jpg (Witch 2)</option>
+            <option value="assets/editorial-chair-dark.jpg">editorial-chair-dark.jpg (black chair)</option>
+            <option value="assets/lifestyle-gym-eating.jpg">lifestyle-gym-eating.jpg (ramen gym)</option>
+            <option value="assets/proj-exercise.jpg">proj-exercise.jpg (outdoor fitness)</option>
+            <option value="assets/proj-timetorun.jpg">proj-timetorun.jpg (Time to Run)</option>
+            <option value="assets/proj-freedom.jpg">proj-freedom.jpg (Freedom)</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="swapSelectedPhoto()" style="margin-top:0.5rem">Swap photo</button>
+
+        <div class="sep"></div>
+
+        <p style="font-size:11px;color:#555;margin-bottom:0.75rem">All photos currently on actor page:</p>
+        <div id="photo-list"></div>
+      </div>
+    </div><!-- end photos tab -->
+
+    <div class="status">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">Ready — changes apply to preview only</span>
+    </div>
+    <div style="padding:1rem 1.25rem;border-top:1px solid #222">
+      <p style="font-size:11px;color:#555;margin-bottom:0.75rem;line-height:1.6">When you're happy with the preview, send your changes to Claude with the button below.</p>
+      <button class="btn btn-primary btn-full" onclick="copyChanges()">📋 Copy changes for Claude</button>
+    </div>
+  </div><!-- end sidebar -->
+
+  <div class="preview">
+    <div style="background:#1a1a1a;padding:0.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2a2a2a">
+      <span style="font-size:11px;color:#666">Preview</span>
+      <div style="display:flex;gap:0.5rem">
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:10px" onclick="setPreviewWidth('100%')">Desktop</button>
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:10px" onclick="setPreviewWidth('768px')">Tablet</button>
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:10px" onclick="setPreviewWidth('390px')">Mobile</button>
+        <a href="actor.html" target="_blank" class="btn btn-ghost" style="padding:5px 12px;font-size:10px;text-decoration:none">Open →</a>
+      </div>
+    </div>
+    <div id="preview-container" style="height:calc(100% - 40px);overflow:auto;background:#111;display:flex;justify-content:center;padding:1rem">
+      <iframe id="preview-frame" src="actor.html" style="width:100%;height:100%;border:none;background:#fff;border-radius:2px;box-shadow:0 4px 40px rgba(0,0,0,0.5)"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+let selectedImg = null;
+let changes = [];
+
+// Tab switching
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// Section toggle
+function toggleSection(name) {
+  const body = document.getElementById('body-' + name);
+  const arrow = document.getElementById('arrow-' + name);
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+// Load page in preview
+function loadPage(page) {
+  document.getElementById('preview-frame').src = page;
+  selectedImg = null;
+  document.getElementById('selected-photo').value = 'Click a photo to select it';
+  setTimeout(setupPhotoClick, 1500);
+}
+
+// Preview width
+function setPreviewWidth(w) {
+  document.getElementById('preview-frame').style.width = w;
+  document.getElementById('preview-frame').style.maxWidth = w;
+}
+
+// Setup click handlers on preview images
+function setupPhotoClick() {
+  try {
+    const iframe = document.getElementById('preview-frame');
+    const doc = iframe.contentDocument;
+    doc.querySelectorAll('img').forEach(img => {
+      img.style.cursor = 'crosshair';
+      img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        // Remove previous highlight
+        doc.querySelectorAll('img').forEach(i => i.style.outline = '');
+        // Highlight selected
+        img.style.outline = '3px solid #7B8FA1';
+        selectedImg = img;
+        // Update sidebar
+        const src = img.getAttribute('src').split('/').pop();
+        document.getElementById('selected-photo').value = src;
+        // Parse current position
+        const pos = img.style.objectPosition || '50% 20%';
+        const parts = pos.replace(/%/g, '').split(' ');
+        const x = parseInt(parts[0]) || 50;
+        const y = parseInt(parts[1]) || 20;
+        document.getElementById('pos-x').value = x;
+        document.getElementById('pos-y').value = y;
+        document.getElementById('pos-x-val').textContent = x + '%';
+        document.getElementById('pos-y-val').textContent = y + '%';
+        // Get caption
+        const parent = img.closest('[class*="col"], [class*="pf"], .cover-img');
+        if (parent) {
+          const cap = parent.querySelector('.cap');
+          document.getElementById('photo-caption').value = cap ? cap.textContent : '';
+        }
+        // Switch to content tab + open captions section
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab')[0].classList.add('active');
+        document.getElementById('tab-content').classList.add('active');
+        document.getElementById('body-captions').classList.add('open');
+        document.getElementById('arrow-captions').classList.add('open');
+        setStatus('selected', `Selected: ${src}`);
+      });
+    });
+  } catch(e) {
+    console.log('iframe cross-origin issue - retry');
+  }
+}
+
+// Live position update while dragging slider
+function updatePosition() {
+  const x = document.getElementById('pos-x').value;
+  const y = document.getElementById('pos-y').value;
+  document.getElementById('pos-x-val').textContent = x + '%';
+  document.getElementById('pos-y-val').textContent = y + '%';
+  if (selectedImg) {
+    selectedImg.style.objectPosition = `${x}% ${y}%`;
+  }
+}
+
+// Apply photo position + caption changes
+function applyPhotoEdits() {
+  if (!selectedImg) { alert('Click a photo in the preview first'); return; }
+  const x = document.getElementById('pos-x').value;
+  const y = document.getElementById('pos-y').value;
+  const cap = document.getElementById('photo-caption').value;
+  const src = selectedImg.getAttribute('src').split('/').pop();
+  
+  selectedImg.style.objectPosition = `${x}% ${y}%`;
+  
+  // Update caption in iframe
+  const parent = selectedImg.closest('[class*="col"], [class*="pf"], .cover-img');
+  if (parent && cap) {
+    const capEl = parent.querySelector('.cap');
+    if (capEl) capEl.textContent = cap;
+  }
+
+  changes.push({type: 'photo', file: src, x, y, caption: cap});
+  setStatus('saved', `Applied: ${src} → ${x}% ${y}%`);
+}
+
+// Swap selected photo
+function swapSelectedPhoto() {
+  if (!selectedImg) { alert('Click a photo in the preview first'); return; }
+  const newSrc = document.getElementById('swap-photo-select').value;
+  if (!newSrc) { alert('Select a photo from the dropdown'); return; }
+  const oldSrc = selectedImg.getAttribute('src').split('/').pop();
+  selectedImg.setAttribute('src', newSrc);
+  changes.push({type: 'swap', from: oldSrc, to: newSrc.split('/').pop()});
+  setStatus('saved', `Swapped: ${oldSrc} → ${newSrc.split('/').pop()}`);
+}
+
+// Apply stats
+function applyStats() {
+  const frame = document.getElementById('preview-frame');
+  const doc = frame.contentDocument;
+  const updates = {
+    'stat-ig-followers': document.getElementById('stat-ig').value,
+    'stat-ig-reach': document.getElementById('stat-reach').value,
+    'stat-ig-eng': document.getElementById('stat-eng').value,
+    'stat-yt-subs': document.getElementById('stat-yt').value,
+  };
+  Object.entries(updates).forEach(([id, val]) => {
+    const el = doc.getElementById(id);
+    if (el) el.textContent = val;
+  });
+  changes.push({type: 'stats', values: updates});
+  setStatus('saved', 'Stats updated in preview');
+}
+
+// Apply rates
+function applyRates() {
+  changes.push({type: 'rates', note: 'Rate changes — see values below', values: {
+    entry: document.getElementById('rate-1').value,
+    retainer: document.getElementById('rate-2').value,
+    trial: document.getElementById('rate-3').value,
+    trip: document.getElementById('rate-4').value,
+    youtube: document.getElementById('rate-5').value,
+  }});
+  setStatus('saved', 'Rates logged — send to Claude to apply');
+}
+
+// Apply homepage edits
+function applyHomepageEdits() {
+  changes.push({type: 'homepage', tagline: document.getElementById('home-tagline').value});
+  setStatus('saved', 'Homepage changes logged');
+}
+
+// Apply actor edits
+function applyActorEdits() {
+  changes.push({type: 'actor-bio', bio1: document.getElementById('actor-bio1').value, bio2: document.getElementById('actor-bio2').value});
+  setStatus('saved', 'Bio changes logged');
+}
+
+// Apply contact
+function applyContact() {
+  changes.push({type: 'contact', email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value});
+  setStatus('saved', 'Contact changes logged');
+}
+
+// Copy changes as structured message for Claude
+function copyChanges() {
+  if (changes.length === 0) {
+    alert('No changes recorded yet. Make some changes first.');
+    return;
+  }
+  const msg = 'Please apply these changes to the site:\n\n' +
+    changes.map((c, i) => {
+      if (c.type === 'photo') return `${i+1}. Photo "${c.file}": position ${c.x}% ${c.y}%${c.caption ? ', caption: "' + c.caption + '"' : ''}`;
+      if (c.type === 'swap') return `${i+1}. Replace ${c.from} with ${c.to}`;
+      if (c.type === 'stats') return `${i+1}. Update stats: ${JSON.stringify(c.values)}`;
+      if (c.type === 'rates') return `${i+1}. Update rates: ${JSON.stringify(c.values)}`;
+      if (c.type === 'homepage') return `${i+1}. Homepage tagline: "${c.tagline}"`;
+      if (c.type === 'actor-bio') return `${i+1}. Actor bio:\n   P1: ${c.bio1}\n   P2: ${c.bio2}`;
+      if (c.type === 'contact') return `${i+1}. Contact: email=${c.email}, phone=${c.phone}`;
+      return `${i+1}. ${JSON.stringify(c)}`;
+    }).join('\n');
+  navigator.clipboard.writeText(msg).then(() => {
+    setStatus('saved', `${changes.length} changes copied to clipboard — paste into Claude`);
+  }).catch(() => {
+    prompt('Copy this and paste into Claude:', msg);
+  });
+}
+
+// Status helper
+function setStatus(state, msg) {
+  const dot = document.getElementById('status-dot');
+  const text = document.getElementById('status-text');
+  dot.className = 'status-dot';
+  if (state === 'saving') dot.classList.add('saving');
+  else if (state === 'saved') dot.classList.add('saved');
+  else if (state === 'error') dot.classList.add('error');
+  text.textContent = msg;
+  document.getElementById('last-saved').textContent = 'Last action: ' + new Date().toLocaleTimeString();
+}
+
+// Init on page load
+window.addEventListener('load', () => {
+  setTimeout(setupPhotoClick, 2000);
+  document.getElementById('preview-frame').addEventListener('load', () => {
+    setTimeout(setupPhotoClick, 500);
+  });
+});
+</script>
+</body>
+</html>
