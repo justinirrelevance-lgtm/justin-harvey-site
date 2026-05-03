@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Justin Harvey — Actor Profile</title>
+<meta name="description" content="Justin Harvey actor profile — Netflix, Disney+, Korean film and television. South African. Fluent Korean. Seoul-based.">
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ACTOR PAGE SPECIFIC */
+.actor-hero {
+  min-height: 100vh; padding-top: 56px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--s900);
+}
+.actor-hero-img {
+  position: relative; overflow: hidden;
+  background: #111;
+}
+.actor-hero-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 12%;
+  filter: brightness(0.9) contrast(1.04);
+}
+.actor-hero-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 70%, var(--s900) 100%);
+}
+.actor-hero-content {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 5rem 4rem;
+}
+.actor-hero-kicker {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--accent-l);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 2rem;
+}
+.actor-hero-kicker::before { content: ''; width: 24px; height: 1px; background: rgba(184,200,212,0.4); }
+.actor-hero-name {
+  font-size: clamp(52px, 6vw, 84px);
+  font-weight: 700; line-height: 0.92;
+  color: var(--s50); letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+.actor-hero-name span { display: block; color: var(--accent-l); font-weight: 300; }
+.actor-hero-bio {
+  font-size: 14px; color: rgba(255,255,255,0.45);
+  line-height: 1.85; font-weight: 300;
+  max-width: 420px; margin-bottom: 2.5rem;
+  border-left: 2px solid rgba(255,255,255,0.1);
+  padding-left: 1.25rem;
+}
+.actor-hero-bio strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+.actor-press-quote {
+  font-size: 13px; color: rgba(255,255,255,0.35);
+  line-height: 1.7; font-style: italic;
+  padding: 1.25rem; border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 2px; max-width: 420px;
+}
+.actor-press-quote cite {
+  display: block; margin-top: 0.75rem;
+  font-size: 10px; font-style: normal; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent-l);
+}
+
+/* STATS ROW */
+.actor-stats {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  background: var(--s800);
+}
+.actor-stat {
+  padding: 2rem 2rem;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.actor-stat:last-child { border-right: none; }
+.actor-stat-n {
+  font-size: 42px; font-weight: 700;
+  color: var(--s100); line-height: 1;
+  margin-bottom: 6px;
+}
+.actor-stat-l {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--s600);
+}
+
+/* PHYSICAL */
+.physical-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 0; margin-top: 2.5rem;
+}
+.phys-item {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--s200); margin: -1px 0 0 -1px;
+}
+.phys-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--s400); margin-bottom: 4px; }
+.phys-val { font-size: 18px; font-weight: 700; color: var(--s900); }
+
+/* FILMOGRAPHY */
+.film-list { display: flex; flex-direction: column; margin-top: 2.5rem; }
+.film-row {
+  display: grid; grid-template-columns: 60px 1fr 120px 100px;
+  gap: 1.5rem; align-items: center;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--s200);
+}
+.film-row:first-child { border-top: 1px solid var(--s200); }
+.film-year { font-size: 12px; font-weight: 600; color: var(--s400); }
+.film-title { font-size: 16px; font-weight: 600; color: var(--s900); }
+.film-role { font-size: 12px; color: var(--s500); margin-top: 2px; }
+.film-dir { font-size: 11px; color: var(--s500); }
+.film-badge {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px;
+  text-align: center;
+}
+.badge-netflix { background: rgba(229,9,20,0.1); color: #E50914; }
+.badge-disney { background: rgba(0,119,182,0.1); color: #0077B6; }
+.badge-coupang { background: rgba(192,57,43,0.08); color: #c0392b; }
+.badge-cinema { background: var(--s100); color: var(--s600); }
+.badge-reality { background: rgba(123,143,161,0.12); color: var(--accent-d); }
+
+/* SKILLS */
+.skills-grid {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 2.5rem;
+}
+.skill-tag {
+  font-size: 12px; font-weight: 500;
+  padding: 8px 16px;
+  background: var(--s100); border: 1px solid var(--s200);
+  border-radius: 2px; color: var(--s700);
+}
+.skill-tag.featured {
+  background: var(--s900); color: var(--s50);
+  border-color: var(--s900);
+}
+
+/* PRESS */
+.press-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; margin-top: 2.5rem;
+}
+.press-card {
+  padding: 1.75rem;
+  background: var(--s100); border: 1px solid var(--s200);
+  border-radius: 4px;
+}
+.press-quote {
+  font-size: 13px; color: var(--s600);
+  line-height: 1.7; font-style: italic;
+  margin-bottom: 1rem;
+}
+.press-source {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent-d);
+}
+
+/* CONTACT CTA */
+.actor-contact {
+  background: var(--s900);
+  padding: 5rem 0;
+}
+.actor-contact-inner {
+  max-width: 1100px; margin: 0 auto; padding: 0 3rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center;
+}
+.actor-contact h2 { color: var(--s50); margin-bottom: 0.75rem; }
+.actor-contact p { color: rgba(255,255,255,0.4); font-size: 14px; line-height: 1.7; }
+.contact-detail-list { display: flex; flex-direction: column; gap: 0; }
+.c-row { display: flex; align-items: stretch; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.c-row:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+.c-key { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); padding: 1rem 1.25rem; min-width: 100px; display: flex; align-items: center; border-right: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); }
+.c-val { font-size: 13px; color: var(--s200); padding: 1rem 1.25rem; display: flex; align-items: center; }
+.c-val a { color: var(--accent-l); text-decoration: none; transition: color 0.15s; }
+.c-val a:hover { color: var(--s50); }
+
+@media(max-width:900px){
+  .actor-hero { grid-template-columns: 1fr; padding-top: 56px; }
+  .actor-hero-img { height: 55vw; min-height: 280px; }
+  .actor-hero-img::after { background: linear-gradient(to bottom, transparent 60%, var(--s900) 100%); }
+  .actor-hero-content { padding: 2.5rem 1.5rem; }
+  .actor-stats { grid-template-columns: 1fr 1fr; }
+  .actor-stat { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .physical-grid { grid-template-columns: 1fr 1fr; }
+  .film-row { grid-template-columns: 48px 1fr; gap: 1rem; }
+  .film-dir, .film-badge { display: none; }
+  .press-grid { grid-template-columns: 1fr; }
+  .actor-contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .actor-contact { padding: 3rem 0; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">Justin Harvey</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="actor.html" class="active">Actor Profile</a></li>
+    <li><a href="mediakit.html">Media Kit</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <button class="nav-burger" onclick="toggleMenu()">☰</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="actor.html">Actor Profile</a>
+  <a href="mediakit.html">Media Kit</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- HERO -->
+<div class="actor-hero">
+  <div class="actor-hero-img">
+    <img src="assets/hero.png" alt="Justin Harvey">
+  </div>
+  <div class="actor-hero-content">
+    <div class="actor-hero-kicker">Actor Profile · Seoul · 2026</div>
+    <div class="actor-hero-name">Justin John<span>Harvey</span></div>
+    <p class="actor-hero-bio">
+      A South African actor who has built a <strong>sustained, fluent career inside the Korean film and television industry</strong> over eight years. Since his debut in Ashfall (2019), Harvey has worked with Korea's most prominent directors — including Park Hoon-jung across three productions. Fluent in Korean. One of very few foreign actors to inhabit Korean-language roles without playing a foreigner.
+    </p>
+    <div class="actor-press-quote">
+      "Armed with Korean language, Justin Harvey is determined to succeed."
+      <cite>— The Korea Herald · 2022</cite>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="actor-stats">
+  <div class="actor-stat">
+    <div class="actor-stat-n">8+</div>
+    <div class="actor-stat-l">Years in Korean industry</div>
+  </div>
+  <div class="actor-stat">
+    <div class="actor-stat-n">9</div>
+    <div class="actor-stat-l">Series & film credits</div>
+  </div>
+  <div class="actor-stat">
+    <div class="actor-stat-n">8.25M</div>
+    <div class="actor-stat-l">Ashfall admissions</div>
+  </div>
+  <div class="actor-stat">
+    <div class="actor-stat-n">4th</div>
+    <div class="actor-stat-l">Physical 100 · Netflix</div>
+  </div>
+</div>
+
+<!-- PROFILE + PHYSICAL -->
+<section class="page-wrap" style="padding: 5rem 3rem;">
+  <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start;">
+    <div>
+      <div class="sec-label fu">Physical profile</div>
+      <h2 class="fu">The<br><span class="accent">actor</span></h2>
+      <div class="physical-grid fu">
+        <div class="phys-item"><div class="phys-label">Height</div><div class="phys-val">180 cm</div></div>
+        <div class="phys-item"><div class="phys-label">Weight</div><div class="phys-val">82 kg</div></div>
+        <div class="phys-item"><div class="phys-label">Eyes</div><div class="phys-val">Blue/Green</div></div>
+        <div class="phys-item"><div class="phys-label">Hair</div><div class="phys-val">Brown</div></div>
+        <div class="phys-item"><div class="phys-label">DOB</div><div class="phys-val">27 Mar 1991</div></div>
+        <div class="phys-item"><div class="phys-label">Nationality</div><div class="phys-val">South African</div></div>
+      </div>
+
+      <div style="margin-top: 2.5rem;">
+        <div class="sec-label fu">Languages</div>
+        <div class="skills-grid fu">
+          <div class="skill-tag featured">Korean — Fluent</div>
+          <div class="skill-tag featured">English — Native</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 2.5rem;">
+        <div class="sec-label fu">Training</div>
+        <div style="font-size: 13px; color: var(--s500); line-height: 1.8; margin-top: 0.75rem;" class="fu">
+          Lucid Body · Meisner · Montes Method
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sec-label fu">Biography</div>
+      <div style="font-size: 14px; color: var(--s500); line-height: 1.9; font-weight: 300;" class="fu">
+        <p>Justin John Harvey is a South African actor based in Seoul — one of the very few foreign actors to have built a sustained, fluent career inside the Korean film and television industry. Since his debut in <strong style="color:var(--s700)">Ashfall</strong> (2019), which recorded over 8.25 million admissions at the Korean box office, Harvey has worked with Korea's most prominent directors.</p>
+        <p style="margin-top: 1rem;">Cast in <strong style="color:var(--s700)">The Witch: Part 2</strong> (2022) by director Park Hoon-jung, he reunited with the director on <strong style="color:var(--s700)">The Childe</strong> (2023) and Disney+ series <strong style="color:var(--s700)">Tyrant</strong> (2024) — one of the most-streamed titles on Disney+ Korea. In 2024, he finished <strong style="color:var(--s700)">4th on Netflix's Physical 100: Underground</strong> — the highest placement of any foreign national.</p>
+        <p style="margin-top: 1rem;">Upcoming in 2026: <strong style="color:var(--s700)">A Shop for Killers</strong> (Disney+), <strong style="color:var(--s700)">Portraits of Delusion</strong> (Disney+, dir. Han Jae-rim), and <strong style="color:var(--s700)">Resurrection Man</strong> (dir. Baek Jong-yeol).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILMOGRAPHY -->
+<div style="background: var(--s100); border-top: 1px solid var(--s200); border-bottom: 1px solid var(--s200);">
+  <div class="page-wrap" style="padding: 5rem 3rem;">
+    <div class="sec-label fu">Filmography</div>
+    <h2 class="fu">Full <span class="accent">credits</span></h2>
+
+    <div class="film-list fu">
+
+      <div style="margin: 2rem 0 1rem;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); padding-bottom: 0.75rem; border-bottom: 2px solid var(--s200);">Television & Streaming</div>
+      </div>
+
+      <div class="film-row">
+        <div class="film-year">2026</div>
+        <div><div class="film-title">Portraits of Delusion</div><div class="film-role">Dir. Han Jae-rim</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-disney">Disney+</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2026</div>
+        <div><div class="film-title">A Shop for Killers</div><div class="film-role">Supporting</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-disney">Disney+</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2025</div>
+        <div><div class="film-title">Newtopia</div><div class="film-role">Paulo · Dir. Yoon Sung-hyun</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-coupang">Coupang Play</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2025</div>
+        <div><div class="film-title">First Night with the Duke</div><div class="film-role">Mark · Period Drama</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-coupang">Coupang Play</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2024</div>
+        <div><div class="film-title">Tyrant</div><div class="film-role">Crocodile · Dir. Park Hoon-jung</div></div>
+        <div class="film-dir">#1 Most Streamed · Disney+ Korea</div>
+        <div><span class="film-badge badge-disney">Disney+</span></div>
+      </div>
+
+      <div style="margin: 2rem 0 1rem;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); padding-bottom: 0.75rem; border-bottom: 2px solid var(--s200);">Feature Film</div>
+      </div>
+
+      <div class="film-row">
+        <div class="film-year">2026</div>
+        <div><div class="film-title">Resurrection Man</div><div class="film-role">Dir. Baek Jong-yeol</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-cinema">Cinema</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2023</div>
+        <div><div class="film-title">The Childe</div><div class="film-role">Dir. Park Hoon-jung</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-cinema">Cinema</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2022</div>
+        <div><div class="film-title">The Witch: Part 2</div><div class="film-role">Tom · Dir. Park Hoon-jung</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-cinema">Cinema</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2019</div>
+        <div><div class="film-title">Ashfall (백두산)</div><div class="film-role">Dir. Lee Hae-jun · 8.25M admissions</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-cinema">Cinema</span></div>
+      </div>
+
+      <div style="margin: 2rem 0 1rem;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); padding-bottom: 0.75rem; border-bottom: 2px solid var(--s200);">Reality & Music Video</div>
+      </div>
+
+      <div class="film-row">
+        <div class="film-year">2024</div>
+        <div><div class="film-title">Physical 100: Underground</div><div class="film-role">Cast · 4th Place Finish</div></div>
+        <div class="film-dir">Highest foreign national placement</div>
+        <div><span class="film-badge badge-netflix">Netflix</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2024</div>
+        <div><div class="film-title">Zombieverse: New Blood</div><div class="film-role">Cast</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-netflix">Netflix</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2024</div>
+        <div><div class="film-title">Easy Lover — JYP</div><div class="film-role">Music Video</div></div>
+        <div class="film-dir">JYP Entertainment</div>
+        <div><span class="film-badge badge-reality">Music Video</span></div>
+      </div>
+      <div class="film-row">
+        <div class="film-year">2024</div>
+        <div><div class="film-title">Untold — ENHYPEN</div><div class="film-role">Dir. Lee Chung Hyeon</div></div>
+        <div class="film-dir"></div>
+        <div><span class="film-badge badge-reality">Music Video</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPECIAL SKILLS -->
+<section class="page-wrap" style="padding: 5rem 3rem;">
+  <div class="sec-label fu">Special skills</div>
+  <h2 class="fu">Trained. Athletic. <span class="accent">Dangerous.</span></h2>
+  <div class="skills-grid fu" style="margin-top: 2.5rem;">
+    <div class="skill-tag featured">Muay Thai</div>
+    <div class="skill-tag featured">Stage Combat</div>
+    <div class="skill-tag featured">Stunt Training</div>
+    <div class="skill-tag featured">Firearms</div>
+    <div class="skill-tag">Advanced Swimming</div>
+    <div class="skill-tag">Scuba · Freediving</div>
+    <div class="skill-tag">Road & Dirt Bike</div>
+    <div class="skill-tag">Triathlon</div>
+    <div class="skill-tag">Screenwriting</div>
+    <div class="skill-tag">Yoga</div>
+    <div class="skill-tag">HYROX Competitor</div>
+    <div class="skill-tag">Bilingual KR / EN</div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<div style="background: var(--s100); border-top: 1px solid var(--s200); border-bottom: 1px solid var(--s200);">
+  <div class="page-wrap" style="padding: 5rem 3rem;">
+    <div class="sec-label fu">Press</div>
+    <h2 class="fu">What they're <span class="accent">saying</span></h2>
+    <div class="press-grid fu">
+      <div class="press-card">
+        <div class="press-quote">"Armed with Korean language, Justin Harvey is determined to succeed."</div>
+        <div class="press-source">The Korea Herald · 2022</div>
+      </div>
+      <div class="press-card">
+        <div class="press-quote">"The South African star who made it to the Netflix hit's final four has his sights set on some big acting roles."</div>
+        <div class="press-source">Marie Claire · Physical 100 · 2024</div>
+      </div>
+      <div class="press-card">
+        <div class="press-quote">"Justin Harvey has done South Africa proud by making it to the top four."</div>
+        <div class="press-source">News24 / YOU Magazine · 2024</div>
+      </div>
+      <div class="press-card">
+        <div class="press-quote">"Showcasing his commitment to breaking down cultural barriers."</div>
+        <div class="press-source">The Korea Herald · Physical 100 · 2024</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="actor-contact">
+  <div class="actor-contact-inner">
+    <div>
+      <div class="sec-label" style="color:var(--accent-l)">Casting enquiries</div>
+      <h2>Get in<br>touch</h2>
+      <p style="margin-top: 1rem;">Available for Korean and English language productions. Bilingual. Seoul-based. Direct line — no agencies.</p>
+      <a href="contact.html" class="btn-primary" style="margin-top: 2rem; display: inline-block;">Contact →</a>
+    </div>
+    <div class="contact-detail-list">
+      <div class="c-row">
+        <div class="c-key">Email</div>
+        <div class="c-val"><a href="mailto:justin.irrelevance@gmail.com">justin.irrelevance@gmail.com</a></div>
+      </div>
+      <div class="c-row">
+        <div class="c-key">Phone</div>
+        <div class="c-val">+82 10 5045 5269</div>
+      </div>
+      <div class="c-row">
+        <div class="c-key">KakaoTalk</div>
+        <div class="c-val">+82 10 5045 5269</div>
+      </div>
+      <div class="c-row">
+        <div class="c-key">IMDb</div>
+        <div class="c-val"><a href="https://www.imdb.com/name/nm14684840/" target="_blank">nm14684840</a></div>
+      </div>
+      <div class="c-row">
+        <div class="c-key">Base</div>
+        <div class="c-val">Seoul, South Korea</div>
+      </div>
+      <div class="c-row">
+        <div class="c-key">Languages</div>
+        <div class="c-val">Korean · English</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="page-wrap footer-inner">
+    <div class="footer-logo">Justin Harvey</div>
+    <div class="footer-links">
+      <a href="actor.html">Actor Profile</a>
+      <a href="mediakit.html">Media Kit</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/justin.irrelevance/" target="_blank">Instagram</a>
+      <a href="https://www.youtube.com/@Justin.irrelevance" target="_blank">YouTube</a>
+      <a href="https://www.imdb.com/name/nm14684840/" target="_blank">IMDb</a>
+    </div>
+    <div class="footer-copy">© 2026 Justin Harvey · Seoul</div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

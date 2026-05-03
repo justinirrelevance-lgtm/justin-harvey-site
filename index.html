@@ -4,154 +4,109 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Justin Harvey — Actor · Athlete · Creator</title>
-<meta name="description" content="Justin Harvey — Seoul-based actor, hybrid athlete, and bilingual content creator. Netflix & Disney+ credits. 750k weekly reach.">
+<meta name="description" content="Justin Harvey — Seoul-based actor. Netflix & Disney+ credits. South African. Fluent Korean.">
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{overflow:hidden}
+@media(max-width:900px){body{overflow:auto}}
+.home-wrap{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.home-photo{position:relative;overflow:hidden;background:var(--s900)}
+.home-photo img{width:100%;height:100%;object-fit:cover;object-position:center 15%;filter:brightness(0.85) contrast(1.05)}
+.home-photo-tag{position:absolute;bottom:2rem;left:2rem;display:flex;flex-direction:column;gap:4px}
+.home-photo-tag span{font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.45)}
+.home-photo-tag strong{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.85)}
+.home-content{background:var(--s50);display:flex;flex-direction:column;border-left:1px solid var(--s200)}
+.home-top{padding:3rem 3rem 2rem;border-bottom:1px solid var(--s200);flex:0}
+.home-kicker{font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin-bottom:1.5rem}
+.home-kicker::before{content:'';width:24px;height:1px;background:var(--accent-l)}
+.home-name{font-size:clamp(48px,5.5vw,78px);font-weight:700;line-height:0.92;color:var(--s900);letter-spacing:-0.02em;margin-bottom:1.5rem}
+.home-name span{display:block;color:var(--accent-d)}
+.home-tagline{font-size:13px;color:var(--s500);line-height:1.8;font-weight:300;max-width:380px}
+.home-buttons{display:grid;grid-template-columns:1fr 1fr;flex:1}
+.home-btn{display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem;text-decoration:none;border-top:1px solid var(--s200);transition:background 0.2s;min-height:200px;position:relative;overflow:hidden}
+.home-btn:first-child{border-right:1px solid var(--s200);background:var(--s900)}
+.home-btn:first-child:hover{background:#2A2622}
+.home-btn:last-child{background:var(--s100)}
+.home-btn:last-child:hover{background:var(--s200)}
+.btn-tag{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase}
+.home-btn:first-child .btn-tag{color:var(--accent-l)}
+.home-btn:last-child .btn-tag{color:var(--accent)}
+.btn-title{font-size:clamp(24px,2.8vw,36px);font-weight:700;line-height:1.05;letter-spacing:-0.01em;margin-top:auto}
+.home-btn:first-child .btn-title{color:var(--s50)}
+.home-btn:last-child .btn-title{color:var(--s900)}
+.btn-desc{font-size:12px;line-height:1.6;font-weight:300;margin-top:0.5rem}
+.home-btn:first-child .btn-desc{color:rgba(255,255,255,0.38)}
+.home-btn:last-child .btn-desc{color:var(--s500)}
+.btn-arrow{position:absolute;bottom:1.75rem;right:1.75rem;font-size:22px;transition:transform 0.2s}
+.home-btn:hover .btn-arrow{transform:translate(3px,-3px)}
+.home-btn:first-child .btn-arrow{color:rgba(255,255,255,0.2)}
+.home-btn:last-child .btn-arrow{color:var(--s300)}
+.home-bottom{padding:1.25rem 2.5rem;border-top:1px solid var(--s200);display:flex;justify-content:space-between;align-items:center;background:var(--s100)}
+.home-socials{display:flex;gap:1.5rem}
+.home-socials a{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--s400);text-decoration:none;transition:color 0.15s}
+.home-socials a:hover{color:var(--s800)}
+.home-locale{font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--s300)}
+@media(max-width:900px){
+  body{overflow:auto}
+  .home-wrap{grid-template-columns:1fr}
+  .home-photo{height:60vw;min-height:280px}
+  .home-top{padding:2rem 1.5rem 1.5rem}
+  .home-buttons{grid-template-columns:1fr}
+  .home-btn{min-height:160px;padding:1.75rem 1.5rem}
+  .home-btn:first-child{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06)}
+  .home-bottom{padding:1rem 1.5rem;flex-direction:column;gap:0.75rem}
+}
+</style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="index.html" class="nav-logo">Justin Harvey</a>
-  <ul class="nav-links">
-    <li><a href="index.html" class="active">Home</a></li>
-    <li><a href="acting.html">Acting</a></li>
-    <li><a href="content.html">Content</a></li>
-    <li><a href="mediakit.html">Media Kit</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <button class="nav-burger" onclick="toggleMenu()">☰</button>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="acting.html">Acting</a>
-  <a href="content.html">Content</a>
-  <a href="mediakit.html">Media Kit</a>
-  <a href="contact.html">Contact</a>
+<div class="home-wrap">
+  <div class="home-photo">
+    <img src="assets/hero.png" alt="Justin Harvey">
+    <div class="home-photo-tag">
+      <span>Seoul, Korea</span>
+      <strong>Justin Harvey</strong>
+    </div>
+  </div>
+
+  <div class="home-content">
+    <div class="home-top">
+      <div class="home-kicker">Actor · Athlete · Creator · 2026</div>
+      <div class="home-name">Justin<span>Harvey</span></div>
+      <p class="home-tagline">South African actor based in Seoul. Netflix & Disney+ credits. Fluent Korean. Eight years building a career inside the Korean film and television industry.</p>
+    </div>
+
+    <div class="home-buttons">
+      <a href="actor.html" class="home-btn">
+        <div class="btn-tag">Casting & representation</div>
+        <div>
+          <div class="btn-title">Actor<br>Profile</div>
+          <div class="btn-desc">Filmography, skills,<br>press & contact</div>
+        </div>
+        <div class="btn-arrow">↗</div>
+      </a>
+      <a href="mediakit.html" class="home-btn">
+        <div class="btn-tag">Brand partnerships</div>
+        <div>
+          <div class="btn-title">Media<br>Kit</div>
+          <div class="btn-desc">Stats, rates, channels<br>& past partners</div>
+        </div>
+        <div class="btn-arrow">↗</div>
+      </a>
+    </div>
+
+    <div class="home-bottom">
+      <div class="home-socials">
+        <a href="https://www.instagram.com/justin.irrelevance/" target="_blank">Instagram</a>
+        <a href="https://www.youtube.com/@Justin.irrelevance" target="_blank">YouTube</a>
+        <a href="https://www.imdb.com/name/nm14684840/" target="_blank">IMDb</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="home-locale">Seoul · Korea</div>
+    </div>
+  </div>
 </div>
 
-<!-- HERO -->
-<section class="home-hero">
-  <div class="home-hero-left">
-    <div class="hero-kicker"><span class="dot"></span>Seoul, Korea · 2025</div>
-    <h1>Justin<br><span class="accent">Harvey</span></h1>
-    <p class="hero-sub">Actor. Hybrid athlete. Bilingual creator. Netflix & Disney+ credits. 750k weekly reach.</p>
-    <div class="hero-btns">
-      <a href="mediakit.html" class="btn-primary">View Media Kit</a>
-      <a href="acting.html" class="btn-ghost">Acting Credits</a>
-    </div>
-  </div>
-  <div class="home-hero-right">
-    <img src="assets/hero.png" alt="Justin Harvey" class="hero-img">
-    <div class="hero-tags">
-      <div class="hero-tag">Netflix · Disney+</div>
-      <div class="hero-tag">Seoul · Korea</div>
-      <div class="hero-tag">KR · EN</div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats-band">
-  <div class="stat-item"><div class="stat-n" data-target="64" data-suffix="k">0</div><div class="stat-l">IG Followers</div></div>
-  <div class="stat-item"><div class="stat-n" data-target="750" data-suffix="k">0</div><div class="stat-l">Weekly Reach</div></div>
-  <div class="stat-item"><div class="stat-n" data-target="48.9" data-suffix="%" data-dec="1">0</div><div class="stat-l">Engagement Rate</div></div>
-  <div class="stat-item"><div class="stat-n" data-target="9" data-suffix="">0</div><div class="stat-l">Screen Credits</div></div>
-</div>
-
-<!-- PILLARS -->
-<section class="pillars-sec page-wrap">
-  <div class="sec-label">What I do</div>
-  <h2>Three worlds.<br><span class="accent">One person.</span></h2>
-  <div class="pillars-grid">
-    <a href="acting.html" class="pillar-card">
-      <div class="pillar-num">01</div>
-      <div class="pillar-title">Acting</div>
-      <div class="pillar-body">Netflix & Disney+ credits. Korean & English productions. 9 screen credits and counting.</div>
-      <div class="pillar-arrow">→</div>
-    </a>
-    <a href="content.html" class="pillar-card">
-      <div class="pillar-num">02</div>
-      <div class="pillar-title">Content</div>
-      <div class="pillar-body">YouTube, Instagram, and the In My Shoes podcast. Bilingual audience across two markets.</div>
-      <div class="pillar-arrow">→</div>
-    </a>
-    <a href="mediakit.html" class="pillar-card">
-      <div class="pillar-num">03</div>
-      <div class="pillar-title">Partnerships</div>
-      <div class="pillar-body">Cathay Pacific, HK Tourism Board, Giant Bicycles, Freedom, and more. World-class brand track record.</div>
-      <div class="pillar-arrow">→</div>
-    </a>
-  </div>
-</section>
-
-<!-- LATEST -->
-<section class="latest-sec">
-  <div class="page-wrap">
-    <div class="sec-label">Latest</div>
-    <h2>Recent <span class="accent">work</span></h2>
-    <div class="latest-grid">
-      <div class="latest-card large">
-        <div class="latest-tag">Netflix · 2024</div>
-        <div class="latest-title">Physical 100 — Season 2</div>
-        <div class="latest-body">Korea's most watched competition series. Finished 4th out of 100 elite athletes.</div>
-        <a href="acting.html" class="latest-link">View credits →</a>
-      </div>
-      <div class="latest-card">
-        <div class="latest-tag">Disney+ · 2024</div>
-        <div class="latest-title">A Shop for Killers</div>
-        <div class="latest-body">Korean action thriller. Streaming globally on Disney+.</div>
-        <a href="acting.html" class="latest-link">View credits →</a>
-      </div>
-      <div class="latest-card">
-        <div class="latest-tag">Podcast</div>
-        <div class="latest-title">In My Shoes</div>
-        <div class="latest-body">Performance, mindset, and lifestyle. Available on all major platforms.</div>
-        <a href="content.html" class="latest-link">Listen →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BRANDS STRIP -->
-<section class="brands-strip">
-  <div class="page-wrap">
-    <div class="sec-label center">Trusted by</div>
-    <div class="brand-logos">
-      <img src="assets/cathay.jpg" alt="Cathay Pacific">
-      <img src="assets/hk7.jpg" alt="HK Sevens">
-      <img src="assets/hktb.webp" alt="HK Tourism Board">
-      <img src="assets/freedom.jpg" alt="Freedom">
-      <img src="assets/giant.jpg" alt="Giant Bicycles">
-      <img src="assets/gbx.png" alt="GBX">
-    </div>
-    <div class="brand-cta">
-      <a href="mediakit.html" class="btn-primary">See full media kit</a>
-    </div>
-  </div>
-</section>
-
-<!-- QUOTE -->
-<section class="quote-sec">
-  <div class="page-wrap">
-    <blockquote>"Work over talent."</blockquote>
-    <cite>— Justin Harvey</cite>
-  </div>
-</section>
-
-<footer>
-  <div class="page-wrap footer-inner">
-    <div class="footer-logo">Justin Harvey</div>
-    <div class="footer-links">
-      <a href="acting.html">Acting</a>
-      <a href="content.html">Content</a>
-      <a href="mediakit.html">Media Kit</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="footer-copy">© 2025 Justin Harvey · Seoul</div>
-  </div>
-</footer>
-
-<script src="main.js"></script>
 </body>
 </html>
