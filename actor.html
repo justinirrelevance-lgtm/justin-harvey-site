@@ -15,7 +15,7 @@
 .cover-right{display:flex;flex-direction:column;justify-content:center;padding:4rem 3.5rem}
 .cover-kicker{font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:2rem}
 .cover-name{font-size:clamp(52px,6vw,82px);font-weight:700;line-height:0.9;color:#fff;letter-spacing:-0.025em;margin-bottom:2rem}
-.cover-name span{display:block;color:rgba(255,255,255,0.25);font-weight:300}
+.cover-name span{display:block;color:rgba(255,255,255,0.22);font-weight:300}
 .cover-quote{font-size:14px;color:rgba(255,255,255,0.38);line-height:1.75;font-style:italic;border-left:2px solid rgba(255,255,255,0.08);padding-left:1.25rem;max-width:360px;margin-bottom:2.5rem}
 .cover-quote cite{display:block;margin-top:0.75rem;font-style:normal;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent-l)}
 .cover-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.05)}
@@ -23,50 +23,62 @@
 .cstat-n{font-size:28px;font-weight:700;color:#fff;line-height:1}
 .cstat-l{font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:4px}
 
-/* FULL-WIDTH PHOTO DIVIDERS */
+/* PHOTO LAYOUTS */
 .photo-full{position:relative;overflow:hidden}
 .photo-full img{width:100%;display:block;object-fit:cover}
-.photo-full.tall img{height:90vh;object-position:center 15%}
-.photo-full.mid img{height:70vh;object-position:center 20%}
-.photo-full.short img{height:55vh;object-position:center 15%}
-.photo-caption{position:absolute;bottom:2rem;left:3rem;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.45)}
-.photo-label{position:absolute;top:2rem;right:2rem;font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:5px 14px;border-radius:20px}
-.photo-label.netflix{background:rgba(229,9,20,0.85);color:#fff}
-.photo-label.disney{background:rgba(0,119,182,0.85);color:#fff}
+.photo-full.h90 img{height:90vh}
+.photo-full.h70 img{height:70vh}
+.photo-full.h55 img{height:55vh}
+.photo-full.h45 img{height:45vh}
+.photo-caption{position:absolute;bottom:1.5rem;left:2.5rem;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+.photo-badge{position:absolute;top:1.5rem;right:1.75rem;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:20px}
+.badge-n{background:rgba(229,9,20,0.9);color:#fff}
+.badge-d{background:rgba(0,119,182,0.9);color:#fff}
+.badge-c{background:rgba(192,57,43,0.85);color:#fff}
 
-/* 2-PHOTO GRID */
-.photo-2grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#111}
-.photo-2grid img{width:100%;height:65vh;object-fit:cover;display:block}
-.photo-2grid img:first-child{object-position:center top}
-.photo-2grid img:last-child{object-position:center 20%}
+.photo-2{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#000}
+.photo-2 img{width:100%;height:65vh;object-fit:cover;display:block}
+.photo-2 .left img{object-position:center 20%}
+.photo-2 .right img{object-position:center top}
+.photo-2-rel{position:relative}
 
-/* 3-PHOTO GRID */
-.photo-3grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:#111}
-.photo-3grid img{width:100%;height:50vh;object-fit:cover;display:block;object-position:center top}
+.photo-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:#000}
+.photo-3 img{width:100%;height:52vh;object-fit:cover;display:block;object-position:center top}
+
+.photo-wide-portrait{display:grid;grid-template-columns:3fr 2fr;gap:2px;background:#000}
+.photo-wide-portrait img{width:100%;height:75vh;object-fit:cover;display:block}
+.photo-wide-portrait .l img{object-position:center 20%}
+.photo-wide-portrait .r img{object-position:center top}
 
 /* TEXT SECTIONS */
-.text-sec{padding:5rem 0;background:var(--s50)}
-.text-sec.dark{background:var(--s900)}
-.text-sec.mid{background:var(--s100)}
-.text-inner{max-width:1100px;margin:0 auto;padding:0 3rem}
+.tsec{padding:5rem 0}
+.tsec.dark{background:var(--s900)}
+.tsec.mid{background:var(--s100)}
+.tsec.light{background:var(--s50)}
+.tinner{max-width:1100px;margin:0 auto;padding:0 3rem}
 
-/* SPLIT: text + photo */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1100px;margin:0 auto;padding:0 3rem}
+/* BIO SPLIT */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;max-width:1100px;margin:0 auto;padding:0 3rem}
 .split.rev{direction:rtl}
 .split.rev>*{direction:ltr}
-.split-photo{overflow:hidden;border-radius:2px}
-.split-photo img{width:100%;display:block;object-fit:cover}
-.split-photo.portrait img{aspect-ratio:3/4;object-position:center top}
-.split-photo.landscape img{aspect-ratio:4/3;object-position:center 15%}
+.split-img{overflow:hidden;border-radius:2px}
+.split-img img{width:100%;display:block;object-fit:cover}
+.split-img.portrait img{aspect-ratio:3/4;object-position:center top}
 
-/* FILMOGRAPHY */
-.film-sec{background:var(--s100);padding:5rem 0}
+/* PRODUCTION LABEL */
+.prod-label{display:flex;flex-direction:column;gap:4px;margin-bottom:1.5rem}
+.prod-name{font-family:inherit;font-size:clamp(28px,3.5vw,44px);font-weight:700;color:var(--s900);line-height:1.0;letter-spacing:-0.01em}
+.prod-name.white{color:#fff}
+.prod-meta{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--s400)}
+.prod-meta.white{color:rgba(255,255,255,0.35)}
+
+/* FILMOGRAPHY TABLE */
 .film-inner{max-width:1100px;margin:0 auto;padding:0 3rem}
 .film-cat{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);padding:1rem 0 0.75rem;border-bottom:2px solid var(--s200);margin-top:2.5rem}
 .film-row{display:grid;grid-template-columns:56px 1fr auto;gap:1.5rem;align-items:center;padding:1.1rem 0;border-bottom:1px solid var(--s200)}
-.film-yr{font-size:12px;font-weight:600;color:var(--s400)}
-.film-t{font-size:16px;font-weight:600;color:var(--s900)}
-.film-sub{font-size:12px;color:var(--s500);margin-top:2px;font-weight:300}
+.fyr{font-size:12px;font-weight:600;color:var(--s400)}
+.ft{font-size:16px;font-weight:600;color:var(--s900)}
+.fsub{font-size:12px;color:var(--s500);margin-top:2px;font-weight:300}
 .fbadge{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;white-space:nowrap}
 .fn{background:rgba(229,9,20,0.1);color:#E50914}
 .fd{background:rgba(0,119,182,0.1);color:#0077B6}
@@ -74,26 +86,25 @@
 .fm{background:var(--s100);color:var(--s600)}
 .fr{background:rgba(123,143,161,0.1);color:var(--accent-d)}
 
-/* PHYSICAL + SKILLS */
+/* PHYSICAL */
 .phys-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--s200);margin-top:2rem}
 .phys-cell{background:var(--s50);padding:1.25rem 1rem}
 .phys-lbl{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--s400);margin-bottom:4px}
 .phys-val{font-size:18px;font-weight:700;color:var(--s900)}
+
+/* SKILLS */
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:2rem}
 .chip{padding:10px 20px;font-size:12px;font-weight:600;border-radius:2px;letter-spacing:0.04em}
 .chip.d{background:var(--s900);color:var(--s50)}
 .chip.l{background:var(--s100);border:1px solid var(--s200);color:var(--s700)}
 
 /* PRESS */
-.press-sec{background:var(--s900);padding:5rem 0}
-.press-inner{max-width:1100px;margin:0 auto;padding:0 3rem}
 .press-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem}
 .press-card{padding:1.75rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:2px}
 .press-q{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;font-style:italic;margin-bottom:1rem}
 .press-src{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent-l)}
 
 /* CONTACT */
-.cta-sec{background:var(--s900);padding:5rem 0;border-top:1px solid rgba(255,255,255,0.04)}
 .cta-inner{max-width:1100px;margin:0 auto;padding:0 3rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 .cta-rows{display:flex;flex-direction:column}
 .cta-row{display:flex;align-items:stretch;border-bottom:1px solid rgba(255,255,255,0.06)}
@@ -103,22 +114,32 @@
 .cta-val a{color:var(--accent-l);text-decoration:none}
 .cta-val a:hover{color:#fff}
 
+/* PULL QUOTE OVERLAY */
+.pq-wrap{position:relative}
+.pq-wrap img{width:100%;height:65vh;object-fit:cover;object-position:center 20%;display:block}
+.pq-overlay{position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(0,0,0,0.85))}
+.pq-text{position:absolute;bottom:2.5rem;left:3rem;right:3rem;max-width:700px}
+.pq-text blockquote{font-size:clamp(20px,2.5vw,30px);font-weight:300;color:#fff;line-height:1.35}
+.pq-text cite{display:block;margin-top:1rem;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent-l);font-style:normal}
+
 @media(max-width:900px){
   .cover{grid-template-columns:1fr;height:auto}
-  .cover-img{height:60vw}
+  .cover-img{height:65vw}
   .cover-right{padding:2.5rem 1.5rem}
-  .photo-2grid img,.photo-3grid img{height:40vw}
-  .photo-3grid{grid-template-columns:1fr}
-  .photo-3grid img{height:60vw}
+  .photo-2,.photo-3{grid-template-columns:1fr}
+  .photo-2 img,.photo-3 img{height:60vw}
+  .photo-wide-portrait{grid-template-columns:1fr}
+  .photo-wide-portrait img{height:60vw}
   .split{grid-template-columns:1fr;gap:2rem;padding:0 1.5rem}
   .split.rev{direction:ltr}
-  .text-inner{padding:0 1.5rem}
-  .film-inner{padding:0 1.5rem}
-  .press-inner{padding:0 1.5rem}
-  .cta-inner{grid-template-columns:1fr;gap:2.5rem;padding:0 1.5rem}
+  .tinner,.film-inner,.cta-inner{padding:0 1.5rem}
+  .cta-inner{grid-template-columns:1fr;gap:2.5rem}
   .press-grid{grid-template-columns:1fr}
   .phys-grid{grid-template-columns:repeat(3,1fr)}
-  .photo-full.tall img,.photo-full.mid img,.photo-full.short img{height:60vw}
+  .photo-full.h90 img,.photo-full.h70 img{height:60vw}
+  .photo-full.h55 img,.photo-full.h45 img{height:50vw}
+  .pq-wrap img{height:60vw}
+  .pq-text{left:1.5rem;right:1.5rem;bottom:1.5rem}
 }
 </style>
 </head>
@@ -141,7 +162,7 @@
   <a href="contact.html">Contact</a>
 </div>
 
-<!-- COVER -->
+<!-- COVER: B&W headshot -->
 <div class="cover">
   <div class="cover-img">
     <img src="assets/model-bw-face2.jpg" alt="Justin Harvey" style="object-position:center top">
@@ -162,24 +183,24 @@
   </div>
 </div>
 
-<!-- FILM STILL — FULL WIDTH: The Witch 2 / action -->
-<div class="photo-full mid">
-  <img src="assets/film-witch2-3.jpg" alt="The Witch: Part 2" style="object-position:center 25%">
-  <div class="photo-caption">The Witch: Part 2 · Dir. Park Hoon-jung · 2022</div>
-  <div class="photo-label netflix">Netflix</div>
+<!-- THE CHILDE: wide full-bleed action shot -->
+<div class="photo-full h70" style="position:relative">
+  <img src="assets/film-childe-1.jpg" alt="The Childe" style="object-position:center 35%">
+  <div class="photo-caption">The Childe · Dir. Park Hoon-jung · 2023</div>
+  <div class="photo-badge fm" style="background:rgba(30,30,30,0.85);color:#fff">Cinema</div>
 </div>
 
-<!-- BIO SPLIT -->
-<div class="text-sec">
+<!-- BIO SPLIT with editorial portrait -->
+<div class="tsec light">
   <div class="split">
     <div class="fu">
       <div class="sec-label">Biography</div>
       <h2>Eight years.<br><span class="accent">Fluent Korean.</span></h2>
       <p style="font-size:14px;color:var(--s500);line-height:1.9;margin-top:1.5rem;font-weight:300">
-        Justin John Harvey is a South African actor based in Seoul — one of the very few foreign actors to have built a sustained, fluent career inside the Korean film and television industry. Since his debut in <strong style="color:var(--s700)">Ashfall</strong> (2019, 8.25M admissions), he has worked with Korea's most prominent directors across film, streaming, and television.
+        Justin John Harvey is a South African actor based in Seoul — one of the very few foreign actors to have built a sustained, fluent career inside the Korean film and television industry. Since his debut in <strong style="color:var(--s700)">Ashfall</strong> (2019, 8.25M admissions), he has worked with Korea's most prominent directors.
       </p>
       <p style="font-size:14px;color:var(--s500);line-height:1.9;margin-top:1rem;font-weight:300">
-        Cast across three productions by director <strong style="color:var(--s700)">Park Hoon-jung</strong>. In 2024, finished <strong style="color:var(--s700)">4th on Netflix's Physical 100: Underground</strong> — the highest placement by any foreign national.
+        Cast across three productions by director <strong style="color:var(--s700)">Park Hoon-jung</strong> — The Witch: Part 2, The Childe, and Disney+ series Tyrant. In 2024, finished <strong style="color:var(--s700)">4th on Netflix's Physical 100: Underground</strong>, the highest placement by any foreign national.
       </p>
       <div style="margin-top:2rem">
         <div class="sec-label">Languages</div>
@@ -189,21 +210,26 @@
         </div>
       </div>
     </div>
-    <div class="split-photo portrait fu" style="transition-delay:0.15s">
-      <img src="assets/model-editorial-1.jpg" alt="Justin Harvey" style="object-position:center top">
+    <div class="split-img portrait fu" style="transition-delay:.15s">
+      <img src="assets/model-editorial-1.jpg" alt="Justin Harvey">
     </div>
   </div>
 </div>
 
-<!-- FILM STILL — 2 GRID: Action stills -->
-<div class="photo-2grid">
-  <img src="assets/film-witch2-1.jpg" alt="The Witch: Part 2" style="object-position:center 20%">
-  <img src="assets/film-witch2-2.jpg" alt="The Witch: Part 2" style="object-position:center 15%">
+<!-- THE CHILDE: dramatic face closeups 2-grid -->
+<div class="photo-2">
+  <div class="left" style="position:relative">
+    <img src="assets/film-childe-2.jpg" alt="The Childe" style="object-position:center 20%">
+    <div style="position:absolute;bottom:1.5rem;left:1.75rem;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5)">The Childe · 2023</div>
+  </div>
+  <div class="right" style="position:relative">
+    <img src="assets/film-childe-3.jpg" alt="The Childe" style="object-position:center 20%">
+  </div>
 </div>
 
 <!-- PHYSICAL PROFILE -->
-<div class="text-sec mid">
-  <div class="text-inner">
+<div class="tsec mid">
+  <div class="tinner">
     <div class="sec-label fu">Physical profile</div>
     <div class="phys-grid fu">
       <div class="phys-cell"><div class="phys-lbl">Height</div><div class="phys-val">180 cm</div></div>
@@ -216,76 +242,125 @@
   </div>
 </div>
 
-<!-- FILM STILL — action / dramatic -->
-<div class="photo-full mid">
-  <img src="assets/film-action-1.jpg" alt="On set" style="object-position:center 30%">
-  <div class="photo-caption">On set · Korean production</div>
+<!-- PHYSICAL 100: Netflix entry shot full width -->
+<div class="pq-wrap">
+  <img src="assets/film-physical100-suit.jpg" alt="Physical 100 · Netflix">
+  <div class="pq-overlay"></div>
+  <div class="pq-text">
+    <blockquote>"The South African star who made it to the Netflix hit's final four has his sights set on some big acting roles."</blockquote>
+    <cite>Marie Claire · Physical 100 · 2024</cite>
+  </div>
 </div>
 
-<!-- SPLIT: Suit photo + training text -->
-<div class="text-sec">
+<!-- PHYSICAL 100: 2-grid action -->
+<div class="photo-2">
+  <div class="left" style="position:relative">
+    <img src="assets/film-physical100-wrestle.jpg" alt="Physical 100 Netflix" style="object-position:center 35%">
+    <div class="photo-badge badge-n">Netflix</div>
+    <div style="position:absolute;bottom:1.5rem;left:1.75rem;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5)">Physical 100: Underground · 2024</div>
+  </div>
+  <div class="right" style="position:relative">
+    <img src="assets/film-physical100-run.jpg" alt="Physical 100 Netflix" style="object-position:center 40%">
+    <div class="photo-badge badge-n">Netflix</div>
+  </div>
+</div>
+
+<!-- RANGE SPLIT with editorial photo -->
+<div class="tsec light">
   <div class="split rev">
     <div class="fu">
       <div class="sec-label">The range</div>
       <h2>From <span class="accent">dramatic leads</span><br>to physical extremes</h2>
       <p style="font-size:14px;color:var(--s500);line-height:1.9;margin-top:1.5rem;font-weight:300">
-        Trained in Lucid Body, Meisner, and Montes Method. A physical actor who brings genuine athletic credibility — HYROX competitor, triathlete, 4th on Netflix's Physical 100. Fluent in the language on and off camera.
+        Trained in Lucid Body, Meisner, and Montes Method. A physical actor who brings real athletic credibility to every role — HYROX competitor, triathlete, 4th on Netflix's Physical 100. On camera in Korean and English.
       </p>
       <div style="margin-top:2rem">
         <div class="sec-label">Training</div>
-        <div style="font-size:13px;color:var(--s500);margin-top:0.75rem;line-height:1.8">
-          Lucid Body · Meisner · Montes Method
-        </div>
+        <div style="font-size:13px;color:var(--s500);margin-top:0.75rem;line-height:1.8">Lucid Body · Meisner · Montes Method</div>
       </div>
     </div>
-    <div class="split-photo portrait fu" style="transition-delay:0.15s">
-      <img src="assets/model-editorial-2.jpg" alt="Justin Harvey" style="object-position:center top">
+    <div class="split-img portrait fu" style="transition-delay:.15s">
+      <img src="assets/model-editorial-2.jpg" alt="Justin Harvey">
     </div>
   </div>
 </div>
 
-<!-- 3-PHOTO GRID: Headshots -->
-<div class="photo-3grid">
-  <img src="assets/model-bw-face1.jpg" alt="Justin Harvey" style="object-position:center top">
+<!-- PHYSICAL 100 SCULPTURE + FIRST NIGHT: wide + portrait -->
+<div class="photo-wide-portrait">
+  <div class="l" style="position:relative">
+    <img src="assets/film-physical100-sculpture.jpg" alt="Physical 100 Netflix" style="object-position:center 30%">
+    <div class="photo-badge badge-n">Netflix · Physical 100</div>
+  </div>
+  <div class="r" style="position:relative">
+    <img src="assets/film-firstnight-1.jpg" alt="First Night with the Duke" style="object-position:center 20%">
+    <div class="photo-badge badge-c">Coupang Play</div>
+    <div style="position:absolute;bottom:1.5rem;left:1.75rem;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5)">First Night with the Duke · 2025</div>
+  </div>
+</div>
+
+<!-- 3-PHOTO GRID: Headshots / different looks -->
+<div class="photo-3">
+  <img src="assets/model-bw-face1.jpg" alt="Justin Harvey">
   <img src="assets/model-bw-face3.jpg" alt="Justin Harvey" style="object-position:center top">
-  <img src="assets/model-editorial-3.jpg" alt="Justin Harvey" style="object-position:center top">
+  <img src="assets/model-editorial-3.jpg" alt="Justin Harvey">
 </div>
 
 <!-- FILMOGRAPHY -->
-<div class="film-sec">
+<div class="tsec mid">
   <div class="film-inner">
     <div class="sec-label fu">Filmography</div>
     <h2 class="fu">Full <span class="accent">credits</span></h2>
 
     <div class="film-cat">Television & Streaming</div>
-    <div class="film-row"><div class="film-yr">2026</div><div><div class="film-t">Portraits of Delusion</div><div class="film-sub">Dir. Han Jae-rim</div></div><span class="fbadge fd">Disney+</span></div>
-    <div class="film-row"><div class="film-yr">2026</div><div><div class="film-t">A Shop for Killers</div><div class="film-sub">Supporting</div></div><span class="fbadge fd">Disney+</span></div>
-    <div class="film-row"><div class="film-yr">2025</div><div><div class="film-t">Newtopia</div><div class="film-sub">Paulo · Dir. Yoon Sung-hyun</div></div><span class="fbadge fc">Coupang Play</span></div>
-    <div class="film-row"><div class="film-yr">2025</div><div><div class="film-t">First Night with the Duke</div><div class="film-sub">Mark · Period Drama</div></div><span class="fbadge fc">Coupang Play</span></div>
-    <div class="film-row"><div class="film-yr">2024</div><div><div class="film-t">Tyrant</div><div class="film-sub">Crocodile · Dir. Park Hoon-jung · #1 Disney+ Korea</div></div><span class="fbadge fd">Disney+</span></div>
+    <div class="film-row"><div class="fyr">2026</div><div><div class="ft">Portraits of Delusion</div><div class="fsub">Dir. Han Jae-rim</div></div><span class="fbadge fd">Disney+</span></div>
+    <div class="film-row"><div class="fyr">2026</div><div><div class="ft">A Shop for Killers</div><div class="fsub">Supporting</div></div><span class="fbadge fd">Disney+</span></div>
+    <div class="film-row"><div class="fyr">2025</div><div><div class="ft">Newtopia</div><div class="fsub">Paulo · Dir. Yoon Sung-hyun</div></div><span class="fbadge fc">Coupang Play</span></div>
+    <div class="film-row"><div class="fyr">2025</div><div><div class="ft">First Night with the Duke</div><div class="fsub">Mark · Period Drama</div></div><span class="fbadge fc">Coupang Play</span></div>
+    <div class="film-row"><div class="fyr">2024</div><div><div class="ft">Tyrant</div><div class="fsub">Crocodile · Dir. Park Hoon-jung · #1 Disney+ Korea</div></div><span class="fbadge fd">Disney+</span></div>
 
     <div class="film-cat">Feature Film</div>
-    <div class="film-row"><div class="film-yr">2026</div><div><div class="film-t">Resurrection Man</div><div class="film-sub">Dir. Baek Jong-yeol</div></div><span class="fbadge fm">Cinema</span></div>
-    <div class="film-row"><div class="film-yr">2023</div><div><div class="film-t">The Childe</div><div class="film-sub">Dir. Park Hoon-jung</div></div><span class="fbadge fm">Cinema</span></div>
-    <div class="film-row"><div class="film-yr">2022</div><div><div class="film-t">The Witch: Part 2</div><div class="film-sub">Tom · Dir. Park Hoon-jung</div></div><span class="fbadge fm">Cinema</span></div>
-    <div class="film-row"><div class="film-yr">2019</div><div><div class="film-t">Ashfall (백두산)</div><div class="film-sub">Dir. Lee Hae-jun · 8.25M admissions</div></div><span class="fbadge fm">Cinema</span></div>
+    <div class="film-row"><div class="fyr">2026</div><div><div class="ft">Resurrection Man</div><div class="fsub">Dir. Baek Jong-yeol</div></div><span class="fbadge fm">Cinema</span></div>
+    <div class="film-row"><div class="fyr">2023</div><div><div class="ft">The Childe</div><div class="fsub">Dir. Park Hoon-jung</div></div><span class="fbadge fm">Cinema</span></div>
+    <div class="film-row"><div class="fyr">2022</div><div><div class="ft">The Witch: Part 2</div><div class="fsub">Tom · Dir. Park Hoon-jung</div></div><span class="fbadge fm">Cinema</span></div>
+    <div class="film-row"><div class="fyr">2019</div><div><div class="ft">Ashfall (백두산)</div><div class="fsub">Dir. Lee Hae-jun · 8.25M admissions</div></div><span class="fbadge fm">Cinema</span></div>
 
     <div class="film-cat">Reality & Music Video</div>
-    <div class="film-row"><div class="film-yr">2024</div><div><div class="film-t">Physical 100: Underground</div><div class="film-sub">4th Place · Highest foreign placement</div></div><span class="fbadge fn">Netflix</span></div>
-    <div class="film-row"><div class="film-yr">2024</div><div><div class="film-t">Zombieverse: New Blood</div><div class="film-sub">Cast</div></div><span class="fbadge fn">Netflix</span></div>
-    <div class="film-row"><div class="film-yr">2024</div><div><div class="film-t">Easy Lover — JYP</div><div class="film-sub">JYP Entertainment</div></div><span class="fbadge fr">Music Video</span></div>
-    <div class="film-row"><div class="film-yr">2024</div><div><div class="film-t">Untold — ENHYPEN</div><div class="film-sub">Dir. Lee Chung Hyeon</div></div><span class="fbadge fr">Music Video</span></div>
+    <div class="film-row"><div class="fyr">2024</div><div><div class="ft">Physical 100: Underground</div><div class="fsub">4th Place · Highest foreign placement</div></div><span class="fbadge fn">Netflix</span></div>
+    <div class="film-row"><div class="fyr">2024</div><div><div class="ft">Zombieverse: New Blood</div><div class="fsub">Cast</div></div><span class="fbadge fn">Netflix</span></div>
+    <div class="film-row"><div class="fyr">2024</div><div><div class="ft">Easy Lover — JYP</div><div class="fsub">JYP Entertainment</div></div><span class="fbadge fr">Music Video</span></div>
+    <div class="film-row"><div class="fyr">2024</div><div><div class="ft">Untold — ENHYPEN</div><div class="fsub">Dir. Lee Chung Hyeon</div></div><span class="fbadge fr">Music Video</span></div>
   </div>
 </div>
 
-<!-- FULL WIDTH: editorial lifestyle -->
-<div class="photo-full short">
-  <img src="assets/model-editorial-4.jpg" alt="Justin Harvey" style="object-position:center 30%">
+<!-- FIRST NIGHT + PORTRAITS: film stills -->
+<div class="photo-2">
+  <div class="left" style="position:relative">
+    <img src="assets/film-firstnight-2.jpg" alt="First Night with the Duke" style="object-position:center 25%">
+    <div class="photo-badge badge-c">Coupang Play</div>
+    <div style="position:absolute;bottom:1.5rem;left:1.75rem;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5)">First Night with the Duke · 2025</div>
+  </div>
+  <div class="right" style="position:relative">
+    <img src="assets/film-portraits.jpg" alt="Portraits of Delusion" style="object-position:center 20%">
+    <div class="photo-badge badge-d">Disney+</div>
+    <div style="position:absolute;bottom:1.5rem;left:1.75rem;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5)">Portraits of Delusion · 2026</div>
+  </div>
+</div>
+
+<!-- THE CHILDE: subway scene full width -->
+<div class="photo-full h55">
+  <img src="assets/film-childe-4.jpg" alt="The Childe" style="object-position:center 40%">
+  <div class="photo-caption">The Childe · Dir. Park Hoon-jung · 2023</div>
+</div>
+
+<!-- 2-GRID: clean editorial looks -->
+<div class="photo-2">
+  <div class="left"><img src="assets/model-suit-white.jpg" alt="Justin Harvey" style="object-position:center top"></div>
+  <div class="right"><img src="assets/model-knit-beige.jpg" alt="Justin Harvey" style="object-position:center top"></div>
 </div>
 
 <!-- SPECIAL SKILLS -->
-<div class="text-sec">
-  <div class="text-inner">
+<div class="tsec light">
+  <div class="tinner">
     <div class="sec-label fu">Special skills</div>
     <h2 class="fu">Trained. Athletic. <span class="accent">Dangerous.</span></h2>
     <div class="chips fu">
@@ -305,15 +380,9 @@
   </div>
 </div>
 
-<!-- 2-PHOTO GRID: More looks -->
-<div class="photo-2grid">
-  <img src="assets/model-suit-white.jpg" alt="Justin Harvey" style="object-position:center top">
-  <img src="assets/model-knit-beige.jpg" alt="Justin Harvey" style="object-position:center top">
-</div>
-
 <!-- PRESS -->
-<div class="press-sec">
-  <div class="press-inner">
+<div class="tsec dark">
+  <div class="tinner">
     <div class="sec-label fu" style="color:var(--accent-l)">Press</div>
     <h2 class="fu" style="color:#fff">What they're <span style="color:rgba(255,255,255,0.25);font-weight:300">saying</span></h2>
     <div class="press-grid">
@@ -326,7 +395,7 @@
 </div>
 
 <!-- CONTACT -->
-<div class="cta-sec">
+<div class="tsec dark" style="border-top:1px solid rgba(255,255,255,0.04)">
   <div class="cta-inner">
     <div>
       <div class="sec-label" style="color:var(--accent-l)">Casting enquiries</div>
