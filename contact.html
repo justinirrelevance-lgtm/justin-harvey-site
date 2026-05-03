@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Justin Harvey</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav id="nav">
+  <a href="index.html" class="nav-logo">Justin Harvey</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="acting.html">Acting</a></li>
+    <li><a href="content.html">Content</a></li>
+    <li><a href="mediakit.html">Media Kit</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <button class="nav-burger" onclick="toggleMenu()">☰</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="acting.html">Acting</a>
+  <a href="content.html">Content</a>
+  <a href="mediakit.html">Media Kit</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="page-header">
+  <div class="page-wrap">
+    <div class="sec-label">Get in touch</div>
+    <h1>Let's <span class="accent">work together</span></h1>
+    <p class="page-header-sub">Brand partnerships, casting enquiries, podcast guests, press. Direct line — no agencies.</p>
+  </div>
+</div>
+
+<section class="contact-sec page-wrap">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-rows">
+        <div class="c-row">
+          <div class="c-key">Email</div>
+          <div class="c-val"><a href="mailto:justin.irrelevance@gmail.com">justin.irrelevance@gmail.com</a></div>
+        </div>
+        <div class="c-row">
+          <div class="c-key">Phone</div>
+          <div class="c-val">+82 10 5045 5269</div>
+        </div>
+        <div class="c-row">
+          <div class="c-key">Base</div>
+          <div class="c-val">Seoul, South Korea</div>
+        </div>
+        <div class="c-row">
+          <div class="c-key">Language</div>
+          <div class="c-val">Korean · English</div>
+        </div>
+        <div class="c-row">
+          <div class="c-key">Response</div>
+          <div class="c-val">Within 24 hours</div>
+        </div>
+      </div>
+
+      <div class="contact-types">
+        <div class="sec-label" style="margin-top:2.5rem">I'm open to</div>
+        <div class="contact-type-list">
+          <div class="contact-type">Brand partnerships & sponsorships</div>
+          <div class="contact-type">Casting enquiries (KR & EN)</div>
+          <div class="contact-type">Podcast guest appearances</div>
+          <div class="contact-type">Press & media interviews</div>
+          <div class="contact-type">Event appearances & hosting</div>
+          <div class="contact-type">Brand trip activations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <form class="contact-form" name="contact" netlify>
+        <input type="hidden" name="form-name" value="contact">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Company / Brand</label>
+          <input type="text" name="company" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label>Enquiry type</label>
+          <select name="type">
+            <option value="">Select...</option>
+            <option>Brand partnership</option>
+            <option>Casting</option>
+            <option>Podcast guest</option>
+            <option>Press / media</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" rows="5" placeholder="Tell me about the project..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary full">Send message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="page-wrap footer-inner">
+    <div class="footer-logo">Justin Harvey</div>
+    <div class="footer-links">
+      <a href="acting.html">Acting</a>
+      <a href="content.html">Content</a>
+      <a href="mediakit.html">Media Kit</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 Justin Harvey · Seoul</div>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>
