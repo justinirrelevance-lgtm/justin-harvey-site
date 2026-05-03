@@ -7,516 +7,906 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Sora',sans-serif;background:#0f0f0f;color:#f0f0f0;font-size:14px;line-height:1.5}
-.header{padding:1.5rem 2rem;background:#1a1a1a;border-bottom:1px solid #2a2a2a;display:flex;align-items:center;justify-content:space-between}
-.header h1{font-size:18px;font-weight:600}
-.header span{font-size:11px;color:#666;letter-spacing:0.1em;text-transform:uppercase}
-.layout{display:grid;grid-template-columns:320px 1fr;height:calc(100vh - 64px)}
-.sidebar{background:#141414;border-right:1px solid #2a2a2a;overflow-y:auto;display:flex;flex-direction:column}
-.preview{background:#0a0a0a;overflow:hidden;position:relative}
-.preview iframe{width:100%;height:100%;border:none;transform-origin:top left}
+:root{
+  --bg:#0d0d0d;--surface:#161616;--surface2:#1e1e1e;--surface3:#252525;
+  --border:#2a2a2a;--border2:#333;--text:#f0f0f0;--muted:#666;--dim:#444;
+  --accent:#7B8FA1;--accent2:#5a6f82;--red:#c0392b;--green:#27ae60;--amber:#f39c12;
+}
+html,body{height:100%;font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-size:14px;overflow:hidden}
 
-/* SIDEBAR */
-.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #2a2a2a}
-.tab{padding:0.875rem;text-align:center;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#555;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all 0.15s}
-.tab.active{color:#fff;border-bottom-color:#7B8FA1}
-.panel{display:none;flex:1;overflow-y:auto}
-.panel.active{display:block}
+/* LAYOUT */
+.app{display:grid;grid-template-rows:52px 1fr;height:100vh}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.25rem;gap:1rem}
+.topbar-logo{font-size:15px;font-weight:700;margin-right:0.5rem}
+.topbar-page{display:flex;align-items:center;gap:0.5rem}
+.topbar-page label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.topbar-page select{background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:'Sora',sans-serif;font-size:12px;padding:5px 10px;border-radius:3px;outline:none;cursor:pointer}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:0.5rem}
+.status-pill{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--muted)}
+.dot.green{background:var(--green)}
+.dot.amber{background:var(--amber);animation:pulse 1s infinite}
+.dot.red{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* SECTIONS */
-.section{border-bottom:1px solid #222}
-.section-header{padding:0.875rem 1.25rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
-.section-header:hover{background:#1c1c1c}
-.section-title{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#999}
-.section-arrow{font-size:10px;color:#444;transition:transform 0.2s}
-.section-arrow.open{transform:rotate(90deg)}
-.section-body{display:none;padding:0.75rem 1.25rem 1.25rem}
-.section-body.open{display:block}
+.main{display:grid;grid-template-columns:280px 1fr 300px;height:100%}
 
-/* CONTROLS */
-.ctrl{margin-bottom:1rem}
-.ctrl:last-child{margin-bottom:0}
-.ctrl label{display:block;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#666;margin-bottom:6px}
-.ctrl input[type=text],.ctrl input[type=number],.ctrl textarea,.ctrl select{width:100%;background:#1e1e1e;border:1px solid #333;border-radius:3px;color:#f0f0f0;font-family:'Sora',sans-serif;font-size:13px;padding:8px 10px;outline:none;transition:border-color 0.15s}
-.ctrl input[type=text]:focus,.ctrl input[type=number]:focus,.ctrl textarea:focus,.ctrl select:focus{border-color:#7B8FA1}
-.ctrl textarea{resize:vertical;min-height:72px}
+/* LEFT PANEL — TOOLS */
+.left{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.tool-tabs{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
+.tool-tab{padding:0.75rem 0;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:center;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s}
+.tool-tab.active{color:var(--text);border-bottom-color:var(--accent)}
+.tool-tab:hover:not(.active){color:#aaa}
+.tool-panel{display:none;flex:1;overflow-y:auto;flex-direction:column}
+.tool-panel.active{display:flex}
 
-/* IMAGE POSITION SLIDER */
-.slider-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.slider-group label{font-size:10px;color:#555;margin-bottom:4px;display:block}
-.slider-group input[type=range]{width:100%;accent-color:#7B8FA1;margin-bottom:2px}
-.slider-group .val{font-size:11px;color:#7B8FA1;text-align:right}
+/* PREVIEW — CENTRE */
+.preview-wrap{display:flex;flex-direction:column;background:#111;overflow:hidden}
+.preview-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1rem;height:40px;display:flex;align-items:center;gap:0.5rem;flex-shrink:0}
+.preview-bar span{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-right:0.5rem}
+.preview-viewport{flex:1;overflow:auto;display:flex;justify-content:center;padding:1rem;align-items:flex-start}
+iframe#pv{border:none;background:#fff;border-radius:2px;box-shadow:0 8px 40px rgba(0,0,0,.6);transition:width .2s}
 
-/* PHOTO CARDS */
-.photo-card{background:#1e1e1e;border:1px solid #2a2a2a;border-radius:4px;padding:0.875rem;margin-bottom:0.75rem;cursor:pointer;transition:border-color 0.15s}
-.photo-card:hover{border-color:#555}
-.photo-card.selected{border-color:#7B8FA1}
-.photo-card-name{font-size:12px;font-weight:600;color:#ccc;margin-bottom:2px}
-.photo-card-file{font-size:10px;color:#555;font-family:monospace}
-.photo-preview{width:100%;height:80px;object-fit:cover;border-radius:3px;margin-top:8px;display:block}
+/* RIGHT PANEL — PROPERTIES */
+.right{background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.props-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.props-body{flex:1;overflow-y:auto;padding:1rem 1.25rem}
+.prop-group{margin-bottom:1.5rem}
+.prop-group-label{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);margin-bottom:0.75rem;display:flex;align-items:center;gap:8px}
+.prop-group-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.prop{margin-bottom:0.875rem}
+.prop label{display:block;font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.prop input,.prop textarea,.prop select{width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:'Sora',sans-serif;font-size:13px;padding:8px 10px;border-radius:3px;outline:none;transition:border-color .15s}
+.prop input:focus,.prop textarea:focus,.prop select:focus{border-color:var(--accent)}
+.prop textarea{resize:vertical;min-height:64px;line-height:1.5}
+.prop-hint{font-size:10px;color:var(--dim);margin-top:4px;line-height:1.5}
+
+/* SLIDERS */
+.slider-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.slider-item label{font-size:9px;color:var(--muted);display:block;margin-bottom:3px}
+.slider-item{display:flex;flex-direction:column}
+input[type=range]{accent-color:var(--accent);width:100%;margin:0}
+.slider-val{font-size:11px;color:var(--accent);text-align:right;font-weight:600;margin-top:2px}
 
 /* BUTTONS */
-.btn{display:inline-block;padding:10px 20px;border-radius:3px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.15s;font-family:'Sora',sans-serif}
-.btn-primary{background:#7B8FA1;color:#fff}
-.btn-primary:hover{background:#5a6f82}
-.btn-danger{background:#c0392b;color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:3px;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;border:none;font-family:'Sora',sans-serif;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2)}
+.btn-danger{background:var(--red);color:#fff}
 .btn-danger:hover{background:#a93226}
-.btn-ghost{background:none;border:1px solid #333;color:#888}
+.btn-ghost{background:none;border:1px solid var(--border2);color:#888}
 .btn-ghost:hover{border-color:#666;color:#ccc}
-.btn-full{width:100%;text-align:center}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:#229955}
+.btn-full{width:100%;margin-top:0.5rem}
+.btn-sm{padding:6px 12px;font-size:10px}
 
-/* STATUS */
-.status{padding:0.75rem 1.25rem;font-size:11px;font-weight:600;letter-spacing:0.06em;border-top:1px solid #222;color:#555;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
-.status-dot{width:6px;height:6px;border-radius:50%;background:#555;flex-shrink:0}
-.status-dot.saving{background:#f39c12;animation:pulse 0.8s infinite}
-.status-dot.saved{background:#27ae60}
-.status-dot.error{background:#c0392b}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+/* ITEM CARDS — image list */
+.img-card{background:var(--surface2);border:1px solid var(--border);border-radius:4px;margin-bottom:0.75rem;cursor:pointer;transition:border-color .15s;overflow:hidden}
+.img-card:hover{border-color:var(--accent)}
+.img-card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.img-card-header{padding:0.75rem;display:flex;align-items:center;gap:0.75rem}
+.img-thumb{width:48px;height:48px;object-fit:cover;border-radius:3px;flex-shrink:0}
+.img-info{flex:1;min-width:0}
+.img-name{font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.img-caption{font-size:10px;color:var(--muted);margin-top:2px}
+.img-badge{font-size:9px;padding:2px 7px;border-radius:10px;background:var(--surface3);color:var(--dim);margin-top:3px;display:inline-block}
 
-/* PAGE SELECTOR */
-.page-select{padding:0.875rem 1.25rem;border-bottom:1px solid #2a2a2a}
-.page-select label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#666;margin-bottom:6px;display:block}
-.page-select select{width:100%;background:#1e1e1e;border:1px solid #333;border-radius:3px;color:#f0f0f0;font-size:13px;padding:8px 10px;outline:none;font-family:'Sora',sans-serif}
+/* TEXT BLOCKS */
+.text-block{background:var(--surface2);border:1px solid var(--border);border-radius:4px;margin-bottom:0.75rem;cursor:pointer;transition:border-color .15s}
+.text-block:hover{border-color:var(--accent)}
+.text-block.selected{border-color:var(--accent)}
+.text-block-header{padding:0.75rem;display:flex;align-items:center;gap:0.75rem}
+.text-block-icon{width:32px;height:32px;background:var(--surface3);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.text-block-info{flex:1}
+.text-block-type{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)}
+.text-block-preview{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
 
-/* SEPARATOR */
-.sep{height:1px;background:#222;margin:0.75rem 0}
+/* DRAG-TO-REORDER */
+.reorder-list{display:flex;flex-direction:column;gap:0.5rem;padding:1rem 1.25rem}
+.reorder-item{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:0.75rem 1rem;display:flex;align-items:center;gap:0.75rem;cursor:grab;user-select:none;transition:border-color .15s}
+.reorder-item:hover{border-color:var(--accent)}
+.reorder-item.dragging{opacity:.4;border-color:var(--accent);cursor:grabbing}
+.reorder-item.drag-over{border-color:var(--accent);border-style:dashed}
+.drag-handle{color:var(--dim);font-size:14px;cursor:grab}
+.reorder-thumb{width:40px;height:40px;object-fit:cover;border-radius:3px;flex-shrink:0}
+.reorder-info{flex:1;min-width:0}
+.reorder-name{font-size:12px;font-weight:600;color:var(--text)}
+.reorder-cap{font-size:10px;color:var(--muted);margin-top:1px}
+.reorder-actions{display:flex;gap:4px}
 
-/* TAG */
-.tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:6px}
-.tag-live{background:rgba(39,174,96,0.2);color:#27ae60}
-.tag-manual{background:rgba(123,143,161,0.2);color:#7B8FA1}
+/* SECTION DIVIDERS in left panel */
+.panel-section{border-bottom:1px solid var(--border)}
+.panel-section-header{padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.panel-section-header:hover{background:var(--surface2)}
+.panel-section-title{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#888}
+.panel-section-body{padding:0 1.25rem 1rem}
+
+/* EMPTY STATE */
+.empty{padding:2rem 1.25rem;text-align:center;color:var(--dim);font-size:12px;line-height:1.7}
+.empty-icon{font-size:32px;margin-bottom:0.75rem;opacity:.4}
+
+/* BOTTOM BAR */
+.bottom-bar{padding:0.875rem 1.25rem;border-top:1px solid var(--border);background:var(--surface);display:flex;gap:0.5rem;align-items:center;flex-shrink:0}
+.bottom-bar .hint{font-size:10px;color:var(--dim);flex:1}
+
+/* NOTIFICATIONS */
+.notif{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--surface3);border:1px solid var(--border2);border-radius:4px;padding:0.875rem 1.25rem;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .2s;pointer-events:none;max-width:320px}
+.notif.show{opacity:1;transform:none}
+.notif.ok{border-color:var(--green);color:var(--green)}
+.notif.err{border-color:var(--red);color:var(--red)}
+.notif.info{border-color:var(--accent);color:var(--accent)}
+
+/* UPLOAD ZONE */
+.upload-zone{border:2px dashed var(--border2);border-radius:4px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:0.75rem}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--accent);background:rgba(123,143,161,.05)}
+.upload-zone p{font-size:11px;color:var(--muted);margin-top:0.5rem}
+input[type=file]{display:none}
+
+/* CHANGES SUMMARY */
+.change-item{padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;gap:0.5rem}
+.change-item .change-type{color:var(--accent);font-weight:600;flex-shrink:0}
 </style>
 </head>
 <body>
+<div class="app">
 
-<div class="header">
-  <h1>Site Editor <span class="tag tag-live">Live</span></h1>
-  <span id="last-saved">Not saved yet</span>
-</div>
-
-<div class="layout">
-  <div class="sidebar">
-    <div class="page-select">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <span class="topbar-logo">✦ Editor</span>
+    <div class="topbar-page">
       <label>Page</label>
-      <select id="page-selector" onchange="loadPage(this.value)">
-        <option value="index.html">Homepage</option>
+      <select id="page-sel" onchange="loadPage(this.value)">
         <option value="actor.html">Actor Profile</option>
         <option value="mediakit.html">Media Kit</option>
+        <option value="index.html">Homepage</option>
         <option value="contact.html">Contact</option>
       </select>
     </div>
+    <div class="topbar-right">
+      <div class="status-pill"><div class="dot" id="sdot"></div><span id="stxt">Ready</span></div>
+      <button class="btn btn-ghost btn-sm" onclick="openLive()">Open live ↗</button>
+      <button class="btn btn-green btn-sm" onclick="exportChanges()">📋 Copy for Claude</button>
+    </div>
+  </div>
 
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('content')">Content</button>
-      <button class="tab" onclick="switchTab('photos')">Photos</button>
+  <div class="main">
+
+    <!-- LEFT: TOOL PANELS -->
+    <div class="left">
+      <div class="tool-tabs">
+        <button class="tool-tab active" onclick="switchTool('images')" id="ttab-images">Images</button>
+        <button class="tool-tab" onclick="switchTool('text')" id="ttab-text">Text</button>
+        <button class="tool-tab" onclick="switchTool('order')" id="ttab-order">Order</button>
+        <button class="tool-tab" onclick="switchTool('changes')" id="ttab-changes">Changes</button>
+      </div>
+
+      <!-- IMAGES PANEL -->
+      <div class="tool-panel active" id="tp-images">
+        <div style="padding:1rem 1.25rem 0.5rem">
+          <p style="font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:0.75rem">Click any image in the preview → edit position, caption, badge, or replace it below.</p>
+          <div class="upload-zone" onclick="document.getElementById('upload-input').click()" id="upload-zone">
+            <div style="font-size:24px">📁</div>
+            <p>Drop new photo here or click to upload</p>
+          </div>
+          <input type="file" id="upload-input" accept="image/*" onchange="handleUpload(this)">
+        </div>
+        <div style="padding:0 1.25rem 0.5rem;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim)">All images on page</div>
+        <div style="flex:1;overflow-y:auto;padding:0 1.25rem 1rem" id="img-list">
+          <div class="empty"><div class="empty-icon">🖼</div>Loading images...</div>
+        </div>
+      </div>
+
+      <!-- TEXT PANEL -->
+      <div class="tool-panel" id="tp-text">
+        <div style="padding:1rem 1.25rem 0.5rem">
+          <p style="font-size:11px;color:var(--muted);line-height:1.6">Click any text in the preview to edit it, or select a block below.</p>
+        </div>
+        <div style="padding:0 1.25rem 0.5rem;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim)">Editable text blocks</div>
+        <div style="flex:1;overflow-y:auto;padding:0 1.25rem 1rem" id="text-list">
+          <div class="empty"><div class="empty-icon">✏️</div>Loading text blocks...</div>
+        </div>
+      </div>
+
+      <!-- ORDER PANEL -->
+      <div class="tool-panel" id="tp-order">
+        <div style="padding:1rem 1.25rem 0.5rem">
+          <p style="font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:0.5rem">Drag to reorder image sections on the page.</p>
+          <p style="font-size:10px;color:var(--dim);line-height:1.5">⚠️ Reordering records a change — Claude will apply it permanently when you copy changes.</p>
+        </div>
+        <div id="reorder-list" class="reorder-list"></div>
+      </div>
+
+      <!-- CHANGES PANEL -->
+      <div class="tool-panel" id="tp-changes">
+        <div style="padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:11px;font-weight:600;color:var(--muted)">Recorded changes</span>
+          <button class="btn btn-ghost btn-sm" onclick="changes=[];renderChanges();notify('Changes cleared','info')">Clear</button>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:0 1.25rem 1rem" id="changes-list">
+          <div class="empty"><div class="empty-icon">📝</div>No changes yet.</div>
+        </div>
+      </div>
     </div>
 
-    <!-- CONTENT TAB -->
-    <div class="panel active" id="tab-content">
-
-      <!-- HOMEPAGE -->
-      <div id="section-homepage" class="section">
-        <div class="section-header" onclick="toggleSection('homepage')">
-          <span class="section-title">Homepage</span>
-          <span class="section-arrow" id="arrow-homepage">›</span>
-        </div>
-        <div class="section-body" id="body-homepage">
-          <div class="ctrl">
-            <label>Tagline</label>
-            <textarea id="home-tagline">South African actor based in Seoul. Netflix & Disney+ credits. Fluent Korean. Eight years building a career inside the Korean film and television industry.</textarea>
-          </div>
-          <button class="btn btn-primary btn-full" onclick="applyHomepageEdits()">Apply changes</button>
-        </div>
+    <!-- CENTRE: PREVIEW -->
+    <div class="preview-wrap">
+      <div class="preview-bar">
+        <span>Preview</span>
+        <button class="btn btn-ghost btn-sm" onclick="setPW('100%')">Desktop</button>
+        <button class="btn btn-ghost btn-sm" onclick="setPW('768px')">Tablet</button>
+        <button class="btn btn-ghost btn-sm" onclick="setPW('390px')">Mobile</button>
       </div>
-
-      <!-- ACTOR PAGE -->
-      <div id="section-actor" class="section">
-        <div class="section-header" onclick="toggleSection('actor')">
-          <span class="section-title">Actor Profile</span>
-          <span class="section-arrow" id="arrow-actor">›</span>
-        </div>
-        <div class="section-body" id="body-actor">
-          <div class="ctrl">
-            <label>Bio paragraph 1</label>
-            <textarea id="actor-bio1">Justin John Harvey is a South African actor based in Seoul — one of the very few foreign actors to have built a sustained, fluent career inside the Korean film and television industry.</textarea>
-          </div>
-          <div class="ctrl">
-            <label>Bio paragraph 2</label>
-            <textarea id="actor-bio2">Cast across three productions by director Park Hoon-jung — The Witch: Part 2, The Childe, and Disney+ series Tyrant. In 2024, finished 4th on Netflix's Physical 100: Underground, the highest placement by any foreign national.</textarea>
-          </div>
-          <button class="btn btn-primary btn-full" onclick="applyActorEdits()">Apply changes</button>
-        </div>
-      </div>
-
-      <!-- PHOTO LABELS / CAPTIONS -->
-      <div id="section-captions" class="section">
-        <div class="section-header" onclick="toggleSection('captions')">
-          <span class="section-title">Photo captions</span>
-          <span class="section-arrow" id="arrow-captions">›</span>
-        </div>
-        <div class="section-body" id="body-captions">
-          <p style="font-size:11px;color:#555;margin-bottom:1rem">Click any photo in the preview, then edit its caption and position here.</p>
-          <div class="ctrl">
-            <label>Selected photo</label>
-            <input type="text" id="selected-photo" value="Click a photo to select it" readonly style="color:#555">
-          </div>
-          <div class="ctrl">
-            <label>Caption text</label>
-            <input type="text" id="photo-caption" value="" placeholder="e.g. The Childe · 2023">
-          </div>
-          <div class="ctrl">
-            <label>Image position</label>
-            <div class="slider-wrap">
-              <div class="slider-group">
-                <label>Left ↔ Right</label>
-                <input type="range" min="0" max="100" value="50" id="pos-x" oninput="updatePosition()">
-                <div class="val" id="pos-x-val">50%</div>
-              </div>
-              <div class="slider-group">
-                <label>Top ↕ Bottom</label>
-                <input type="range" min="0" max="100" value="20" id="pos-y" oninput="updatePosition()">
-                <div class="val" id="pos-y-val">20%</div>
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-primary btn-full" onclick="applyPhotoEdits()">Apply to photo</button>
-        </div>
-      </div>
-
-      <!-- MEDIA KIT STATS -->
-      <div id="section-stats" class="section">
-        <div class="section-header" onclick="toggleSection('stats')">
-          <span class="section-title">Media Kit stats</span>
-          <span class="section-arrow" id="arrow-stats">›</span>
-        </div>
-        <div class="section-body" id="body-stats">
-          <div class="ctrl"><label>IG Followers</label><input type="text" id="stat-ig" value="64k"></div>
-          <div class="ctrl"><label>Weekly Reach</label><input type="text" id="stat-reach" value="750k"></div>
-          <div class="ctrl"><label>Engagement Rate</label><input type="text" id="stat-eng" value="48.9%"></div>
-          <div class="ctrl"><label>YouTube Subscribers</label><input type="text" id="stat-yt" value="5.5k"></div>
-          <button class="btn btn-primary btn-full" onclick="applyStats()">Apply stats</button>
-        </div>
-      </div>
-
-      <!-- RATES -->
-      <div id="section-rates" class="section">
-        <div class="section-header" onclick="toggleSection('rates')">
-          <span class="section-title">Pricing rates</span>
-          <span class="section-arrow" id="arrow-rates">›</span>
-        </div>
-        <div class="section-body" id="body-rates">
-          <div class="ctrl"><label>Post + Stories (entry)</label><input type="text" id="rate-1" value="₩2M"></div>
-          <div class="ctrl"><label>Monthly Retainer</label><input type="text" id="rate-2" value="₩4.5M"></div>
-          <div class="ctrl"><label>3-Month Trial</label><input type="text" id="rate-3" value="₩4M"></div>
-          <div class="ctrl"><label>Brand Trip</label><input type="text" id="rate-4" value="₩8M"></div>
-          <div class="ctrl"><label>YouTube Dedicated</label><input type="text" id="rate-5" value="₩5M"></div>
-          <button class="btn btn-primary btn-full" onclick="applyRates()">Apply rates</button>
-        </div>
-      </div>
-
-      <!-- CONTACT -->
-      <div id="section-contact" class="section">
-        <div class="section-header" onclick="toggleSection('contact')">
-          <span class="section-title">Contact details</span>
-          <span class="section-arrow" id="arrow-contact">›</span>
-        </div>
-        <div class="section-body" id="body-contact">
-          <div class="ctrl"><label>Email</label><input type="text" id="contact-email" value="justin.irrelevance@gmail.com"></div>
-          <div class="ctrl"><label>Phone</label><input type="text" id="contact-phone" value="+82 10 5045 5269"></div>
-          <button class="btn btn-primary btn-full" onclick="applyContact()">Apply changes</button>
-        </div>
-      </div>
-
-    </div><!-- end content tab -->
-
-    <!-- PHOTOS TAB -->
-    <div class="panel" id="tab-photos">
-      <div style="padding:1.25rem">
-        <p style="font-size:11px;color:#555;margin-bottom:1rem;line-height:1.7">
-          To replace a photo: click it in the preview panel on the right. It will be highlighted. Then use the sliders in the Content tab to adjust position, or type a new filename below.
-        </p>
-        <div class="ctrl">
-          <label>Replace selected image with</label>
-          <select id="swap-photo-select">
-            <option value="">-- select a photo --</option>
-            <option value="assets/hero-main.jpg">hero-main.jpg (homepage hero)</option>
-            <option value="assets/hero-suit.jpg">hero-suit.jpg (black suit)</option>
-            <option value="assets/model-bw-face1.jpg">model-bw-face1.jpg</option>
-            <option value="assets/model-bw-face2.jpg">model-bw-face2.jpg</option>
-            <option value="assets/model-bw-face3.jpg">model-bw-face3.jpg</option>
-            <option value="assets/model-editorial-1.jpg">model-editorial-1.jpg (grey suit)</option>
-            <option value="assets/model-editorial-2.jpg">model-editorial-2.jpg (grey suit close)</option>
-            <option value="assets/model-editorial-3.jpg">model-editorial-3.jpg (turtleneck BW)</option>
-            <option value="assets/model-suit-white.jpg">model-suit-white.jpg (white shirt)</option>
-            <option value="assets/model-knit-beige.jpg">model-knit-beige.jpg (cream knit)</option>
-            <option value="assets/film-childe-1.jpg">film-childe-1.jpg (Tyrant hallway)</option>
-            <option value="assets/film-childe-2.jpg">film-childe-2.jpg (Childe face warm)</option>
-            <option value="assets/film-childe-3.jpg">film-childe-3.jpg (Childe closeup)</option>
-            <option value="assets/film-childe-4.jpg">film-childe-4.jpg (Tyrant subway)</option>
-            <option value="assets/film-physical100-suit.jpg">film-physical100-suit.jpg (P100 entry)</option>
-            <option value="assets/film-physical100-sculpture.jpg">film-physical100-sculpture.jpg (P100 sculpture)</option>
-            <option value="assets/film-physical100-wrestle.jpg">film-physical100-wrestle.jpg (P100 wrestle)</option>
-            <option value="assets/film-physical100-running.jpg">film-physical100-running.jpg (P100 running)</option>
-            <option value="assets/film-firstnight-1.jpg">film-firstnight-1.jpg (First Night set)</option>
-            <option value="assets/film-newtopia.jpg">film-newtopia.jpg (Newtopia)</option>
-            <option value="assets/film-witch2-2.jpg">film-witch2-2.jpg (Witch 2)</option>
-            <option value="assets/editorial-chair-dark.jpg">editorial-chair-dark.jpg (black chair)</option>
-            <option value="assets/lifestyle-gym-eating.jpg">lifestyle-gym-eating.jpg (ramen gym)</option>
-            <option value="assets/proj-exercise.jpg">proj-exercise.jpg (outdoor fitness)</option>
-            <option value="assets/proj-timetorun.jpg">proj-timetorun.jpg (Time to Run)</option>
-            <option value="assets/proj-freedom.jpg">proj-freedom.jpg (Freedom)</option>
-          </select>
-        </div>
-        <button class="btn btn-primary btn-full" onclick="swapSelectedPhoto()" style="margin-top:0.5rem">Swap photo</button>
-
-        <div class="sep"></div>
-
-        <p style="font-size:11px;color:#555;margin-bottom:0.75rem">All photos currently on actor page:</p>
-        <div id="photo-list"></div>
-      </div>
-    </div><!-- end photos tab -->
-
-    <div class="status">
-      <div class="status-dot" id="status-dot"></div>
-      <span id="status-text">Ready — changes apply to preview only</span>
-    </div>
-    <div style="padding:1rem 1.25rem;border-top:1px solid #222">
-      <p style="font-size:11px;color:#555;margin-bottom:0.75rem;line-height:1.6">When you're happy with the preview, send your changes to Claude with the button below.</p>
-      <button class="btn btn-primary btn-full" onclick="copyChanges()">📋 Copy changes for Claude</button>
-    </div>
-  </div><!-- end sidebar -->
-
-  <div class="preview">
-    <div style="background:#1a1a1a;padding:0.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2a2a2a">
-      <span style="font-size:11px;color:#666">Preview</span>
-      <div style="display:flex;gap:0.5rem">
-        <button class="btn btn-ghost" style="padding:5px 12px;font-size:10px" onclick="setPreviewWidth('100%')">Desktop</button>
-        <button class="btn btn-ghost" style="padding:5px 12px;font-size:10px" onclick="setPreviewWidth('768px')">Tablet</button>
-        <button class="btn btn-ghost" style="padding:5px 12px;font-size:10px" onclick="setPreviewWidth('390px')">Mobile</button>
-        <a href="actor.html" target="_blank" class="btn btn-ghost" style="padding:5px 12px;font-size:10px;text-decoration:none">Open →</a>
+      <div class="preview-viewport">
+        <iframe id="pv" src="actor.html" style="width:100%;height:calc(100vh - 160px)"></iframe>
       </div>
     </div>
-    <div id="preview-container" style="height:calc(100% - 40px);overflow:auto;background:#111;display:flex;justify-content:center;padding:1rem">
-      <iframe id="preview-frame" src="actor.html" style="width:100%;height:100%;border:none;background:#fff;border-radius:2px;box-shadow:0 4px 40px rgba(0,0,0,0.5)"></iframe>
+
+    <!-- RIGHT: PROPERTIES -->
+    <div class="right">
+      <div class="props-header" id="props-title">Nothing selected</div>
+      <div class="props-body" id="props-body">
+        <div class="empty">
+          <div class="empty-icon">👆</div>
+          Click any image or text in the preview to edit its properties here.
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <span class="hint" id="bottom-hint">Select something to edit</span>
+        <button class="btn btn-primary btn-sm" id="apply-btn" onclick="applyProps()" style="display:none">Apply</button>
+        <button class="btn btn-danger btn-sm" id="remove-btn" onclick="removeSelected()" style="display:none">Remove</button>
+      </div>
     </div>
+
   </div>
 </div>
 
+<!-- NOTIFICATION -->
+<div class="notif" id="notif"></div>
+
 <script>
-let selectedImg = null;
+// ─── STATE ───────────────────────────────────────────────
+let currentPage = 'actor.html';
+let selectedEl = null;
+let selectedType = null; // 'image' | 'text' | 'caption' | 'badge'
 let changes = [];
+let dragSrc = null;
 
-// Tab switching
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('tab-' + name).classList.add('active');
-}
+// ─── INIT ─────────────────────────────────────────────────
+const pv = document.getElementById('pv');
+pv.addEventListener('load', () => {
+  setTimeout(() => {
+    injectClickHandlers();
+    buildImageList();
+    buildTextList();
+    buildReorderList();
+  }, 600);
+});
 
-// Section toggle
-function toggleSection(name) {
-  const body = document.getElementById('body-' + name);
-  const arrow = document.getElementById('arrow-' + name);
-  body.classList.toggle('open');
-  arrow.classList.toggle('open');
-}
-
-// Load page in preview
 function loadPage(page) {
-  document.getElementById('preview-frame').src = page;
-  selectedImg = null;
-  document.getElementById('selected-photo').value = 'Click a photo to select it';
-  setTimeout(setupPhotoClick, 1500);
+  currentPage = page;
+  selectedEl = null;
+  selectedType = null;
+  showProps(null);
+  pv.src = page;
+  document.getElementById('page-sel').value = page;
 }
 
-// Preview width
-function setPreviewWidth(w) {
-  document.getElementById('preview-frame').style.width = w;
-  document.getElementById('preview-frame').style.maxWidth = w;
+function openLive() {
+  window.open(currentPage, '_blank');
 }
 
-// Setup click handlers on preview images
-function setupPhotoClick() {
+// ─── PREVIEW WIDTH ────────────────────────────────────────
+function setPW(w) {
+  pv.style.width = w;
+  pv.style.maxWidth = w;
+}
+
+// ─── INJECT CLICK HANDLERS INTO IFRAME ───────────────────
+function injectClickHandlers() {
   try {
-    const iframe = document.getElementById('preview-frame');
-    const doc = iframe.contentDocument;
+    const doc = pv.contentDocument;
+    // Images
     doc.querySelectorAll('img').forEach(img => {
-      img.style.cursor = 'crosshair';
-      img.addEventListener('click', function(e) {
-        e.stopPropagation();
-        // Remove previous highlight
-        doc.querySelectorAll('img').forEach(i => i.style.outline = '');
-        // Highlight selected
-        img.style.outline = '3px solid #7B8FA1';
-        selectedImg = img;
-        // Update sidebar
-        const src = img.getAttribute('src').split('/').pop();
-        document.getElementById('selected-photo').value = src;
-        // Parse current position
-        const pos = img.style.objectPosition || '50% 20%';
-        const parts = pos.replace(/%/g, '').split(' ');
-        const x = parseInt(parts[0]) || 50;
-        const y = parseInt(parts[1]) || 20;
-        document.getElementById('pos-x').value = x;
-        document.getElementById('pos-y').value = y;
-        document.getElementById('pos-x-val').textContent = x + '%';
-        document.getElementById('pos-y-val').textContent = y + '%';
-        // Get caption
-        const parent = img.closest('[class*="col"], [class*="pf"], .cover-img');
-        if (parent) {
-          const cap = parent.querySelector('.cap');
-          document.getElementById('photo-caption').value = cap ? cap.textContent : '';
-        }
-        // Switch to content tab + open captions section
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab')[0].classList.add('active');
-        document.getElementById('tab-content').classList.add('active');
-        document.getElementById('body-captions').classList.add('open');
-        document.getElementById('arrow-captions').classList.add('open');
-        setStatus('selected', `Selected: ${src}`);
-      });
+      img.style.cursor = 'pointer';
+      img.onclick = (e) => { e.stopPropagation(); selectImage(img); };
     });
+    // Text elements
+    const textSelectors = 'h1,h2,h3,h4,p,.cap,.bio,.press-q,.cover-name,.cover-quote,.cstat-n,.cstat-l,.ft2,.fs,.prc .prq,.prc .prs,.chip,.phv,.aud-n,.aud-l';
+    doc.querySelectorAll(textSelectors).forEach(el => {
+      el.style.cursor = 'text';
+      el.onclick = (e) => { e.stopPropagation(); selectText(el); };
+    });
+    // Captions and badges
+    doc.querySelectorAll('.cap,.badge').forEach(el => {
+      el.style.cursor = 'pointer';
+      el.onclick = (e) => { e.stopPropagation(); selectCaption(el); };
+    });
+    setStatus('green', 'Ready');
   } catch(e) {
-    console.log('iframe cross-origin issue - retry');
+    setStatus('amber', 'Cross-origin — click items directly');
   }
 }
 
-// Live position update while dragging slider
-function updatePosition() {
-  const x = document.getElementById('pos-x').value;
-  const y = document.getElementById('pos-y').value;
-  document.getElementById('pos-x-val').textContent = x + '%';
-  document.getElementById('pos-y-val').textContent = y + '%';
-  if (selectedImg) {
-    selectedImg.style.objectPosition = `${x}% ${y}%`;
-  }
-}
+// ─── SELECT HANDLERS ─────────────────────────────────────
+function selectImage(img) {
+  clearSelection();
+  selectedEl = img;
+  selectedType = 'image';
+  img.style.outline = '3px solid #7B8FA1';
+  img.style.outlineOffset = '-3px';
 
-// Apply photo position + caption changes
-function applyPhotoEdits() {
-  if (!selectedImg) { alert('Click a photo in the preview first'); return; }
-  const x = document.getElementById('pos-x').value;
-  const y = document.getElementById('pos-y').value;
-  const cap = document.getElementById('photo-caption').value;
-  const src = selectedImg.getAttribute('src').split('/').pop();
-  
-  selectedImg.style.objectPosition = `${x}% ${y}%`;
-  
-  // Update caption in iframe
-  const parent = selectedImg.closest('[class*="col"], [class*="pf"], .cover-img');
-  if (parent && cap) {
-    const capEl = parent.querySelector('.cap');
-    if (capEl) capEl.textContent = cap;
-  }
+  const src = img.getAttribute('src') || '';
+  const filename = src.split('/').pop();
+  const pos = img.style.objectPosition || '50% 20%';
+  const parts = pos.split(' ');
+  const x = parseInt(parts[0]) || 50;
+  const y = parseInt(parts[1]) || 20;
 
-  changes.push({type: 'photo', file: src, x, y, caption: cap});
-  setStatus('saved', `Applied: ${src} → ${x}% ${y}%`);
-}
+  // Find caption
+  const parent = img.parentElement;
+  const capEl = parent?.querySelector('.cap');
+  const badgeEl = parent?.querySelector('.badge');
 
-// Swap selected photo
-function swapSelectedPhoto() {
-  if (!selectedImg) { alert('Click a photo in the preview first'); return; }
-  const newSrc = document.getElementById('swap-photo-select').value;
-  if (!newSrc) { alert('Select a photo from the dropdown'); return; }
-  const oldSrc = selectedImg.getAttribute('src').split('/').pop();
-  selectedImg.setAttribute('src', newSrc);
-  changes.push({type: 'swap', from: oldSrc, to: newSrc.split('/').pop()});
-  setStatus('saved', `Swapped: ${oldSrc} → ${newSrc.split('/').pop()}`);
-}
-
-// Apply stats
-function applyStats() {
-  const frame = document.getElementById('preview-frame');
-  const doc = frame.contentDocument;
-  const updates = {
-    'stat-ig-followers': document.getElementById('stat-ig').value,
-    'stat-ig-reach': document.getElementById('stat-reach').value,
-    'stat-ig-eng': document.getElementById('stat-eng').value,
-    'stat-yt-subs': document.getElementById('stat-yt').value,
-  };
-  Object.entries(updates).forEach(([id, val]) => {
-    const el = doc.getElementById(id);
-    if (el) el.textContent = val;
+  showProps('image', {
+    filename, src, x, y,
+    caption: capEl?.textContent || '',
+    badge: badgeEl?.textContent || '',
+    badgeClass: badgeEl?.className || ''
   });
-  changes.push({type: 'stats', values: updates});
-  setStatus('saved', 'Stats updated in preview');
+
+  // Highlight in image list
+  document.querySelectorAll('.img-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.img-card').forEach(c => {
+    if (c.dataset.file === filename) c.classList.add('selected');
+  });
+
+  switchTool('images');
 }
 
-// Apply rates
-function applyRates() {
-  changes.push({type: 'rates', note: 'Rate changes — see values below', values: {
-    entry: document.getElementById('rate-1').value,
-    retainer: document.getElementById('rate-2').value,
-    trial: document.getElementById('rate-3').value,
-    trip: document.getElementById('rate-4').value,
-    youtube: document.getElementById('rate-5').value,
-  }});
-  setStatus('saved', 'Rates logged — send to Claude to apply');
+function selectText(el) {
+  clearSelection();
+  selectedEl = el;
+  selectedType = 'text';
+  el.style.outline = '2px solid #f39c12';
+  el.style.outlineOffset = '2px';
+
+  const tag = el.tagName.toLowerCase();
+  const classes = el.className;
+  showProps('text', {
+    tag, classes,
+    content: el.innerHTML.replace(/<[^>]*>/g, ' ').replace(/\s+/g,' ').trim(),
+    html: el.innerHTML
+  });
+  switchTool('text');
 }
 
-// Apply homepage edits
-function applyHomepageEdits() {
-  changes.push({type: 'homepage', tagline: document.getElementById('home-tagline').value});
-  setStatus('saved', 'Homepage changes logged');
+function selectCaption(el) {
+  clearSelection();
+  selectedEl = el;
+  selectedType = 'caption';
+  el.style.outline = '2px solid #e67e22';
+  el.style.outlineOffset = '2px';
+  showProps('caption', { content: el.textContent, isCaption: el.classList.contains('cap') });
 }
 
-// Apply actor edits
-function applyActorEdits() {
-  changes.push({type: 'actor-bio', bio1: document.getElementById('actor-bio1').value, bio2: document.getElementById('actor-bio2').value});
-  setStatus('saved', 'Bio changes logged');
+function clearSelection() {
+  try {
+    if (selectedEl) {
+      selectedEl.style.outline = '';
+      selectedEl.style.outlineOffset = '';
+    }
+  } catch(e){}
+  selectedEl = null;
+  selectedType = null;
 }
 
-// Apply contact
-function applyContact() {
-  changes.push({type: 'contact', email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value});
-  setStatus('saved', 'Contact changes logged');
-}
+// ─── PROPERTIES PANEL ─────────────────────────────────────
+function showProps(type, data) {
+  const title = document.getElementById('props-title');
+  const body = document.getElementById('props-body');
+  const applyBtn = document.getElementById('apply-btn');
+  const removeBtn = document.getElementById('remove-btn');
 
-// Copy changes as structured message for Claude
-function copyChanges() {
-  if (changes.length === 0) {
-    alert('No changes recorded yet. Make some changes first.');
+  if (!type) {
+    title.textContent = 'Nothing selected';
+    body.innerHTML = '<div class="empty"><div class="empty-icon">👆</div>Click any image or text in the preview.</div>';
+    applyBtn.style.display = 'none';
+    removeBtn.style.display = 'none';
+    document.getElementById('bottom-hint').textContent = 'Select something to edit';
     return;
   }
-  const msg = 'Please apply these changes to the site:\n\n' +
+
+  applyBtn.style.display = '';
+  removeBtn.style.display = '';
+
+  if (type === 'image') {
+    title.textContent = `Image: ${data.filename}`;
+    document.getElementById('bottom-hint').textContent = data.filename;
+
+    // Badge options
+    const badgeOptions = ['','bn','bd','bc','bk','fr2'].map(v => {
+      const labels = {
+        '': 'None', 'bn': 'Netflix', 'bd': 'Disney+', 'bc': 'Coupang Play',
+        'bk': 'Cinema', 'fr2': 'Music Video'
+      };
+      const selected = data.badgeClass.includes(v) && v !== '' ? 'selected' : '';
+      return `<option value="${v}" ${selected}>${labels[v]||v}</option>`;
+    }).join('');
+
+    body.innerHTML = `
+      <div class="prop-group">
+        <div class="prop-group-label">Position</div>
+        <div class="prop">
+          <label>Left ↔ Right (X)</label>
+          <div class="slider-item">
+            <input type="range" min="0" max="100" value="${data.x}" id="px" oninput="livePos()">
+            <div class="slider-val" id="pxv">${data.x}%</div>
+          </div>
+        </div>
+        <div class="prop">
+          <label>Top ↕ Bottom (Y)</label>
+          <div class="slider-item">
+            <input type="range" min="0" max="100" value="${data.y}" id="py" oninput="livePos()">
+            <div class="slider-val" id="pyv">${data.y}%</div>
+          </div>
+        </div>
+        <div class="prop-hint">Lower Y = shows top of image. Higher Y = shows bottom.</div>
+      </div>
+      <div class="prop-group">
+        <div class="prop-group-label">Caption & Label</div>
+        <div class="prop">
+          <label>Caption text</label>
+          <input type="text" id="pcap" value="${data.caption}" placeholder="e.g. The Childe · 2023">
+        </div>
+        <div class="prop">
+          <label>Badge / Platform</label>
+          <select id="pbadge">${badgeOptions}</select>
+        </div>
+      </div>
+      <div class="prop-group">
+        <div class="prop-group-label">Replace photo</div>
+        <div class="prop">
+          <label>Swap with</label>
+          <select id="pswap">
+            <option value="">-- keep current --</option>
+            ${getAllPhotoOptions(data.filename)}
+          </select>
+        </div>
+      </div>
+    `;
+  } else if (type === 'text') {
+    title.textContent = `Text: <${data.tag}>`;
+    removeBtn.style.display = 'none';
+    body.innerHTML = `
+      <div class="prop-group">
+        <div class="prop-group-label">Edit text</div>
+        <div class="prop">
+          <label>Content</label>
+          <textarea id="tedit" rows="5">${data.content}</textarea>
+          <div class="prop-hint">Plain text only. HTML tags will be stripped.</div>
+        </div>
+        <div class="prop">
+          <label>Element type</label>
+          <input type="text" value="${data.tag}.${data.classes.split(' ').filter(Boolean).join('.')}" readonly style="color:var(--dim)">
+        </div>
+      </div>
+    `;
+  } else if (type === 'caption') {
+    title.textContent = data.isCaption ? 'Caption' : 'Badge';
+    body.innerHTML = `
+      <div class="prop-group">
+        <div class="prop-group-label">Edit label</div>
+        <div class="prop">
+          <label>Text</label>
+          <input type="text" id="cedit" value="${data.content}">
+        </div>
+      </div>
+    `;
+  }
+}
+
+// Live preview position while dragging slider
+function livePos() {
+  const x = document.getElementById('px')?.value;
+  const y = document.getElementById('py')?.value;
+  if (x !== undefined) document.getElementById('pxv').textContent = x + '%';
+  if (y !== undefined) document.getElementById('pyv').textContent = y + '%';
+  if (selectedEl && selectedType === 'image') {
+    selectedEl.style.objectPosition = `${x}% ${y}%`;
+  }
+}
+
+// Apply changes from props panel
+function applyProps() {
+  if (!selectedEl) return;
+
+  if (selectedType === 'image') {
+    const x = document.getElementById('px')?.value || 50;
+    const y = document.getElementById('py')?.value || 20;
+    const cap = document.getElementById('pcap')?.value || '';
+    const badgeVal = document.getElementById('pbadge')?.value || '';
+    const swap = document.getElementById('pswap')?.value || '';
+    const filename = selectedEl.getAttribute('src').split('/').pop();
+
+    // Apply position
+    selectedEl.style.objectPosition = `${x}% ${y}%`;
+
+    // Update caption in iframe
+    const parent = selectedEl.parentElement;
+    const capEl = parent?.querySelector('.cap');
+    if (capEl && cap) capEl.textContent = cap;
+
+    // Update badge
+    const badgeEl = parent?.querySelector('.badge');
+    if (badgeEl && badgeVal) {
+      const badgeLabels = {'bn':'Netflix','bd':'Disney+','bc':'Coupang Play','bk':'Cinema','fr2':'Music Video'};
+      badgeEl.textContent = badgeLabels[badgeVal] || '';
+      badgeEl.className = 'badge ' + badgeVal;
+    }
+
+    // Swap photo
+    if (swap) {
+      selectedEl.setAttribute('src', swap);
+      changes.push({type:'swap', from: filename, to: swap.split('/').pop()});
+      notify(`Swapped: ${filename} → ${swap.split('/').pop()}`, 'ok');
+    }
+
+    changes.push({type:'img-pos', file: filename, x, y, caption: cap});
+    notify(`Applied: ${filename} → ${x}% ${y}%`, 'ok');
+    renderChanges();
+
+  } else if (selectedType === 'text') {
+    const newText = document.getElementById('tedit')?.value || '';
+    const tag = selectedEl.tagName.toLowerCase();
+    const preview = newText.substring(0, 40);
+    selectedEl.textContent = newText;
+    changes.push({type:'text', tag, classes: selectedEl.className, content: newText});
+    notify('Text updated in preview', 'ok');
+    renderChanges();
+
+  } else if (selectedType === 'caption') {
+    const newText = document.getElementById('cedit')?.value || '';
+    selectedEl.textContent = newText;
+    const parent = selectedEl.closest('[class*="col"],[class*="pf"]');
+    const img = parent?.querySelector('img');
+    const filename = img?.getAttribute('src')?.split('/').pop() || 'unknown';
+    changes.push({type:'caption', file: filename, text: newText});
+    notify('Caption updated', 'ok');
+    renderChanges();
+  }
+}
+
+// Remove selected element
+function removeSelected() {
+  if (!selectedEl) return;
+  if (!confirm('Remove this element from the preview? (This is a preview only — confirm with Claude to apply permanently)')) return;
+
+  const filename = selectedEl.getAttribute('src')?.split('/').pop() || 'element';
+  const parent = selectedEl.closest('.col,.pf,.pq');
+
+  if (parent) {
+    const grandParent = parent.parentElement;
+    if (grandParent) {
+      parent.remove();
+      changes.push({type:'remove', file: filename, description: `Remove ${filename} from page`});
+      notify(`Removed from preview: ${filename}`, 'info');
+      renderChanges();
+      buildImageList();
+      buildReorderList();
+      showProps(null);
+    }
+  }
+}
+
+// ─── IMAGE LIST ────────────────────────────────────────────
+function buildImageList() {
+  const list = document.getElementById('img-list');
+  try {
+    const doc = pv.contentDocument;
+    const imgs = [...doc.querySelectorAll('img')];
+    if (!imgs.length) { list.innerHTML = '<div class="empty"><div class="empty-icon">🖼</div>No images found</div>'; return; }
+
+    list.innerHTML = imgs.map((img, i) => {
+      const src = img.getAttribute('src') || '';
+      const filename = src.split('/').pop();
+      const pos = img.style.objectPosition || '50% 20%';
+      const parent = img.parentElement;
+      const cap = parent?.querySelector('.cap')?.textContent || '';
+      const badge = parent?.querySelector('.badge')?.textContent || '';
+      return `<div class="img-card" data-file="${filename}" data-idx="${i}" onclick="selectImageByIdx(${i})">
+        <div class="img-card-header">
+          <img src="${src}" class="img-thumb" onerror="this.style.background='#333';this.src=''">
+          <div class="img-info">
+            <div class="img-name">${filename}</div>
+            ${cap ? `<div class="img-caption">${cap}</div>` : ''}
+            ${badge ? `<span class="img-badge">${badge}</span>` : ''}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">🖼</div>Could not load images</div>';
+  }
+}
+
+function selectImageByIdx(idx) {
+  try {
+    const imgs = [...pv.contentDocument.querySelectorAll('img')];
+    if (imgs[idx]) selectImage(imgs[idx]);
+  } catch(e){}
+}
+
+// ─── TEXT LIST ─────────────────────────────────────────────
+function buildTextList() {
+  const list = document.getElementById('text-list');
+  try {
+    const doc = pv.contentDocument;
+    const blocks = [
+      { sel: '.cover-name', label: 'Cover name', icon: 'H' },
+      { sel: '.cover-quote', label: 'Cover quote', icon: '"' },
+      { sel: 'h2', label: 'Section headings', icon: 'H2', multiple: true },
+      { sel: 'p', label: 'Body paragraphs', icon: '¶', multiple: true },
+      { sel: '.cap', label: 'Photo captions', icon: '🏷', multiple: true },
+      { sel: '.press-q', label: 'Press quotes', icon: '"', multiple: true },
+      { sel: '.press-src,.prs', label: 'Press sources', icon: '📰', multiple: true },
+      { sel: '.chip', label: 'Skills chips', icon: '●', multiple: true },
+      { sel: '.cstat-n', label: 'Cover stats', icon: '#', multiple: true },
+      { sel: '.film-title,.ft2', label: 'Film titles', icon: '🎬', multiple: true },
+    ];
+
+    let html = '';
+    blocks.forEach(b => {
+      const els = [...doc.querySelectorAll(b.sel)];
+      if (!els.length) return;
+      if (b.multiple) {
+        els.forEach((el, i) => {
+          const preview = el.textContent.trim().substring(0, 50);
+          if (!preview) return;
+          html += `<div class="text-block" onclick="selectTextFromList('${b.sel}', ${i})">
+            <div class="text-block-header">
+              <div class="text-block-icon">${b.icon}</div>
+              <div class="text-block-info">
+                <div class="text-block-type">${b.label}</div>
+                <div class="text-block-preview">${preview}</div>
+              </div>
+            </div>
+          </div>`;
+        });
+      } else {
+        const el = els[0];
+        const preview = el.textContent.trim().substring(0, 50);
+        html += `<div class="text-block" onclick="selectTextFromList('${b.sel}', 0)">
+          <div class="text-block-header">
+            <div class="text-block-icon">${b.icon}</div>
+            <div class="text-block-info">
+              <div class="text-block-type">${b.label}</div>
+              <div class="text-block-preview">${preview}</div>
+            </div>
+          </div>
+        </div>`;
+      }
+    });
+    list.innerHTML = html || '<div class="empty">No editable text found</div>';
+  } catch(e) {
+    list.innerHTML = '<div class="empty">Could not load text blocks</div>';
+  }
+}
+
+function selectTextFromList(sel, idx) {
+  try {
+    const els = [...pv.contentDocument.querySelectorAll(sel)];
+    if (els[idx]) {
+      selectText(els[idx]);
+      els[idx].scrollIntoView({behavior:'smooth', block:'center'});
+      switchTool('text');
+    }
+  } catch(e){}
+}
+
+// ─── REORDER ──────────────────────────────────────────────
+function buildReorderList() {
+  const list = document.getElementById('reorder-list');
+  try {
+    const doc = pv.contentDocument;
+    // Get all major image sections
+    const sections = [...doc.querySelectorAll('.pf,.pg2,.pg3,.pgwp,.pq,.ts,.tsec')].filter(s => s.querySelector('img'));
+    if (!sections.length) { list.innerHTML = '<div class="empty" style="padding:1rem">No reorderable sections found</div>'; return; }
+
+    list.innerHTML = sections.slice(0,20).map((sec, i) => {
+      const img = sec.querySelector('img');
+      const cap = sec.querySelector('.cap')?.textContent || '';
+      const src = img?.getAttribute('src') || '';
+      const filename = src.split('/').pop();
+      return `<div class="reorder-item" draggable="true" data-idx="${i}" id="ri-${i}"
+          ondragstart="dragStart(event,${i})" ondragover="dragOver(event,${i})"
+          ondrop="dragDrop(event,${i})" ondragleave="dragLeave(event,${i})">
+        <span class="drag-handle">⠿</span>
+        <img src="${src}" class="reorder-thumb" onerror="this.style.background='#333';this.src=''">
+        <div class="reorder-info">
+          <div class="reorder-name">${filename}</div>
+          <div class="reorder-cap">${cap || 'No caption'}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    window._reorderSections = sections;
+  } catch(e) {
+    list.innerHTML = '<div class="empty" style="padding:1rem">Could not load sections</div>';
+  }
+}
+
+let dragIdx = null;
+function dragStart(e, idx) {
+  dragIdx = idx;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function dragOver(e, idx) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.reorder-item').forEach(i => i.classList.remove('drag-over'));
+  document.getElementById('ri-' + idx)?.classList.add('drag-over');
+}
+function dragLeave(e, idx) {
+  document.getElementById('ri-' + idx)?.classList.remove('drag-over');
+}
+function dragDrop(e, toIdx) {
+  e.preventDefault();
+  document.querySelectorAll('.reorder-item').forEach(i => { i.classList.remove('dragging'); i.classList.remove('drag-over'); });
+  if (dragIdx === null || dragIdx === toIdx) return;
+
+  try {
+    const secs = window._reorderSections;
+    const from = secs[dragIdx];
+    const to = secs[toIdx];
+    const parent = from.parentElement;
+    if (!parent) return;
+
+    // DOM swap
+    const fromNext = from.nextSibling;
+    if (toIdx > dragIdx) {
+      parent.insertBefore(from, to.nextSibling);
+    } else {
+      parent.insertBefore(from, to);
+    }
+
+    const fromImg = from.querySelector('img')?.getAttribute('src')?.split('/').pop() || `section-${dragIdx}`;
+    const toImg = to.querySelector('img')?.getAttribute('src')?.split('/').pop() || `section-${toIdx}`;
+    changes.push({type:'reorder', from: fromImg, to: toImg, fromIdx: dragIdx, toIdx});
+    notify(`Moved ${fromImg} ${dragIdx < toIdx ? 'down' : 'up'}`, 'info');
+    renderChanges();
+    buildReorderList();
+  } catch(e2) {
+    notify('Could not reorder — try a different section', 'err');
+  }
+  dragIdx = null;
+}
+
+// ─── UPLOAD ────────────────────────────────────────────────
+function handleUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    changes.push({type:'upload', filename: file.name, dataUrl, note: 'New photo uploaded — Claude will add it to assets'});
+    notify(`Uploaded: ${file.name} — apply changes to add it to the site`, 'info');
+    renderChanges();
+    // Show it in the swap dropdown
+    const sel = document.getElementById('pswap');
+    if (sel) {
+      const opt = document.createElement('option');
+      opt.value = `assets/${file.name}`;
+      opt.textContent = `${file.name} (just uploaded)`;
+      sel.prepend(opt);
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+// Drag onto upload zone
+const uz = document.getElementById('upload-zone');
+uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('dragover'); });
+uz.addEventListener('dragleave', () => uz.classList.remove('dragover'));
+uz.addEventListener('drop', e => {
+  e.preventDefault(); uz.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    document.getElementById('upload-input').files = e.dataTransfer.files;
+    handleUpload(document.getElementById('upload-input'));
+  }
+});
+
+// ─── CHANGES ──────────────────────────────────────────────
+function renderChanges() {
+  const list = document.getElementById('changes-list');
+  const tab = document.getElementById('ttab-changes');
+  tab.textContent = changes.length ? `Changes (${changes.length})` : 'Changes';
+
+  if (!changes.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">📝</div>No changes yet.</div>';
+    return;
+  }
+  list.innerHTML = changes.map((c, i) => {
+    let desc = '';
+    if (c.type === 'img-pos') desc = `${c.file} → ${c.x}% ${c.y}%${c.caption ? `, caption: "${c.caption}"` : ''}`;
+    else if (c.type === 'swap') desc = `Replace ${c.from} with ${c.to}`;
+    else if (c.type === 'text') desc = `Text update: "${c.content.substring(0,40)}..."`;
+    else if (c.type === 'caption') desc = `Caption on ${c.file}: "${c.text}"`;
+    else if (c.type === 'remove') desc = c.description;
+    else if (c.type === 'reorder') desc = `Move ${c.from} (pos ${c.fromIdx}) → pos ${c.toIdx}`;
+    else if (c.type === 'upload') desc = `New photo: ${c.filename}`;
+    else desc = JSON.stringify(c).substring(0, 60);
+    return `<div class="change-item">
+      <span class="change-type">${c.type}</span>
+      <span>${desc}</span>
+    </div>`;
+  }).join('');
+}
+
+function exportChanges() {
+  if (!changes.length) { notify('No changes to copy', 'info'); return; }
+  const msg = `Please apply these changes to ${currentPage}:\n\n` +
     changes.map((c, i) => {
-      if (c.type === 'photo') return `${i+1}. Photo "${c.file}": position ${c.x}% ${c.y}%${c.caption ? ', caption: "' + c.caption + '"' : ''}`;
+      if (c.type === 'img-pos') return `${i+1}. Photo "${c.file}": position ${c.x}% ${c.y}%${c.caption ? `, caption: "${c.caption}"` : ''}`;
       if (c.type === 'swap') return `${i+1}. Replace ${c.from} with ${c.to}`;
-      if (c.type === 'stats') return `${i+1}. Update stats: ${JSON.stringify(c.values)}`;
-      if (c.type === 'rates') return `${i+1}. Update rates: ${JSON.stringify(c.values)}`;
-      if (c.type === 'homepage') return `${i+1}. Homepage tagline: "${c.tagline}"`;
-      if (c.type === 'actor-bio') return `${i+1}. Actor bio:\n   P1: ${c.bio1}\n   P2: ${c.bio2}`;
-      if (c.type === 'contact') return `${i+1}. Contact: email=${c.email}, phone=${c.phone}`;
+      if (c.type === 'text') return `${i+1}. Text change — ${c.tag}.${c.classes}: "${c.content}"`;
+      if (c.type === 'caption') return `${i+1}. Caption on ${c.file}: "${c.text}"`;
+      if (c.type === 'remove') return `${i+1}. ${c.description}`;
+      if (c.type === 'reorder') return `${i+1}. Move image at position ${c.fromIdx} to position ${c.toIdx} (${c.from} before/after ${c.to})`;
+      if (c.type === 'upload') return `${i+1}. New photo uploaded: ${c.filename} — add to assets folder`;
       return `${i+1}. ${JSON.stringify(c)}`;
     }).join('\n');
-  navigator.clipboard.writeText(msg).then(() => {
-    setStatus('saved', `${changes.length} changes copied to clipboard — paste into Claude`);
-  }).catch(() => {
-    prompt('Copy this and paste into Claude:', msg);
-  });
+
+  navigator.clipboard.writeText(msg)
+    .then(() => notify(`${changes.length} change${changes.length>1?'s':''} copied — paste into Claude`, 'ok'))
+    .catch(() => { prompt('Copy this:', msg); });
 }
 
-// Status helper
+// ─── HELPERS ──────────────────────────────────────────────
+function switchTool(name) {
+  document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('ttab-' + name).classList.add('active');
+  document.getElementById('tp-' + name).classList.add('active');
+}
+
 function setStatus(state, msg) {
-  const dot = document.getElementById('status-dot');
-  const text = document.getElementById('status-text');
-  dot.className = 'status-dot';
-  if (state === 'saving') dot.classList.add('saving');
-  else if (state === 'saved') dot.classList.add('saved');
-  else if (state === 'error') dot.classList.add('error');
-  text.textContent = msg;
-  document.getElementById('last-saved').textContent = 'Last action: ' + new Date().toLocaleTimeString();
+  const dot = document.getElementById('sdot');
+  dot.className = 'dot';
+  if (state === 'green') dot.classList.add('green');
+  else if (state === 'amber') dot.classList.add('amber');
+  else if (state === 'red') dot.classList.add('red');
+  document.getElementById('stxt').textContent = msg;
 }
 
-// Init on page load
-window.addEventListener('load', () => {
-  setTimeout(setupPhotoClick, 2000);
-  document.getElementById('preview-frame').addEventListener('load', () => {
-    setTimeout(setupPhotoClick, 500);
-  });
-});
+function notify(msg, type='ok') {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.className = `notif ${type} show`;
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+function getAllPhotoOptions(current) {
+  const photos = [
+    'hero-main.jpg','hero-suit.jpg','model-bw-face1.jpg','model-bw-face2.jpg',
+    'model-bw-face3.jpg','model-editorial-1.jpg','model-editorial-2.jpg',
+    'model-editorial-3.jpg','model-suit-white.jpg','model-knit-beige.jpg',
+    'film-childe-1.jpg','film-childe-2.jpg','film-childe-3.jpg','film-childe-4.jpg',
+    'film-physical100-suit.jpg','film-physical100-sculpture.jpg',
+    'film-physical100-wrestle.jpg','film-physical100-running.jpg',
+    'film-firstnight-1.jpg','film-newtopia.jpg','film-witch2-2.jpg',
+    'editorial-chair-dark.jpg','lifestyle-gym-eating.jpg',
+    'proj-exercise.jpg','proj-timetorun.jpg','proj-freedom.jpg',
+    'photo-red.jpg','photo-crop.png'
+  ];
+  return photos
+    .filter(p => p !== current)
+    .map(p => `<option value="assets/${p}">${p}</option>`)
+    .join('');
+}
 </script>
 </body>
 </html>
