@@ -134,6 +134,12 @@ html,body{height:100%;font-family:'Sora',sans-serif;overflow:hidden}
 }
 .socials a:hover{color:rgba(255,255,255,0.85)}
 
+.lang{position:absolute;top:2rem;right:2.5rem;z-index:20;display:flex;align-items:center;gap:12px}
+.lang a{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s}
+.lang a.active{color:rgba(255,255,255,0.9);border-bottom:1px solid rgba(255,255,255,0.5);padding-bottom:1px}
+.lang a:hover{color:rgba(255,255,255,0.8)}
+.lang-div{color:rgba(255,255,255,0.2);font-size:10px}
+
 @media(max-width:768px){
   html,body{overflow:auto}
   .wrap{height:100svh;min-height:600px}
@@ -142,6 +148,7 @@ html,body{height:100%;font-family:'Sora',sans-serif;overflow:hidden}
   .btn-title{font-size:20px}
   .bottom{padding:2rem 1.5rem 2.5rem}
   .name-tag{top:1.5rem;left:1.5rem}
+  .lang{top:1.5rem;right:1.5rem}
 }
 </style>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -158,6 +165,13 @@ html,body{height:100%;font-family:'Sora',sans-serif;overflow:hidden}
   <!-- NAME TAG -->
   <div class="name-tag">
     <span>Justin Harvey</span>
+  </div>
+
+  <!-- LANG TOGGLE -->
+  <div class="lang">
+    <a href="index.html" class="active">EN</a>
+    <span class="lang-div">/</span>
+    <a href="ko/index.html">KO</a>
   </div>
 
   <!-- BOTTOM: BUTTONS + SOCIALS -->
@@ -185,7 +199,6 @@ html,body{height:100%;font-family:'Sora',sans-serif;overflow:hidden}
     <div class="socials">
       <a href="https://www.instagram.com/justin.irrelevance/" target="_blank">Instagram</a>
       <a href="https://www.youtube.com/@Justin.irrelevance" target="_blank">YouTube</a>
-      <a href="ko/index.html">한국어</a>
       <a href="https://www.imdb.com/name/nm14684840/" target="_blank">IMDb</a>
       <a href="contact.html">Contact</a>
     </div>
