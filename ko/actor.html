@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>저스틴 하비 — 배우 프로필</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Noto Sans KR',sans-serif;background:#0c0c0c;color:#fff;line-height:1.6}
+img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.25rem 2.5rem;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.7),transparent);
+}
+.nav-name{font-family:'Noto Serif KR',serif;font-size:12px;font-weight:400;letter-spacing:0.18em;color:rgba(255,255,255,0.8);text-decoration:none}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+.nav-right a{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s}
+.nav-right a:hover,.nav-right a.active{color:rgba(255,255,255,0.85)}
+.nav-div{color:rgba(255,255,255,0.18);font-size:10px}
+
+/* HERO — full bleed portrait */
+.hero{
+  height:100vh;min-height:700px;
+  position:relative;overflow:hidden;background:#0c0c0c;
+}
+.hero img{object-position:50% 12%;filter:brightness(0.72)}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,0.1) 60%,rgba(0,0,0,0.88) 100%);
+}
+.hero-text{
+  position:absolute;bottom:3.5rem;left:3rem;right:3rem;
+}
+.hero-kicker{font-size:10px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:1rem}
+.hero-name{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(52px,8vw,100px);
+  font-weight:700;line-height:0.9;
+  letter-spacing:-0.02em;color:#fff;
+  margin-bottom:1.25rem;
+}
+.hero-name em{display:block;font-style:normal;color:rgba(255,255,255,0.22);font-weight:300;font-size:0.72em}
+.hero-tags{display:flex;gap:10px;flex-wrap:wrap}
+.hero-tag{
+  font-size:10px;font-weight:500;letter-spacing:0.12em;
+  padding:5px 12px;border:1px solid rgba(255,255,255,0.25);
+  border-radius:2px;color:rgba(255,255,255,0.65);
+}
+
+/* BASICS */
+.basics{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.basics-block{
+  padding:3.5rem;
+  border-right:1px solid rgba(255,255,255,0.07);
+}
+.basics-block:last-child{border-right:none}
+.basics-label{font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1.5rem}
+.basics-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 2rem}
+.bi-l{font-size:9px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:4px}
+.bi-v{font-size:15px;font-weight:400;color:#fff}
+
+/* FULL-BLEED PHOTO PAIRS */
+.pg2{display:grid;grid-template-columns:1fr 1fr;height:70vh;min-height:500px}
+.pg2 .col{position:relative;overflow:hidden}
+.pg2 .col img{transition:transform 0.6s ease}
+.pg2 .col:hover img{transform:scale(1.03)}
+.pg2 .cap{
+  position:absolute;bottom:1.5rem;left:1.5rem;
+  font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.5);
+}
+
+.pg1{height:80vh;min-height:500px;position:relative;overflow:hidden}
+.pg1 img{object-position:50% 20%}
+
+/* SECTION WRAPPER */
+.sec{padding:5rem 0}
+.wrap{max-width:1100px;margin:0 auto;padding:0 3rem}
+
+/* SECTION HEADER */
+.sec-label{font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem}
+.sec-title{font-family:'Noto Serif KR',serif;font-size:clamp(28px,3.5vw,44px);font-weight:600;line-height:1.15;margin-bottom:2.5rem;color:#fff}
+.sec-title em{font-style:normal;color:rgba(255,255,255,0.22);font-weight:300}
+
+/* FILMOGRAPHY TABLE */
+.fcat{
+  font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);padding:1.5rem 0 0.75rem;
+  border-top:1px solid rgba(255,255,255,0.07);margin-top:1.5rem;
+}
+.fcat:first-child{margin-top:0;border-top:none}
+.frow{
+  display:flex;align-items:baseline;gap:1.5rem;
+  padding:0.85rem 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.fy{font-size:11px;color:rgba(255,255,255,0.28);min-width:38px;font-weight:300}
+.ft2{font-size:16px;font-weight:500;color:#fff;margin-bottom:3px;flex:1}
+.fs{font-size:11px;color:rgba(255,255,255,0.38);font-weight:300}
+.fb{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;flex-shrink:0}
+.fn2{background:rgba(229,9,20,0.15);color:#e50914}
+.fd2{background:rgba(0,120,215,0.12);color:#4da6ff}
+.fc2{background:rgba(255,180,0,0.12);color:#ffb400}
+.fm2{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5)}
+.fr2{background:rgba(180,50,200,0.12);color:#d46aec}
+
+/* PRESS */
+.press-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,0.07);margin-top:2rem}
+.press-item{
+  background:#0c0c0c;padding:2rem 2.25rem;
+  text-decoration:none;
+  transition:background 0.2s;
+  display:block;
+}
+.press-item:hover{background:#141414}
+.press-outlet{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.75rem}
+.press-headline{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:400;color:#fff;line-height:1.5;margin-bottom:0.5rem}
+.press-arrow{font-size:14px;color:rgba(255,255,255,0.25);transition:transform 0.15s,color 0.15s}
+.press-item:hover .press-arrow{transform:translate(3px,-3px);color:rgba(255,255,255,0.7)}
+
+/* FOOTER */
+footer{
+  padding:3rem;border-top:1px solid rgba(255,255,255,0.07);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.foot-name{font-family:'Noto Serif KR',serif;font-size:12px;color:rgba(255,255,255,0.35);letter-spacing:0.12em}
+.foot-links{display:flex;gap:2rem}
+.foot-links a{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.2s}
+.foot-links a:hover{color:rgba(255,255,255,0.7)}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  .hero-text{bottom:2.5rem;left:1.5rem;right:1.5rem}
+  .basics{grid-template-columns:1fr}
+  .basics-block{padding:2rem 1.5rem;border-right:none;border-bottom:1px solid rgba(255,255,255,0.07)}
+  .pg2{grid-template-columns:1fr;height:auto}
+  .pg2 .col{height:60vw;min-height:260px}
+  .wrap{padding:0 1.5rem}
+  .sec{padding:3.5rem 0}
+  .press-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-name" href="index.html">JUSTIN HARVEY</a>
+  <div class="nav-right">
+    <a href="actor.html" class="active">배우 프로필</a>
+    <a href="mediakit.html">미디어 킷</a>
+    <span class="nav-div">/</span>
+    <a href="../actor.html">EN</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="../assets/headshot-bw-suit.jpg" alt="저스틴 하비">
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <div class="hero-kicker">배우 · 서울</div>
+    <div class="hero-name">
+      저스틴 하비
+      <em>Justin Harvey</em>
+    </div>
+    <div class="hero-tags">
+      <span class="hero-tag">Netflix</span>
+      <span class="hero-tag">Disney+</span>
+      <span class="hero-tag">Coupang Play</span>
+      <span class="hero-tag">한국어 가능</span>
+      <span class="hero-tag">남아공 출신</span>
+    </div>
+  </div>
+</div>
+
+<!-- BASIC DETAILS -->
+<div class="basics">
+  <div class="basics-block">
+    <div class="basics-label">기본 정보</div>
+    <div class="basics-grid">
+      <div><div class="bi-l">국적</div><div class="bi-v">남아프리카공화국</div></div>
+      <div><div class="bi-l">거주지</div><div class="bi-v">서울, 대한민국</div></div>
+      <div><div class="bi-l">신장</div><div class="bi-v">179 cm</div></div>
+      <div><div class="bi-l">체중</div><div class="bi-v">83 kg</div></div>
+      <div><div class="bi-l">언어</div><div class="bi-v">한국어 · 영어</div></div>
+      <div><div class="bi-l">데뷔</div><div class="bi-v">백두산 (2019)</div></div>
+    </div>
+  </div>
+  <div class="basics-block">
+    <div class="basics-label">특기 / 훈련</div>
+    <div class="basics-grid">
+      <div><div class="bi-l">연기</div><div class="bi-v">Lucid Body · Meisner</div></div>
+      <div><div class="bi-l">격투</div><div class="bi-v">무에타이 · 스턴트</div></div>
+      <div><div class="bi-l">수중</div><div class="bi-v">고급 수영 · 스쿠버</div></div>
+      <div><div class="bi-l">운동</div><div class="bi-v">트라이애슬론 · HYROX</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDITORIAL GRID 1 -->
+<div class="pg2">
+  <div class="col">
+    <img src="../assets/film-childe-1.jpg" alt="저스틴 하비" style="object-position:50% 25%">
+    <div class="cap">폭군 / Disney+</div>
+  </div>
+  <div class="col">
+    <img src="../assets/headshot-bw-turtleneck.jpg" alt="저스틴 하비" style="object-position:50% 15%">
+  </div>
+</div>
+
+<!-- FILMOGRAPHY -->
+<div class="sec" style="background:#0c0c0c">
+  <div class="wrap">
+    <div class="sec-label">경력</div>
+    <div class="sec-title">필모그래피 <em>/ 출연작</em></div>
+
+    <div class="fcat">드라마 · 스트리밍</div>
+
+    <div class="frow">
+      <div class="fy">2026</div>
+      <div style="flex:1">
+        <div class="ft2">현혹 (Portraits of Delusion)</div>
+        <div class="fs">감독: 한재림 — 개봉 예정</div>
+      </div>
+      <span class="fb fd2">Disney+</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2026</div>
+      <div style="flex:1">
+        <div class="ft2">킬러들의 쇼핑몰 (A Shop for Killers)</div>
+        <div class="fs">조연 — 개봉 예정</div>
+      </div>
+      <span class="fb fd2">Disney+</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2025</div>
+      <div style="flex:1">
+        <div class="ft2">뉴토피아 (Newtopia)</div>
+        <div class="fs">파울로 역 · 감독: 윤성현</div>
+      </div>
+      <span class="fb fc2">Coupang Play</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2025</div>
+      <div style="flex:1">
+        <div class="ft2">공작부인: 첫날밤을 보여드리오</div>
+        <div class="fs">마크 역 · 시대극</div>
+      </div>
+      <span class="fb fc2">Coupang Play</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2024</div>
+      <div style="flex:1">
+        <div class="ft2">폭군 (Tyrant)</div>
+        <div class="fs">크로코다일 역 · 감독: 박훈정 · Disney+ 한국 1위</div>
+      </div>
+      <span class="fb fd2">Disney+</span>
+    </div>
+
+    <div class="fcat">영화</div>
+
+    <div class="frow">
+      <div class="fy">2026</div>
+      <div style="flex:1">
+        <div class="ft2">부활남 (Resurrection Man)</div>
+        <div class="fs">감독: 백종열</div>
+      </div>
+      <span class="fb fm2">극장</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2023</div>
+      <div style="flex:1">
+        <div class="ft2">하이재킹 / 폭군 원작 (The Childe)</div>
+        <div class="fs">감독: 박훈정</div>
+      </div>
+      <span class="fb fm2">극장</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2022</div>
+      <div style="flex:1">
+        <div class="ft2">마녀 Part 2. The Other One</div>
+        <div class="fs">톰 역 · 감독: 박훈정</div>
+      </div>
+      <span class="fb fm2">극장</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2019</div>
+      <div style="flex:1">
+        <div class="ft2">백두산</div>
+        <div class="fs">감독: 이해준 · 누적 관객 825만 명</div>
+      </div>
+      <span class="fb fm2">극장</span>
+    </div>
+
+    <div class="fcat">리얼리티 · 뮤직비디오</div>
+
+    <div class="frow">
+      <div class="fy">2024</div>
+      <div style="flex:1">
+        <div class="ft2">피지컬: 100 시즌 2</div>
+        <div class="fs">4위 · 외국인 역대 최고 순위</div>
+      </div>
+      <span class="fb fn2">Netflix</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2024</div>
+      <div style="flex:1">
+        <div class="ft2">좀비버스: 뉴 블러드</div>
+        <div class="fs">출연</div>
+      </div>
+      <span class="fb fn2">Netflix</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2024</div>
+      <div style="flex:1">
+        <div class="ft2">Easy Lover — JYP 엔터테인먼트</div>
+        <div class="fs">JYP Entertainment</div>
+      </div>
+      <span class="fb fr2">뮤직비디오</span>
+    </div>
+
+    <div class="frow">
+      <div class="fy">2024</div>
+      <div style="flex:1">
+        <div class="ft2">Untold — ENHYPEN</div>
+        <div class="fs">감독: 이충현</div>
+      </div>
+      <span class="fb fr2">뮤직비디오</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- EDITORIAL GRID 2 -->
+<div class="pg2">
+  <div class="col">
+    <img src="../assets/film-newtopia-1.jpg" alt="뉴토피아" style="object-position:50% 30%">
+    <div class="cap">뉴토피아 / Coupang Play</div>
+  </div>
+  <div class="col">
+    <img src="../assets/film-physical100-suit.jpg" alt="피지컬 100" style="object-position:50% 35%">
+    <div class="cap">피지컬: 100 / Netflix</div>
+  </div>
+</div>
+
+<!-- FULL BLEED -->
+<div class="pg1">
+  <img src="../assets/film-witch2-2.jpg" alt="마녀 2" style="object-position:50% 30%">
+</div>
+
+<!-- PRESS / ARTICLES -->
+<div class="sec" style="background:#0f0f0f">
+  <div class="wrap">
+    <div class="sec-label">언론 보도</div>
+    <div class="sec-title">미디어 <em>/ 기사</em></div>
+
+    <div class="press-grid">
+
+      <a class="press-item" href="https://www.koreaherald.com/article/3407249" target="_blank" rel="noopener">
+        <div class="press-outlet">Korea Herald</div>
+        <div class="press-headline">"피지컬: 100 시즌 2, 최고의 외국인 참가자 저스틴 하비가 배우 꿈 키운다"</div>
+        <div class="press-arrow">↗</div>
+      </a>
+
+      <a class="press-item" href="https://www.koreaherald.com/article/3391891" target="_blank" rel="noopener">
+        <div class="press-outlet">Korea Herald</div>
+        <div class="press-headline">"남아공 출신 저스틴, 피지컬:100 시즌2 외국인 최고 순위 4위 기록"</div>
+        <div class="press-arrow">↗</div>
+      </a>
+
+      <a class="press-item" href="https://sports.khan.co.kr/entertainment/sk_index.html?art_id=202402221527003" target="_blank" rel="noopener">
+        <div class="press-outlet">스포츠경향</div>
+        <div class="press-headline">"피지컬100 저스틴, 뛰어난 운동 능력과 한국어 실력으로 눈길"</div>
+        <div class="press-arrow">↗</div>
+      </a>
+
+      <a class="press-item" href="https://n.news.naver.com/article/108/0003245678" target="_blank" rel="noopener">
+        <div class="press-outlet">매일경제</div>
+        <div class="press-headline">"피지컬:100 시즌2 저스틴 하비, 한국 배우 활동 포부 밝혀"</div>
+        <div class="press-arrow">↗</div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- FINAL EDITORIAL IMAGE -->
+<div class="pg2" style="height:60vh">
+  <div class="col">
+    <img src="../assets/proj-exercise.jpg" alt="저스틴 하비" style="object-position:50% 40%">
+  </div>
+  <div class="col">
+    <img src="../assets/model-editorial-1.jpg" alt="저스틴 하비" style="object-position:50% 20%">
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-name">Justin Harvey © 2026</div>
+  <div class="foot-links">
+    <a href="index.html">홈</a>
+    <a href="mediakit.html">미디어 킷</a>
+    <a href="../actor.html">English</a>
+  </div>
+</footer>
+
+</body>
+</html>

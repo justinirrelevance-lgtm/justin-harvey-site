@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>저스틴 하비 — 배우</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Noto Sans KR',sans-serif;overflow:hidden;background:#0a0a0a}
+@media(max-width:768px){html,body{overflow:auto}}
+
+.wrap{height:100vh;position:relative;display:flex;align-items:flex-end}
+
+.bg{position:absolute;inset:0;background:#0a0a0a}
+.bg img{width:100%;height:100%;object-fit:cover;object-position:center 15%;filter:brightness(0.65)}
+.bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 20%,rgba(0,0,0,0.3) 55%,rgba(0,0,0,0.92) 100%);
+}
+
+.lang{position:absolute;top:2rem;right:2.5rem;z-index:20;display:flex;align-items:center;gap:12px}
+.lang a{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s}
+.lang a.active{color:rgba(255,255,255,0.9);border-bottom:1px solid rgba(255,255,255,0.5);padding-bottom:1px}
+.lang a:hover{color:rgba(255,255,255,0.8)}
+.lang-div{color:rgba(255,255,255,0.2);font-size:10px}
+
+.name-tag{position:absolute;top:2rem;left:2.5rem;z-index:20}
+.name-tag span{font-family:'Noto Serif KR',serif;font-size:13px;font-weight:400;letter-spacing:0.18em;color:rgba(255,255,255,0.75)}
+
+.bottom{position:relative;z-index:10;width:100%;padding:2.5rem 2.5rem 3.5rem}
+
+.tagline{font-family:'Noto Serif KR',serif;font-size:clamp(11px,1.2vw,13px);color:rgba(255,255,255,0.35);letter-spacing:0.12em;font-weight:300;margin-bottom:2rem}
+
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:680px}
+
+.btn{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 1.75rem;text-decoration:none;border-radius:2px;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s,background 0.15s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 48px rgba(0,0,0,0.5)}
+
+.btn-actor{background:rgba(255,255,255,0.94);border:none}
+.btn-actor:hover{background:#fff}
+
+.btn-media{background:rgba(12,12,12,0.6);backdrop-filter:blur(16px);border:1.5px solid rgba(255,255,255,0.22)}
+.btn-media:hover{background:rgba(12,12,12,0.85)}
+
+.btn-label{font-size:9px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:7px}
+.btn-actor .btn-label{color:#8a9aaa}
+.btn-media .btn-label{color:rgba(255,255,255,0.4)}
+
+.btn-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:600;line-height:1.2;letter-spacing:0.02em}
+.btn-actor .btn-title{color:#141210}
+.btn-media .btn-title{color:#fff}
+
+.btn-arrow{font-size:22px;font-weight:300;transition:transform 0.15s;flex-shrink:0;margin-left:1rem}
+.btn-actor .btn-arrow{color:#5a6e7f}
+.btn-media .btn-arrow{color:rgba(255,255,255,0.45)}
+.btn:hover .btn-arrow{transform:translate(3px,-3px)}
+
+@media(max-width:768px){
+  html,body{overflow:auto}
+  .wrap{height:100svh;min-height:600px}
+  .buttons{grid-template-columns:1fr;max-width:100%;gap:10px}
+  .btn{padding:1.25rem 1.5rem}
+  .btn-title{font-size:18px}
+  .bottom{padding:2rem 1.5rem 2.5rem}
+  .name-tag{top:1.5rem;left:1.5rem}
+  .lang{top:1.5rem;right:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="bg"><img src="../assets/hero-main.jpg" alt="저스틴 하비"></div>
+  <div class="name-tag"><span>JUSTIN HARVEY</span></div>
+  <div class="lang">
+    <a href="index.html" class="active">KO</a>
+    <span class="lang-div">/</span>
+    <a href="../index.html">EN</a>
+  </div>
+  <div class="bottom">
+    <div class="tagline">배우 · 서울 거주 · 한국어 · 남아공 출신</div>
+    <div class="buttons">
+      <a href="actor.html" class="btn btn-actor">
+        <div class="btn-left">
+          <div class="btn-label">캐스팅 및 매니지먼트</div>
+          <div class="btn-title">배우 프로필</div>
+        </div>
+        <div class="btn-arrow">↗</div>
+      </a>
+      <a href="mediakit.html" class="btn btn-media">
+        <div class="btn-left">
+          <div class="btn-label">브랜드 협업</div>
+          <div class="btn-title">미디어 킷</div>
+        </div>
+        <div class="btn-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
