@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>저스틴 하비 — 미디어 킷 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{font-family:'Noto Sans KR',sans-serif;background:#f5f3ef;color:#1a1814;line-height:1.6}
+html,body{font-family:'Sora','Noto Sans KR',sans-serif;background:#f5f3ef;color:#1a1814;line-height:1.6}
 img{display:block;width:100%;height:100%;object-fit:cover}
 
 /* NAV */
@@ -17,7 +17,7 @@ nav{
   padding:1.25rem 2.5rem;background:#f5f3ef;
   border-bottom:1px solid rgba(0,0,0,0.07);
 }
-.nav-name{font-family:'Noto Serif KR',serif;font-size:12px;font-weight:400;letter-spacing:0.15em;color:#1a1814;text-decoration:none}
+.nav-name{font-family:'Sora','Noto Serif KR',serif;font-size:12px;font-weight:600;letter-spacing:0.15em;color:#1a1814;text-decoration:none}
 .nav-right{display:flex;align-items:center;gap:1.5rem}
 .nav-right a{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.35);text-decoration:none;transition:color 0.2s}
 .nav-right a:hover,.nav-right a.active{color:#1a1814}
@@ -30,7 +30,7 @@ nav{
   background:#1a1814;
 }
 .hero-img{position:relative;overflow:hidden}
-.hero-img img{object-position:50% 15%;filter:brightness(0.85)}
+.hero-img img{object-position:50% 15%}
 
 .hero-content{
   display:flex;flex-direction:column;justify-content:flex-end;
@@ -38,7 +38,7 @@ nav{
 }
 .hero-kicker{font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1.5rem}
 .hero-name{
-  font-family:'Noto Serif KR',serif;
+  font-family:'Sora','Noto Serif KR',serif;
   font-size:clamp(40px,5vw,64px);font-weight:700;
   line-height:1;letter-spacing:-0.01em;color:#fff;margin-bottom:1rem;
 }
@@ -56,7 +56,7 @@ nav{
 .wrap{max-width:1100px;margin:0 auto;padding:0 3rem}
 
 .sec-label{font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(0,0,0,0.3);margin-bottom:0.75rem}
-.sec-title{font-family:'Noto Serif KR',serif;font-size:clamp(28px,3.5vw,42px);font-weight:600;line-height:1.2;margin-bottom:2.5rem;color:#1a1814}
+.sec-title{font-family:'Sora','Noto Serif KR',serif;font-size:clamp(28px,3.5vw,42px);font-weight:600;line-height:1.2;margin-bottom:2.5rem;color:#1a1814}
 .sec-title em{font-style:normal;color:rgba(0,0,0,0.22);font-weight:300}
 
 /* FULL BLEED PHOTO PAIRS */
@@ -84,7 +84,7 @@ nav{
 .press-item{background:#f5f3ef;padding:2rem 2.25rem;text-decoration:none;display:block;transition:background 0.2s}
 .press-item:hover{background:#eceae4}
 .press-outlet{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(0,0,0,0.3);margin-bottom:0.75rem}
-.press-headline{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:400;color:#1a1814;line-height:1.55;margin-bottom:0.5rem}
+.press-headline{font-family:'Sora','Noto Serif KR',serif;font-size:15px;font-weight:400;color:#1a1814;line-height:1.55;margin-bottom:0.5rem}
 .press-arrow{font-size:14px;color:rgba(0,0,0,0.25);transition:transform 0.15s,color 0.15s}
 .press-item:hover .press-arrow{transform:translate(3px,-3px);color:#1a1814}
 
@@ -104,8 +104,38 @@ nav{
 .fr2{background:rgba(180,50,200,0.12);color:#d46aec}
 
 /* FOOTER */
+/* BRANDS GRID */
+.brands-logo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem}
+.brand-logo-cell{aspect-ratio:3/2;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:1.25rem;transition:box-shadow 0.2s,transform 0.2s}
+.brand-logo-cell:hover{box-shadow:0 4px 16px rgba(0,0,0,0.07);transform:translateY(-2px)}
+.brand-logo-cell img{max-width:85%;max-height:60px;object-fit:contain}
+.brand-logo-cell span{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.35)}
+/* RATES */
+.rates-toggle{display:flex;gap:0.5rem;margin-top:2rem;flex-wrap:wrap}
+.rate-btn{padding:9px 20px;border-radius:2px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(0,0,0,0.12);background:none;color:rgba(0,0,0,0.4);transition:all 0.2s;font-family:'Sora','Noto Sans KR',sans-serif}
+.rate-btn.active{background:#1a1814;color:#f5f3ef;border-color:#1a1814}
+.rates-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(0,0,0,0.08);margin-top:1.5rem}
+.rate-card{background:#f5f3ef;padding:1.75rem}
+.rate-card.feat{background:#1a1814}
+.rate-tag{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.3);margin-bottom:0.75rem}
+.rate-card.feat .rate-tag{color:rgba(255,255,255,0.35)}
+.rate-name{font-size:18px;font-weight:700;color:#1a1814;margin-bottom:0.5rem}
+.rate-card.feat .rate-name{color:#fff}
+.rate-price{font-size:32px;font-weight:700;color:#1a1814;line-height:1;margin-bottom:4px}
+.rate-card.feat .rate-price{color:#fff}
+.rate-per{font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:1rem}
+.rate-card.feat .rate-per{color:rgba(255,255,255,0.35)}
+.rate-items{list-style:none;display:flex;flex-direction:column;gap:6px}
+.rate-items li{font-size:12px;color:rgba(0,0,0,0.5);display:flex;align-items:center;gap:8px;font-weight:300}
+.rate-items li::before{content:'—';color:rgba(0,0,0,0.2);flex-shrink:0}
+.rate-items li.hl{color:#1a1814;font-weight:500}
+.rate-items li.hl::before{color:rgba(0,0,0,0.4)}
+.rate-card.feat .rate-items li{color:rgba(255,255,255,0.45)}
+.rate-card.feat .rate-items li.hl{color:rgba(255,255,255,0.85)}
+.rate-card.feat .rate-items li::before,.rate-card.feat .rate-items li.hl::before{color:rgba(255,255,255,0.2)}
+.rates-note{font-size:11px;color:rgba(0,0,0,0.3);text-align:center;margin-top:1.25rem;font-style:italic}
 footer{padding:3rem;border-top:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:space-between;background:#f5f3ef}
-.foot-name{font-family:'Noto Serif KR',serif;font-size:12px;color:rgba(0,0,0,0.35);letter-spacing:0.12em}
+.foot-name{font-family:'Sora','Noto Serif KR',serif;font-size:12px;color:rgba(0,0,0,0.35);letter-spacing:0.12em}
 .foot-links{display:flex;gap:2rem}
 .foot-links a{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(0,0,0,0.35);text-decoration:none;transition:color 0.2s}
 .foot-links a:hover{color:#1a1814}
@@ -120,6 +150,8 @@ footer{padding:3rem;border-top:1px solid rgba(0,0,0,0.08);display:flex;align-ite
   .wrap{padding:0 1.5rem}
   .sec{padding:3.5rem 0}
   .press-grid{grid-template-columns:1fr}
+  .brands-logo-grid{grid-template-columns:1fr 1fr}
+  .rates-grid{grid-template-columns:1fr}
   footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem}
 }
 </style>
@@ -193,39 +225,44 @@ footer{padding:3rem;border-top:1px solid rgba(0,0,0,0.08);display:flex;align-ite
         <div class="ch-left">
           <div class="ch-dot" style="background:#E1306C"></div>
           <div>
-            <div class="ch-name">Instagram</div>
-            <div class="ch-handle">@justinirrelevance</div>
+            <a href="https://www.instagram.com/justin.irrelevance/" target="_blank" style="text-decoration:none">
+              <div class="ch-name">Instagram ↗</div>
+            </a>
+            <div class="ch-handle">@justin.irrelevance</div>
           </div>
         </div>
-        <div>
-          <div class="ch-num">54K+</div>
+        <div style="text-align:right">
+          <div class="ch-num">64K+</div>
           <div class="ch-unit">팔로워</div>
+          <div style="font-size:10px;color:rgba(0,0,0,0.35);margin-top:4px">참여율 48.9% · 주간 도달 750K</div>
         </div>
       </div>
       <div class="ch-row">
         <div class="ch-left">
           <div class="ch-dot" style="background:#FF0000"></div>
           <div>
-            <div class="ch-name">YouTube</div>
-            <div class="ch-handle">In My Shoes Podcast</div>
+            <a href="https://www.youtube.com/@Justin.irrelevance" target="_blank" style="text-decoration:none">
+              <div class="ch-name">YouTube ↗</div>
+            </a>
+            <div class="ch-handle">@Justin.irrelevance</div>
           </div>
         </div>
-        <div>
-          <div class="ch-num">8K+</div>
-          <div class="ch-unit">구독자</div>
+        <div style="text-align:right">
+          <div class="ch-num">롱폼</div>
+          <div class="ch-unit">한국어 + 영어</div>
         </div>
       </div>
       <div class="ch-row">
         <div class="ch-left">
-          <div class="ch-dot" style="background:#000"></div>
+          <div class="ch-dot" style="background:#1a1814"></div>
           <div>
-            <div class="ch-name">TikTok</div>
-            <div class="ch-handle">@justinharvey</div>
+            <div class="ch-name">In My Shoes</div>
+            <div class="ch-handle">팟캐스트 · 한국어 / 영어</div>
           </div>
         </div>
-        <div>
-          <div class="ch-num">급성장</div>
-          <div class="ch-unit">운영 중</div>
+        <div style="text-align:right">
+          <div class="ch-num">멀티</div>
+          <div class="ch-unit">플랫폼 클립</div>
         </div>
       </div>
     </div>
@@ -243,39 +280,154 @@ footer{padding:3rem;border-top:1px solid rgba(0,0,0,0.08);display:flex;align-ite
   </div>
 </div>
 
-<!-- PRESS -->
-<div class="sec light">
+<!-- TRUSTED BRANDS -->
+<div class="sec light" style="border-top:1px solid rgba(0,0,0,0.07)">
   <div class="wrap">
-    <div class="sec-label">언론 보도</div>
-    <div class="sec-title">미디어 <em>/ 기사</em></div>
-
-    <div class="press-grid">
-
-      <a class="press-item" href="https://www.koreaherald.com/article/3407249" target="_blank" rel="noopener">
-        <div class="press-outlet">Korea Herald</div>
-        <div class="press-headline">"피지컬:100 외국인 최고 순위 저스틴, 배우 꿈 향해 나아간다"</div>
-        <div class="press-arrow">↗</div>
-      </a>
-
-      <a class="press-item" href="https://www.koreaherald.com/article/3391891" target="_blank" rel="noopener">
-        <div class="press-outlet">Korea Herald</div>
-        <div class="press-headline">"남아공 출신 Justin, 피지컬:100 시즌2 4위 — 외국인 역대 최고"</div>
-        <div class="press-arrow">↗</div>
-      </a>
-
-      <a class="press-item" href="https://sports.khan.co.kr/entertainment/sk_index.html?art_id=202402221527003" target="_blank" rel="noopener">
-        <div class="press-outlet">스포츠경향</div>
-        <div class="press-headline">"저스틴, 운동 실력과 유창한 한국어로 시청자 사로잡아"</div>
-        <div class="press-arrow">↗</div>
-      </a>
-
-      <a class="press-item" href="https://n.news.naver.com/article/108/0003245678" target="_blank" rel="noopener">
-        <div class="press-outlet">매일경제</div>
-        <div class="press-headline">"피지컬:100 저스틴, 한국 배우 도전 포부 공개"</div>
-        <div class="press-arrow">↗</div>
-      </a>
-
+    <div class="sec-label">브랜드 파트너</div>
+    <div class="sec-title">함께한 <em>브랜드</em></div>
+    <div class="brands-logo-grid">
+      <div class="brand-logo-cell"><img src="../assets/freedom.jpg" alt="Freedom"><span>피트니스</span></div>
+      <div class="brand-logo-cell"><img src="../assets/timetorun.jpg" alt="Time to Run"><span>러닝</span></div>
+      <div class="brand-logo-cell"><img src="../assets/cathay.jpg" alt="Cathay Pacific"><span>항공</span></div>
+      <div class="brand-logo-cell"><img src="../assets/giant.jpg" alt="Giant Bicycles"><span>자전거</span></div>
+      <div class="brand-logo-cell"><img src="../assets/hk7.jpg" alt="HK Sevens"><span>스포츠</span></div>
+      <div class="brand-logo-cell"><img src="../assets/gbx.png" alt="Gymbox"><span>피트니스</span></div>
     </div>
+  </div>
+</div>
+
+<!-- SERVICES & RATES -->
+<div class="sec" style="background:#ece9e3;border-top:1px solid rgba(0,0,0,0.07)">
+  <div class="wrap">
+    <div class="sec-label">서비스 & 요금</div>
+    <div class="sec-title">파트너십 <em>옵션</em></div>
+    <p style="font-size:14px;color:rgba(0,0,0,0.45);margin-top:0.5rem;font-weight:300;max-width:540px">모든 파트너십은 자연스러운 콘텐츠 통합을 기반으로 합니다. 광고 낭독 방식은 없습니다. 브랜드에 맞는 구조를 선택하세요.</p>
+    <div class="rates-toggle">
+      <button class="rate-btn active" onclick="switchRates('ig',this)">인스타그램</button>
+      <button class="rate-btn" onclick="switchRates('pkg',this)">패키지</button>
+      <button class="rate-btn" onclick="switchRates('yt',this)">유튜브 & 기타</button>
+    </div>
+
+    <div id="rates-ig">
+      <div class="rates-grid">
+        <div class="rate-card">
+          <div class="rate-tag">기본</div>
+          <div class="rate-name">포스트 + 스토리</div>
+          <div class="rate-price">₩2M</div>
+          <div class="rate-per">1회성</div>
+          <ul class="rate-items">
+            <li>릴 또는 사진 1편</li>
+            <li>인스타그램 스토리 3편</li>
+            <li>링크 스티커 + 콜라보 태그</li>
+            <li>14일 독점</li>
+          </ul>
+        </div>
+        <div class="rate-card feat">
+          <div class="rate-tag">추천</div>
+          <div class="rate-name">월 리테이너</div>
+          <div class="rate-price">₩4.5M</div>
+          <div class="rate-per">월 · 최소 3개월</div>
+          <ul class="rate-items">
+            <li class="hl">릴 2편 / 월</li>
+            <li class="hl">스토리 8편 / 월</li>
+            <li>유튜브 언급 1회</li>
+            <li>제휴 코드 + 결과 리포트</li>
+          </ul>
+        </div>
+        <div class="rate-card">
+          <div class="rate-tag">체험</div>
+          <div class="rate-name">3개월 체험</div>
+          <div class="rate-price">₩4M</div>
+          <div class="rate-per">월 · 총 ₩12M</div>
+          <ul class="rate-items">
+            <li>릴 1편 / 월</li>
+            <li>스토리 4편 / 월</li>
+            <li>유튜브 언급 1회</li>
+            <li>6개월 요금으로 갱신</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="rates-pkg" style="display:none">
+      <div class="rates-grid">
+        <div class="rate-card">
+          <div class="rate-tag">시즌</div>
+          <div class="rate-name">콘텐츠 스프린트</div>
+          <div class="rate-price">₩3.5M</div>
+          <div class="rate-per">1회성</div>
+          <ul class="rate-items">
+            <li>릴 2편</li>
+            <li>스토리 6편</li>
+            <li>유튜브 언급 1회</li>
+          </ul>
+        </div>
+        <div class="rate-card feat">
+          <div class="rate-tag">플래그십</div>
+          <div class="rate-name">전속 앰배서더</div>
+          <div class="rate-price">₩4.5M</div>
+          <div class="rate-per">월 · 6개월</div>
+          <ul class="rate-items">
+            <li class="hl">릴 2편 + 스토리 8편</li>
+            <li class="hl">유튜브 영상 분기별 1편</li>
+            <li>팟캐스트 언급 분기별</li>
+            <li>이벤트 출연 분기별</li>
+            <li>사진 저작권 12개월</li>
+          </ul>
+        </div>
+        <div class="rate-card">
+          <div class="rate-tag">프리미엄</div>
+          <div class="rate-name">브랜드 트립</div>
+          <div class="rate-price">₩8M</div>
+          <div class="rate-per">1회 활동</div>
+          <ul class="rate-items">
+            <li>포스트 3~5편 + 스토리</li>
+            <li>유튜브 브이로그 1편</li>
+            <li class="hl">한국어 + 영어 이중 언어</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="rates-yt" style="display:none">
+      <div class="rates-grid">
+        <div class="rate-card">
+          <div class="rate-tag">유튜브</div>
+          <div class="rate-name">통합 언급</div>
+          <div class="rate-price">₩2M</div>
+          <div class="rate-per">영상당</div>
+          <ul class="rate-items">
+            <li>60~90초 통합</li>
+            <li>설명란 + 고정 댓글</li>
+            <li>이중 언어 옵션</li>
+          </ul>
+        </div>
+        <div class="rate-card feat">
+          <div class="rate-tag">유튜브</div>
+          <div class="rate-name">단독 영상</div>
+          <div class="rate-price">₩5M</div>
+          <div class="rate-per">영상당</div>
+          <ul class="rate-items">
+            <li class="hl">풀 브랜드 콘셉트 영상</li>
+            <li>스크립트 검토</li>
+            <li>한국어 / 영어 이중 언어</li>
+          </ul>
+        </div>
+        <div class="rate-card">
+          <div class="rate-tag">라이선스</div>
+          <div class="rate-name">사진 라이선스</div>
+          <div class="rate-price">₩1.5M</div>
+          <div class="rate-per">이미지당</div>
+          <ul class="rate-items">
+            <li>비독점</li>
+            <li>인스타그램 + 유료 광고</li>
+            <li>6개월 기간</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="rates-note">모든 금액 KRW 기준 · USD 가능 · 맞춤 패키지 문의 환영</div>
   </div>
 </div>
 
@@ -316,5 +468,15 @@ footer{padding:3rem;border-top:1px solid rgba(0,0,0,0.08);display:flex;align-ite
   </div>
 </footer>
 
+<script>
+function switchRates(id, btn) {
+  ['ig','pkg','yt'].forEach(function(k) {
+    var el = document.getElementById('rates-' + k);
+    if (el) el.style.display = k === id ? 'block' : 'none';
+  });
+  document.querySelectorAll('.rate-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+</script>
 </body>
 </html>
