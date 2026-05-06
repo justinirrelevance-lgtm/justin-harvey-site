@@ -8,60 +8,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-.mk-hero{min-height:100vh;padding-top:56px;display:grid;grid-template-columns:1fr 1fr;background:var(--s900)}
-.mk-hero-img{position:relative;overflow:hidden;background:#111}
-.mk-hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 10%;transform:scale(1.2)}
-.mk-hero-content{display:flex;flex-direction:column;justify-content:center;padding:4rem 3.5rem}
-.mk-hero-kicker{font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1.5rem}
-.mk-hero-name{font-size:clamp(44px,5.5vw,72px);font-weight:700;line-height:0.92;color:#fff;letter-spacing:-0.02em;margin-bottom:1.5rem}
-.mk-hero-name span{display:block;color:rgba(255,255,255,0.28);font-weight:300}
-.mk-hero-role{font-size:13px;color:rgba(255,255,255,0.4);letter-spacing:0.08em;margin-bottom:3rem}
-
-.mk-stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--s800)}
-.mk-stat{padding:2rem;border-right:1px solid rgba(255,255,255,0.06)}
-.mk-stat:last-child{border-right:none}
-.mk-stat-n{font-size:40px;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
-.mk-stat-l{font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--s600)}
-
-.mk-sec{padding:4rem 0}
-.mk-wrap{max-width:1100px;margin:0 auto;padding:0 3rem}
-
-.aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--s200);margin-top:2rem}
-.aud-cell{background:var(--s50);padding:1.5rem}
-.aud-n{font-size:32px;font-weight:700;color:var(--s900);margin-bottom:4px}
-.aud-l{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--s400)}
-
-.ch-rows{display:flex;flex-direction:column;margin-top:2rem}
-.ch-row{display:flex;justify-content:space-between;padding:1.25rem 0;border-bottom:1px solid var(--s200)}
-.ch-left{display:flex;align-items:center;gap:1rem}
-.ch-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
-.ch-name{font-size:15px;font-weight:600}
-.ch-handle{font-size:11px;color:var(--s400)}
-
-.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:2.5rem}
-.proj-img{aspect-ratio:3/4;overflow:hidden}
-.proj-img img{width:100%;height:100%;object-fit:cover}
-.proj-body{padding:1.5rem;background:var(--s900)}
-.proj-title{color:#fff;font-size:20px}
-
-.brands-logo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem}
-.brand-logo-cell{background:#fff;padding:1.25rem;display:flex;flex-direction:column;align-items:center}
-.brand-logo-cell img{max-width:85%}
-.brand-logo-cell span{font-size:9px;color:var(--s400)}
-
-.mk-contact{background:var(--s900);padding:4rem 0}
-.mk-contact-inner{max-width:1100px;margin:0 auto;padding:0 3rem;display:flex;justify-content:space-between}
-.mk-contact h2{color:#fff}
-.mk-detail{color:rgba(255,255,255,0.5)}
-
-@media(max-width:900px){
-.mk-hero{grid-template-columns:1fr}
-.brands-logo-grid{grid-template-columns:1fr 1fr}
+/* ONLY change = hero zoom */
+.mk-hero-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 10%;
+  transform:scale(1.2);
 }
 </style>
-</head>
 
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
 <body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">Justin Harvey</a>
+  <ul class="nav-links">
+    <li><a href="index.html">홈</a></li>
+    <li><a href="actor.html">배우 프로필</a></li>
+    <li><a href="mediakit.html" class="active">미디어 킷</a></li>
+    <li><a href="contact.html">문의</a></li>
+  </ul>
+</nav>
 
 <!-- HERO -->
 <div class="mk-hero">
@@ -69,7 +38,7 @@
     <img src="assets/photo-red.jpg" alt="저스틴 하비">
   </div>
   <div class="mk-hero-content">
-    <div class="mk-hero-kicker">MEDIA KIT · 2026</div>
+    <div class="mk-hero-kicker">미디어 킷 · 2026</div>
     <div class="mk-hero-name">Justin<span>Harvey</span></div>
     <div class="mk-hero-role">배우 · 하이브리드 애슬리트 · 이중언어 크리에이터 (KR/EN)</div>
 
@@ -83,10 +52,22 @@
 
 <!-- STATS -->
 <div class="mk-stats">
-  <div class="mk-stat"><div class="mk-stat-n">64k</div><div class="mk-stat-l">인스타 팔로워</div></div>
-  <div class="mk-stat"><div class="mk-stat-n">750k</div><div class="mk-stat-l">주간 도달</div></div>
-  <div class="mk-stat"><div class="mk-stat-n">48.9%</div><div class="mk-stat-l">참여율</div></div>
-  <div class="mk-stat"><div class="mk-stat-n">55%</div><div class="mk-stat-l">남성 비율</div></div>
+  <div class="mk-stat">
+    <div class="mk-stat-n">64k</div>
+    <div class="mk-stat-l">인스타그램 팔로워</div>
+  </div>
+  <div class="mk-stat">
+    <div class="mk-stat-n">750k</div>
+    <div class="mk-stat-l">주간 도달</div>
+  </div>
+  <div class="mk-stat">
+    <div class="mk-stat-n">48.9%</div>
+    <div class="mk-stat-l">참여율</div>
+  </div>
+  <div class="mk-stat">
+    <div class="mk-stat-n">55%</div>
+    <div class="mk-stat-l">남성 비율</div>
+  </div>
 </div>
 
 <!-- AUDIENCE -->
@@ -94,9 +75,18 @@
   <div class="mk-wrap">
     <h2>어떤 사람들이 보고 있는가</h2>
     <div class="aud-grid">
-      <div class="aud-cell"><div class="aud-n">25–38</div><div class="aud-l">핵심 연령대</div></div>
-      <div class="aud-cell"><div class="aud-n">55%</div><div class="aud-l">남성 비율</div></div>
-      <div class="aud-cell"><div class="aud-n">KR · EN</div><div class="aud-l">글로벌 도달</div></div>
+      <div class="aud-cell">
+        <div class="aud-n">25–38</div>
+        <div class="aud-l">핵심 연령대</div>
+      </div>
+      <div class="aud-cell">
+        <div class="aud-n">55%</div>
+        <div class="aud-l">남성 비율</div>
+      </div>
+      <div class="aud-cell">
+        <div class="aud-n">KR · EN</div>
+        <div class="aud-l">글로벌 도달</div>
+      </div>
     </div>
   </div>
 </div>
@@ -107,19 +97,31 @@
     <h2>성과로 증명된 프로젝트</h2>
     <div class="proj-grid">
 
-      <div>
-        <div class="proj-img"><img src="assets/proj-freedom.jpg"></div>
-        <div class="proj-body"><div class="proj-title">Freedom</div></div>
+      <div class="proj-card">
+        <div class="proj-img">
+          <img src="assets/proj-freedom.jpg" alt="Freedom">
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">Freedom</div>
+        </div>
       </div>
 
-      <div>
-        <div class="proj-img"><img src="assets/proj-exercise.jpg"></div>
-        <div class="proj-body"><div class="proj-title">Exercise Editorial</div></div>
+      <div class="proj-card">
+        <div class="proj-img">
+          <img src="assets/proj-exercise.jpg" alt="Exercise Editorial">
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">Exercise Editorial</div>
+        </div>
       </div>
 
-      <div>
-        <div class="proj-img"><img src="assets/proj-timetorun.jpg"></div>
-        <div class="proj-body"><div class="proj-title">Time to Run</div></div>
+      <div class="proj-card">
+        <div class="proj-img">
+          <img src="assets/proj-timetorun.jpg" alt="Time to Run">
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">Time to Run</div>
+        </div>
       </div>
 
     </div>
@@ -144,15 +146,17 @@
   <div class="mk-contact-inner">
     <div>
       <h2>함께 협업해보세요</h2>
-      <a href="contact.html" style="color:white">협업 문의하기 →</a>
+      <a href="contact.html" class="btn-primary">협업 문의하기 →</a>
     </div>
     <div>
       <div class="mk-detail">justin.irrelevance@gmail.com</div>
       <div class="mk-detail">+82 10 5045 5269</div>
       <div class="mk-detail">서울, 대한민국</div>
+      <div class="mk-detail">24시간 내 응답</div>
     </div>
   </div>
 </div>
 
+<script src="main.js"></script>
 </body>
 </html>
