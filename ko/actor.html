@@ -37,7 +37,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .pg2 .col:hover img{transform:scale(1.03)}
 .pg2 .cap{position:absolute;bottom:1.5rem;left:1.5rem;font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5)}
 .pg1{height:80vh;min-height:500px;position:relative;overflow:hidden}
-.pg1 img{object-position:50% 20%}
+.pg1 img{object-position:31% 17%}
 .sec{padding:5rem 0}
 .wrap{max-width:1100px;margin:0 auto;padding:0 3rem}
 .sec-label{font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem}
@@ -65,7 +65,14 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
 .foot-name{font-family:'Sora','Noto Serif KR',serif;font-size:12px;color:rgba(255,255,255,0.35);letter-spacing:0.12em}
 .foot-links{display:flex;gap:2rem}
 .foot-links a{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none}
-@media(max-width:768px){nav{padding:1rem 1.5rem}.hero-text{bottom:2.5rem;left:1.5rem;right:1.5rem}.basics{grid-template-columns:1fr}.basics-block{padding:2rem 1.5rem;border-right:none;border-bottom:1px solid rgba(255,255,255,0.07)}.pg2{grid-template-columns:1fr;height:auto}.pg2 .col{height:60vw;min-height:260px}.pg3{grid-template-columns:1fr!important;height:auto!important}.pg3 .col{height:60vw;min-height:240px}.wrap{padding:0 1.5rem}.sec{padding:3.5rem 0}.press-grid{grid-template-columns:1fr}footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem}}
+.img-hero{object-position:50% 8%}
+.img-portrait-full{object-position:31% 17%}
+.img-editorial-1{object-position:50% 10%}
+.img-editorial-2{object-position:62% 22%}
+.img-portrait-1{object-position:50% 43%}
+.img-portrait-2{object-position:50% 38%}
+.img-firstnight-1{object-position:50% 45%}
+@media(max-width:768px){nav{padding:1rem 1.5rem}.hero{height:85vh;min-height:560px}.hero-text{bottom:2.5rem;left:1.5rem;right:1.5rem}.basics{grid-template-columns:1fr}.basics-block{padding:2rem 1.5rem;border-right:none;border-bottom:1px solid rgba(255,255,255,0.07)}.pg2{grid-template-columns:1fr;height:auto}.pg2 .col{height:65vw;min-height:280px}.pg3{grid-template-columns:1fr!important;height:auto!important}.pg3 .col{height:65vw;min-height:260px}.pg1{height:65vh;min-height:400px}.wrap{padding:0 1.5rem}.sec{padding:3.5rem 0}.press-grid{grid-template-columns:1fr}footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem}.img-hero{object-position:50% 15%}.pg1 img{object-position:45% 15%}.img-editorial-1{object-position:50% 5%}.img-editorial-2{object-position:62% 5%}.img-portrait-1{object-position:50% 5%}.img-portrait-2{object-position:50% 5%}.img-firstnight-1{object-position:50% 15%}}
 </style>
 </head>
 <body>
@@ -79,7 +86,7 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
   </div>
 </nav>
 <div class="hero">
-  <img src="../assets/model-suit-white.jpg" alt="저스틴 하비" style="object-position:50% 8%">
+  <img src="../assets/model-suit-white.jpg" alt="저스틴 하비" class="img-hero">
   <div class="hero-overlay"></div>
   <div class="hero-text">
     <div class="hero-kicker">배우 · 서울</div>
@@ -110,9 +117,9 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
   </div>
 </div>
 <div class="pg3" style="display:grid;grid-template-columns:1fr 1fr 1fr;height:60vh;min-height:400px">
-  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-1.jpg" alt="저스틴 하비" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 10%"></div>
-  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-2.jpg" alt="저스틴 하비" style="display:block;width:100%;height:100%;object-fit:cover;object-position:62% 22%"></div>
-  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-3.jpg" alt="저스틴 하비" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 14%"></div>
+  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-1.jpg" alt="저스틴 하비" class="img-editorial-1"></div>
+  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-2.jpg" alt="저스틴 하비" class="img-editorial-2"></div>
+  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-3.jpg" alt="저스틴 하비" style="object-position:50% 14%"></div>
 </div>
 <div class="sec" style="background:#0c0c0c">
   <div class="wrap">
@@ -136,7 +143,7 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
     <div class="frow"><div class="fy">2024</div><div style="flex:1"><div class="ft2">언톨드 — ENHYPEN</div><div class="fs">감독: 이충현</div></div><span class="fb fr2">뮤직비디오</span></div>
   </div>
 </div>
-<div class="pg1"><img src="../assets/actor-portrait-full.jpg" alt="저스틴 하비" style="object-position:31% 17%"></div>
+<div class="pg1"><img src="../assets/actor-portrait-full.jpg" alt="저스틴 하비" class="img-portrait-full"></div>
 <div class="pg2">
   <div class="col"><img src="../assets/actor-duke-1.jpg" alt="저스틴 하비" style="object-position:50% 30%"><div class="cap">폭군</div></div>
   <div class="col"><img src="../assets/actor-duke-2.jpg" alt="저스틴 하비" style="object-position:50% 35%"><div class="cap">폭군</div></div>
@@ -147,12 +154,12 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
   <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-witch2-3.jpg" alt="저스틴 하비" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 25%"><div class="cap">마녀2</div></div>
 </div>
 <div class="pg2">
-  <div class="col"><img src="../assets/actor-firstnight-1.jpg" alt="저스틴 하비" style="object-position:50% 45%"><div class="cap">남주의 첫날밤</div></div>
+  <div class="col"><img src="../assets/actor-firstnight-1.jpg" alt="저스틴 하비" class="img-firstnight-1"><div class="cap">남주의 첫날밤</div></div>
   <div class="col"><img src="../assets/actor-childe-1.jpg" alt="저스틴 하비" style="object-position:50% 25%"><div class="cap">귀공자</div></div>
 </div>
 <div class="pg2">
-  <div class="col"><img src="../assets/actor-portrait-1.jpg" alt="저스틴 하비" style="object-position:50% 43%"></div>
-  <div class="col"><img src="../assets/actor-portrait-2.jpg" alt="저스틴 하비" style="object-position:50% 38%"></div>
+  <div class="col"><img src="../assets/actor-portrait-1.jpg" alt="저스틴 하비" class="img-portrait-1"></div>
+  <div class="col"><img src="../assets/actor-portrait-2.jpg" alt="저스틴 하비" class="img-portrait-2"></div>
 </div>
 <!-- ACTING REEL -->
 <div style="background:#0c0c0c;padding:5rem 0;border-top:1px solid rgba(255,255,255,0.06)">
