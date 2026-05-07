@@ -72,8 +72,120 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
 .img-portrait-1{object-position:50% 43%}
 .img-portrait-2{object-position:50% 38%}
 .img-firstnight-1{object-position:50% 45%}
-@media(max-width:768px){nav{padding:1rem 1.5rem}.hero{height:85vh;min-height:560px}.hero-text{bottom:2.5rem;left:1.5rem;right:1.5rem}.basics{grid-template-columns:1fr}.basics-block{padding:2rem 1.5rem;border-right:none;border-bottom:1px solid rgba(255,255,255,0.07)}.pg2{grid-template-columns:1fr;height:auto}.pg2 .col{height:65vw;min-height:280px}.pg3{grid-template-columns:1fr!important;height:auto!important}.pg3 .col{height:65vw;min-height:260px}.pg1{height:65vh;min-height:400px}.wrap{padding:0 1.5rem}.sec{padding:3.5rem 0}.press-grid{grid-template-columns:1fr}footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem}.img-hero{object-position:50% 15%}.pg1 img{object-position:45% 15%}.img-editorial-1{object-position:50% 5%}.img-editorial-2{object-position:62% 5%}.img-portrait-1{object-position:50% 5%}.img-portrait-2{object-position:50% 5%}.img-firstnight-1{object-position:50% 15%}}
-</style>
+@media(max-width:768px){
+
+  nav{
+    padding:1rem 1.5rem
+  }
+
+  .hero{
+    min-height:100svh;
+    height:auto;
+  }
+
+  .hero-text{
+    bottom:2.5rem;
+    left:1.5rem;
+    right:1.5rem
+  }
+
+  .basics{
+    grid-template-columns:1fr
+  }
+
+  .basics-block{
+    padding:2rem 1.5rem;
+    border-right:none;
+    border-bottom:1px solid rgba(255,255,255,0.07)
+  }
+
+  .wrap{
+    padding:0 1.5rem
+  }
+
+  .sec{
+    padding:3.5rem 0
+  }
+
+  .press-grid{
+    grid-template-columns:1fr
+  }
+
+  footer{
+    flex-direction:column;
+    gap:1.5rem;
+    text-align:center;
+    padding:2rem 1.5rem
+  }
+
+  /* -------------------------------- */
+  /* MOBILE IMAGE SYSTEM FIXES */
+  /* -------------------------------- */
+
+  img{
+    max-width:100%;
+  }
+
+  .pg1,
+  .pg2 .col,
+  .pg3 .col{
+    height:auto !important;
+    min-height:unset !important;
+    aspect-ratio:4 / 5;
+    overflow:hidden;
+  }
+
+  .pg2{
+    grid-template-columns:1fr;
+    height:auto;
+  }
+
+  .pg3{
+    grid-template-columns:1fr !important;
+    height:auto !important;
+  }
+
+  .pg1 img,
+  .pg2 .col img,
+  .pg3 .col img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  /* -------------------------------- */
+  /* MOBILE FOCAL POINT TUNING */
+  /* -------------------------------- */
+
+  .img-hero{
+    object-position:50% 12%;
+  }
+
+  .img-portrait-full{
+    object-position:50% 20%;
+  }
+
+  .img-editorial-1{
+    object-position:50% 8%;
+  }
+
+  .img-editorial-2{
+    object-position:62% 10%;
+  }
+
+  .img-portrait-1{
+    object-position:50% 18%;
+  }
+
+  .img-portrait-2{
+    object-position:50% 14%;
+  }
+
+  .img-firstnight-1{
+    object-position:50% 18%;
+  }
+
+}</style>
 </head>
 <body>
 <nav>
