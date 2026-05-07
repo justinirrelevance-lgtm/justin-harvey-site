@@ -8,8 +8,22 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{font-family:'Sora','Noto Sans KR',sans-serif;background:#0c0c0c;color:#fff;line-height:1.6}
-img{display:block;width:100%;height:100%;object-fit:cover}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:linear-gradient(to bottom,rgba(0,0,0,0.7),transparent)}
+img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+  /* Cinematic crop sections only */
+
+.hero img,
+.pg1 img,
+.pg2 .col img,
+.pg3 .col img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:linear-gradient(to bottom,rgba(0,0,0,0.7),transparent)}
 .nav-name{font-family:'Sora','Noto Serif KR',serif;font-size:12px;font-weight:600;letter-spacing:0.18em;color:rgba(255,255,255,0.8);text-decoration:none}
 .nav-right{display:flex;align-items:center;gap:1.5rem}
 .nav-right a{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none}
