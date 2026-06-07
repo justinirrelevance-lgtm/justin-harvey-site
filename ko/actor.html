@@ -8,14 +8,29 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{font-family:'Sora','Noto Sans KR',sans-serif;background:#0c0c0c;color:#fff;line-height:1.6}
-img{display:block;width:100%;height:100%;object-fit:cover}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:linear-gradient(to bottom,rgba(0,0,0,0.7),transparent)}
+img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+  /* Cinematic crop sections only */
+
+.hero img,
+.pg1 img,
+.pg2 .col img,
+.pg3 .col img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:linear-gradient(to bottom,rgba(0,0,0,0.7),transparent)}
 .nav-name{font-family:'Sora','Noto Serif KR',serif;font-size:12px;font-weight:600;letter-spacing:0.18em;color:rgba(255,255,255,0.8);text-decoration:none}
 .nav-right{display:flex;align-items:center;gap:1.5rem}
 .nav-right a{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none}
 .nav-right a.active{color:rgba(255,255,255,0.85)}
 .nav-div{color:rgba(255,255,255,0.18);font-size:10px}
 .hero{height:100vh;min-height:700px;position:relative;overflow:hidden;background:#0c0c0c}
+.hero img{}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.28) 0%,rgba(0,0,0,0.28) 30%,rgba(0,0,0,0.36) 60%,rgba(0,0,0,0.9) 100%)}
 .hero-text{position:absolute;bottom:3.5rem;left:3rem;right:3rem}
 .hero-kicker{font-size:10px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:1rem}
@@ -36,6 +51,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .pg2 .col:hover img{transform:scale(1.03)}
 .pg2 .cap{position:absolute;bottom:1.5rem;left:1.5rem;font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5)}
 .pg1{height:80vh;min-height:500px;position:relative;overflow:hidden}
+.pg1 img{object-position:31% 17%}
 .sec{padding:5rem 0}
 .wrap{max-width:1100px;margin:0 auto;padding:0 3rem}
 .sec-label{font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem}
@@ -63,58 +79,117 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
 .foot-name{font-family:'Sora','Noto Serif KR',serif;font-size:12px;color:rgba(255,255,255,0.35);letter-spacing:0.12em}
 .foot-links{display:flex;gap:2rem}
 .foot-links a{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none}
-
-/* Per-image object-position — desktop */
-.actor-img-hero{object-position:50% 8%}
-.actor-img-ed1{object-position:50% 10%}
-.actor-img-ed2{object-position:62% 22%}
-.actor-img-ed3{object-position:50% 14%}
-.actor-img-portrait-full{object-position:31% 17%}
-.actor-img-duke1{object-position:50% 30%}
-.actor-img-duke2{object-position:50% 35%}
-.actor-img-witch1{object-position:50% 40%}
-.actor-img-witch2{object-position:50% 10%}
-.actor-img-witch3{object-position:50% 25%}
-.actor-img-firstnight{object-position:50% 45%}
-.actor-img-childe{object-position:50% 25%}
-.actor-img-p1{object-position:50% 43%}
-.actor-img-p2{object-position:50% 38%}
-.actor-img-phys1{object-position:50% 25%}
-.actor-img-phys2{object-position:50% 25%}
-
+.img-hero{object-position:50% 8%}
+.img-portrait-full{object-position:31% 17%}
+.img-editorial-1{object-position:50% 10%}
+.img-editorial-2{object-position:62% 22%}
+.img-portrait-1{object-position:50% 43%}
+.img-portrait-2{object-position:50% 38%}
+.img-firstnight-1{object-position:50% 45%}
 @media(max-width:768px){
-  nav{padding:1rem 1.5rem}
-  .hero-text{bottom:2.5rem;left:1.5rem;right:1.5rem}
-  .basics{grid-template-columns:1fr}
-  .basics-block{padding:2rem 1.5rem;border-right:none;border-bottom:1px solid rgba(255,255,255,0.07)}
-  .pg2{grid-template-columns:1fr;height:auto}
-  .pg2 .col{height:60vw;min-height:260px}
-  .pg3{grid-template-columns:1fr!important;height:auto!important}
-  .pg3 .col{height:60vw;min-height:240px}
-  .pg1{height:60vw;min-height:320px}
-  .wrap{padding:0 1.5rem}
-  .sec{padding:3.5rem 0}
-  .press-grid{grid-template-columns:1fr}
-  footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem}
-  /* Per-image mobile object-position */
-  .actor-img-hero{object-position:50% 12%}
-  .actor-img-ed1{object-position:50% 12%}
-  .actor-img-ed2{object-position:60% 12%}
-  .actor-img-ed3{object-position:50% 12%}
-  .actor-img-portrait-full{object-position:35% 10%}
-  .actor-img-duke1{object-position:50% 22%}
-  .actor-img-duke2{object-position:50% 25%}
-  .actor-img-witch1{object-position:50% 30%}
-  .actor-img-witch2{object-position:50% 8%}
-  .actor-img-witch3{object-position:50% 18%}
-  .actor-img-firstnight{object-position:50% 35%}
-  .actor-img-childe{object-position:50% 18%}
-  .actor-img-p1{object-position:50% 35%}
-  .actor-img-p2{object-position:50% 28%}
-  .actor-img-phys1{object-position:50% 18%}
-  .actor-img-phys2{object-position:50% 18%}
+
+  nav{
+    padding:1rem 1.5rem
+  }
+
+  .hero{
+    height:85vh;
+    min-height:560px
+  }
+
+  .hero-text{
+    bottom:2.5rem;
+    left:1.5rem;
+    right:1.5rem
+  }
+
+  .basics{
+    grid-template-columns:1fr
+  }
+
+  .basics-block{
+    padding:2rem 1.5rem;
+    border-right:none;
+    border-bottom:1px solid rgba(255,255,255,0.07)
+  }
+
+  .pg2{
+    grid-template-columns:1fr;
+    height:auto
+  }
+
+  .pg2 .col{
+    height:85vw;
+    min-height:420px
+  }
+
+  .pg3{
+    grid-template-columns:1fr!important;
+    height:auto!important
+  }
+
+  .pg3 .col{
+    height:85vw;
+    min-height:420px
+  }
+
+  .pg1{
+    height:65vh;
+    min-height:400px
+  }
+
+  .wrap{
+    padding:0 1.5rem
+  }
+
+  .sec{
+    padding:3.5rem 0
+  }
+
+  .press-grid{
+    grid-template-columns:1fr
+  }
+
+  footer{
+    flex-direction:column;
+    gap:1.5rem;
+    text-align:center;
+    padding:2rem 1.5rem
+  }
+
+  /* MOBILE IMAGE FOCAL POINTS */
+
+  .img-hero{
+    object-position:50% 12%
+  }
+
+  .pg1 img{
+    object-position:45% 15%
+  }
+
+  .img-editorial-1{
+    object-position:50% 8%
+  }
+
+  .img-editorial-2{
+    object-position:62% 10%
+  }
+
+  .img-portrait-1{
+    object-position:50% 18%
+  }
+
+  .img-portrait-2{
+    object-position:50% 14%
+  }
+
+  .img-firstnight-1{
+    object-position:50% 18%
+  }
+
 }
-</style>
+
+}</style>
 </head>
 <body>
 <nav>
@@ -127,12 +202,12 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
   </div>
 </nav>
 <div class="hero">
-  <img src="../assets/actor-hero.jpg" alt="저스틴 하비" class="actor-img-hero">
+  <img src="../assets/model-suit-white.jpg" alt="저스틴 하비" class="img-hero">
   <div class="hero-overlay"></div>
   <div class="hero-text">
     <div class="hero-kicker">배우 · 서울</div>
     <div class="hero-name">저스틴 하비<em>Justin Harvey</em></div>
-    <div class="hero-tags"><span class="hero-tag">Netflix</span><span class="hero-tag">Disney+</span><span class="hero-tag">Coupang Play</span><span class="hero-tag">유창한 한국어</span><span class="hero-tag">남아공 출신</span></div>
+    <div class="hero-tags"><span class="hero-tag">Netflix</span><span class="hero-tag">Disney+</span><span class="hero-tag">Coupang Play</span><span class="hero-tag">한국어 가능</span><span class="hero-tag">남아공 출신</span></div>
   </div>
 </div>
 <div class="basics">
@@ -141,7 +216,7 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
     <div class="basics-grid">
       <div><div class="bi-l">국적</div><div class="bi-v">남아프리카공화국</div></div>
       <div><div class="bi-l">거주지</div><div class="bi-v">서울, 대한민국</div></div>
-      <div><div class="bi-l">신장</div><div class="bi-v">179 cm</div></div>
+      <div><div class="bi-l">신장</div><div class="bi-v">180 cm</div></div>
       <div><div class="bi-l">체중</div><div class="bi-v">83 kg</div></div>
       <div><div class="bi-l">언어</div><div class="bi-v">한국어 · 영어</div></div>
       <div><div class="bi-l">데뷔</div><div class="bi-v">백두산 (2019)</div></div>
@@ -150,7 +225,7 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
   <div class="basics-block">
     <div class="basics-label">특기 / 훈련</div>
     <div class="basics-grid">
-      <div><div class="bi-l">연기</div><div class="bi-v">Lucid Body · Meisner</div></div>
+      <div><div class="bi-l">연기</div><div class="bi-v">루시드 바디 · 마이즈너</div></div>
       <div><div class="bi-l">격투</div><div class="bi-v">무에타이 · 스턴트</div></div>
       <div><div class="bi-l">수중</div><div class="bi-v">고급 수영 · 스쿠버</div></div>
       <div><div class="bi-l">운동</div><div class="bi-v">트라이애슬론 · HYROX</div></div>
@@ -158,9 +233,9 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
   </div>
 </div>
 <div class="pg3" style="display:grid;grid-template-columns:1fr 1fr 1fr;height:60vh;min-height:400px">
-  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-1.jpg" alt="저스틴 하비" class="actor-img-ed1"></div>
-  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-2.jpg" alt="저스틴 하비" class="actor-img-ed2"></div>
-  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-3.jpg" alt="저스틴 하비" class="actor-img-ed3"></div>
+  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-1.jpg" alt="저스틴 하비" class="img-editorial-1"></div>
+  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-2.jpg" alt="저스틴 하비" class="img-editorial-2"></div>
+  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-editorial-3.jpg" alt="저스틴 하비" style="object-position:50% 14%"></div>
 </div>
 <div class="sec" style="background:#0c0c0c">
   <div class="wrap">
@@ -170,47 +245,47 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
     <div class="frow"><div class="fy">2026</div><div style="flex:1"><div class="ft2">현혹</div><div class="fs">감독: 한재림 — 개봉 예정</div></div><span class="fb fd2">Disney+</span></div>
     <div class="frow"><div class="fy">2026</div><div style="flex:1"><div class="ft2">킬러들의 쇼핑몰 2</div><div class="fs">조연 — 개봉 예정</div></div><span class="fb fd2">Disney+</span></div>
     <div class="frow"><div class="fy">2025</div><div style="flex:1"><div class="ft2">뉴토피아</div><div class="fs">파울로 역 · 감독: 윤성현</div></div><span class="fb fc2">Coupang Play</span></div>
-    <div class="frow"><div class="fy">2025</div><div style="flex:1"><div class="ft2">남주의 철날밤 가버렸다</div><div class="fs">마크 역 · 시대극</div></div><span class="fb fc2">Coupang Play</span></div>
+    <div class="frow"><div class="fy">2025</div><div style="flex:1"><div class="ft2">남주의 첫날밤을 가져버렸다</div><div class="fs">마크 역 · 시대극</div></div><span class="fb fc2">Coupang Play</span></div>
     <div class="frow"><div class="fy">2024</div><div style="flex:1"><div class="ft2">폭군</div><div class="fs">악어 역 · 감독: 박훈정 · Disney+ 한국 1위</div></div><span class="fb fd2">Disney+</span></div>
     <div class="fcat">영화</div>
     <div class="frow"><div class="fy">2026</div><div style="flex:1"><div class="ft2">부활남</div><div class="fs">감독: 백종열</div></div><span class="fb fm2">극장</span></div>
     <div class="frow"><div class="fy">2023</div><div style="flex:1"><div class="ft2">귀공자</div><div class="fs">감독: 박훈정</div></div><span class="fb fm2">극장</span></div>
-    <div class="frow"><div class="fy">2022</div><div style="flex:1"><div class="ft2">마녀 Part 2. The Other One</div><div class="fs">톰 역 · 감독: 박훈정</div></div><span class="fb fm2">극장</span></div>
+    <div class="frow"><div class="fy">2022</div><div style="flex:1"><div class="ft2">마녀 2: 디 아더 원</div><div class="fs">톰 역 · 감독: 박훈정</div></div><span class="fb fm2">극장</span></div>
     <div class="frow"><div class="fy">2019</div><div style="flex:1"><div class="ft2">백두산</div><div class="fs">감독: 이해준 · 누적 관객 825만 명</div></div><span class="fb fm2">극장</span></div>
     <div class="fcat">리얼리티 · 뮤직비디오</div>
     <div class="frow"><div class="fy">2024</div><div style="flex:1"><div class="ft2">피지컬: 100 시즌 2</div><div class="fs">4위</div></div><span class="fb fn2">Netflix</span></div>
     <div class="frow"><div class="fy">2024</div><div style="flex:1"><div class="ft2">좀비버스: 뉴 블러드</div><div class="fs">출연</div></div><span class="fb fn2">Netflix</span></div>
-    <div class="frow"><div class="fy">2024</div><div style="flex:1"><div class="ft2">Easy Lover — JYP 엔터테인먼트</div><div class="fs">JYP 엔터테인먼트</div></div><span class="fb fr2">뮤직비디오</span></div>
-    <div class="frow"><div class="fy">2024</div><div style="flex:1"><div class="ft2">Untold — ENHYPEN</div><div class="fs">감독: 이충현</div></div><span class="fb fr2">뮤직비디오</span></div>
+    <div class="frow"><div class="fy">2024</div><div style="flex:1"><div class="ft2">이지 러버 — JYP 엔터테인먼트</div><div class="fs">JYP 엔터테인먼트</div></div><span class="fb fr2">뮤직비디오</span></div>
+    <div class="frow"><div class="fy">2024</div><div style="flex:1"><div class="ft2">언톨드 — ENHYPEN</div><div class="fs">감독: 이충현</div></div><span class="fb fr2">뮤직비디오</span></div>
   </div>
 </div>
-<div class="pg1"><img src="../assets/actor-portrait-full.jpg" alt="저스틴 하비" class="actor-img-portrait-full"></div>
+<div class="pg1"><img src="../assets/actor-portrait-full.jpg" alt="저스틴 하비" class="img-portrait-full"></div>
 <div class="pg2">
-  <div class="col"><img src="../assets/actor-duke-1.jpg" alt="저스틴 하비" class="actor-img-duke1"><div class="cap">폭군</div></div>
-  <div class="col"><img src="../assets/actor-duke-2.jpg" alt="저스틴 하비" class="actor-img-duke2"><div class="cap">폭군</div></div>
+  <div class="col"><img src="../assets/actor-duke-1.jpg" alt="저스틴 하비" style="object-position:50% 30%"><div class="cap">폭군</div></div>
+  <div class="col"><img src="../assets/actor-duke-2.jpg" alt="저스틴 하비" style="object-position:50% 35%"><div class="cap">폭군</div></div>
 </div>
 <div class="pg3" style="display:grid;grid-template-columns:1fr 1fr 1fr;height:60vh;min-height:400px">
-  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-witch2-1.jpg" alt="저스틴 하비" class="actor-img-witch1"><div class="cap">마녀2</div></div>
-  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-witch2-2.jpg" alt="저스틴 하비" class="actor-img-witch2"><div class="cap">마녀2</div></div>
-  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-witch2-3.jpg" alt="저스틴 하비" class="actor-img-witch3"><div class="cap">마녀2</div></div>
+  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-witch2-1.jpg" alt="저스틴 하비" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%"><div class="cap">마녀2</div></div>
+  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-witch2-2.jpg" alt="저스틴 하비" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 10%"><div class="cap">마녀2</div></div>
+  <div class="col" style="position:relative;overflow:hidden"><img src="../assets/actor-witch2-3.jpg" alt="저스틴 하비" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 25%"><div class="cap">마녀2</div></div>
 </div>
 <div class="pg2">
-  <div class="col"><img src="../assets/actor-firstnight-1.jpg" alt="저스틴 하비" class="actor-img-firstnight"><div class="cap">남주의 첫날밤</div></div>
-  <div class="col"><img src="../assets/actor-childe-1.jpg" alt="저스틴 하비" class="actor-img-childe"><div class="cap">귀공자</div></div>
+  <div class="col"><img src="../assets/actor-firstnight-1.jpg" alt="저스틴 하비" class="img-firstnight-1"><div class="cap">남주의 첫날밤</div></div>
+  <div class="col"><img src="../assets/actor-childe-1.jpg" alt="저스틴 하비" style="object-position:50% 25%"><div class="cap">귀공자</div></div>
 </div>
 <div class="pg2">
-  <div class="col"><img src="../assets/actor-portrait-1.jpg" alt="저스틴 하비" class="actor-img-p1"></div>
-  <div class="col"><img src="../assets/actor-portrait-2.jpg" alt="저스틴 하비" class="actor-img-p2"></div>
+  <div class="col"><img src="../assets/actor-portrait-1.jpg" alt="저스틴 하비" class="img-portrait-1"></div>
+  <div class="col"><img src="../assets/actor-portrait-2.jpg" alt="저스틴 하비" class="img-portrait-2"></div>
 </div>
 <!-- ACTING REEL -->
 <div style="background:#0c0c0c;padding:5rem 0;border-top:1px solid rgba(255,255,255,0.06)">
   <div style="max-width:1100px;margin:0 auto;padding:0 3rem">
     <div class="sec-label" style="color:rgba(255,255,255,0.4)">쇼릴</div>
-    <div class="sec-title" style="margin-bottom:2rem">연기 <em>쇼릴</em></div>
+    <div class="sec-title" style="margin-bottom:2rem">연기 <em>릴</em></div>
     <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px">
       <iframe
         src="https://www.youtube.com/embed/SZ8E_pOpHyo"
-        title="저스틴 하비 — 연기 쇼릴"
+        title="저스틴 하비 — 연기 릴"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
@@ -249,8 +324,8 @@ footer{padding:3rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;ali
   </div>
 </div>
 <div class="pg2">
-  <div class="col"><img src="../assets/actor-physical100-ko-1.jpg" alt="저스틴 하비" class="actor-img-phys1"><div class="cap">피지컬 100 시즌 2</div></div>
-  <div class="col"><img src="../assets/actor-physical100-ko-2.jpg" alt="저스틴 하비" class="actor-img-phys2"><div class="cap">피지컬 100 시즌 2</div></div>
+  <div class="col"><img src="../assets/actor-physical100-ko-1.jpg" alt="저스틴 하비" style="object-position:50% 25%"><div class="cap">피지컬 100 시즌 2</div></div>
+  <div class="col"><img src="../assets/actor-physical100-ko-2.jpg" alt="저스틴 하비" style="object-position:50% 25%"><div class="cap">피지컬 100 시즌 2</div></div>
 </div>
 <footer>
   <div class="foot-name">Justin Harvey © 2026</div>
