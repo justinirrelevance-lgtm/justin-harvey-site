@@ -1,0 +1,12 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Force the www subdomain to redirect to the bare apex domain.
+# Netlify also handles this via the primary-domain setting, but pinning
+# it here keeps the behavior consistent regardless of dashboard config.
+[[redirects]]
+  from = "https://www.justinharvey.me/*"
+  to = "https://justinharvey.me/:splat"
+  status = 301
+  force = true
